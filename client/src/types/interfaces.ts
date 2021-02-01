@@ -1,5 +1,3 @@
-import { E_ERROR } from './enum';
-
 // REACT
 export interface ITarget {
   target: {
@@ -56,16 +54,6 @@ export interface IAppProps {
 }
 
 
-export interface IError {
-  id: E_ERROR;
-  msg: IMsg;
-}
-
-export interface IAuthReduxProps {
-  auth: { isAuthenticated: boolean };
-  error: IError;
-}
-
 export interface IConfigHeaders {
   headers: {
     [index: string]: string;
@@ -101,11 +89,6 @@ export interface IItemModal {
   addItem(item: IItem): void;
 }
 
-export interface IItemReduxProps extends IAuthReduxProps {
-  item: {
-    items: IExistingItem[];
-  };
-}
 
 export interface IShoppingList {
   item: {
