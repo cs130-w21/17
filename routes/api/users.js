@@ -1,3 +1,7 @@
+/**
+ * We will not be using any of these api files. They are
+ * only examples for making api calls to the backend.
+ */
 import { Router } from 'express';
 // User Model
 import User from '../../models/User';

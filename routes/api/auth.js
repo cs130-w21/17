@@ -1,8 +1,12 @@
+/**
+ * We will not be using any of these api files. They are
+ * only examples for making api calls to the backend.
+ */
+
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import config from '../../config';
 import jwt from 'jsonwebtoken';
-import auth from '../../middleware/auth';
 // User Model
 import User from '../../models/User';
 
@@ -10,7 +14,6 @@ const { JWT_SECRET } = config;
 const router = Router();
 
 /**
- * @route   POST api/auth/login
  * @desc    Login user
  * @access  Public
  */
@@ -97,20 +100,8 @@ router.post('/register', async (req, res) => {
   }
 });
 
-/**
- * @route   GET api/auth/user
- * @desc    Get user data
- * @access  Private
- */
 
-router.get('/user', auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    if (!user) throw Error('User does not exist');
-    res.json(user);
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
-  }
-});
+
+
 
 export default router;

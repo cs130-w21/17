@@ -20,6 +20,10 @@ class App extends React.Component<IAppProps, IAppState> {
         this.logout = this.logout.bind(this);
     }
 
+    /**
+     * Logs in a user by setting the overall state of the app.
+     * @param user - the user to be logged in.
+     */
     login(user : IUser) : void {
         this.setState({
             isAuthenticated: true,
@@ -27,6 +31,9 @@ class App extends React.Component<IAppProps, IAppState> {
         })
     }
 
+    /**
+     * Logs a user out by changing the state of the app.
+     */
     logout() : void {
         this.setState({
             isAuthenticated: false,

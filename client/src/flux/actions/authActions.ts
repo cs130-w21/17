@@ -1,3 +1,8 @@
+/**
+ * We will not be using any of these flux files. They are
+ * only examples for making api calls to the backend.
+ */
+
 import axios from 'axios';
 import { returnErrors } from './errorActions';
 import {

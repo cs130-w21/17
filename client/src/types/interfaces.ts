@@ -32,10 +32,10 @@ export interface IAuthHandlerProps {
 export interface IAuthHandlerState {}
 
 export interface ILoginProps {
-  login(user : IUser): void
+  login(user : IUser): void;
 }
 
-export interface ILogoutState {}
+export interface ILoginState {}
 
 export interface ILogoutProps {
   logout(): void;

@@ -1,10 +1,14 @@
 import React from "react";
 import {GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login';
-import {IUser, ILoginProps} from "../../types/interfaces";
+import {IUser, ILoginProps, ILoginState} from "../../types/interfaces";
 import {OAUTH_CLIENT_ID} from "./AuthConstants";
 
-//todo - define initial state rather than any
-class Login extends React.Component<ILoginProps, any> {
+
+/**
+ * Handles logging in and creates the user object, which is passed up
+ * to parent components.
+ */
+class Login extends React.Component<ILoginProps, ILoginState> {
     constructor(props : ILoginProps) {
         super(props);
 
