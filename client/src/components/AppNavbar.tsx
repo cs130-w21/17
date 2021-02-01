@@ -9,9 +9,7 @@ import {
   Container
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import RegisterModal from './auth/RegisterModal';
-import LoginModal from './auth/LoginModal';
-import Logout from './auth/Logout';
+
 import { IAppNavbar, IAuthReduxProps } from '../types/interfaces';
 
 const AppNavbar = ({ auth }: IAppNavbar) => {
@@ -24,12 +22,9 @@ const AppNavbar = ({ auth }: IAppNavbar) => {
       <NavItem>
         <span className="navbar-text mr-3">
           <strong>
-            {auth && auth.user ? `Welcome ${auth.user.name}` : ''}
+            {auth && auth.user ? `Welcome ${auth.user.givenName}` : ''}
           </strong>
         </span>
-      </NavItem>
-      <NavItem>
-        <Logout />
       </NavItem>
     </Fragment>
   );
@@ -37,10 +32,7 @@ const AppNavbar = ({ auth }: IAppNavbar) => {
   const guestLinks = (
     <Fragment>
       <NavItem>
-        <RegisterModal />
-      </NavItem>
-      <NavItem>
-        <LoginModal />
+
       </NavItem>
     </Fragment>
   );

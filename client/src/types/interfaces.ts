@@ -15,28 +15,46 @@ export interface IMsg {
 
 // AUTH
 export interface IUser {
-  name?: string;
-  email: string;
-  password: string;
+  id : string;
+  fullName : string;
+  givenName : string;
+  familyName : string;
+  imageURL : string;
+  email : string;
 }
 
-export interface IAuthForm {
-  isAuthenticated?: boolean;
-  error: IError;
-  clearErrors(): void;
+export interface IAuthHandlerProps {
+  isAuthenticated : boolean;
+  login(user: IUser) : void;
+  logout() : void;
 }
 
-export interface ILoginModal extends IAuthForm {
-  login(user: IUser): void;
+export interface IAuthHandlerState {}
+
+export interface ILoginProps {
+  login(user : IUser) : void
 }
 
-export interface IRegisterModal extends IAuthForm {
-  register(user: IUser): void;
-}
+export interface ILogoutState {}
 
 export interface ILogoutProps {
   logout(): void;
 }
+
+export interface ILogoutState {}
+
+
+
+//APP
+export interface IAppState {
+  isAuthenticated: boolean;
+  user: IUser | null;
+}
+
+export interface IAppProps {
+
+}
+
 
 export interface IError {
   id: E_ERROR;

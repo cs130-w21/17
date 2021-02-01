@@ -23,6 +23,7 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.1.6",
+    "react-google-login": "^5.2.2",
     "react-scripts": "^4.0.1"
   },
   "devDependencies": {
