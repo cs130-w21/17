@@ -1,7 +1,5 @@
 import React from 'react';
 import { AppNavbar } from './components/AppNavbar';
-import ShoppingList from './components/ShoppingList';
-import ItemModal from './components/ItemModal';
 import { Container } from 'reactstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -45,8 +43,7 @@ class App extends React.Component<IAppProps, IAppState> {
                            logout={this.logout}
                 />
                 <Container>
-                    <ItemModal />
-                    <ShoppingList />
+                    <h1>Hello, world!</h1>
                 </Container>
             </div>
         );

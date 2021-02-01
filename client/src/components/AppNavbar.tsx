@@ -7,7 +7,6 @@ import {
     Container
 } from 'reactstrap';
 
-
 import { INavbarProps, INavbarState } from '../types/interfaces';
 import { AuthHandler } from "./auth/AuthHandler";
 
@@ -22,16 +21,11 @@ class AppNavbar extends React.Component<INavbarProps, INavbarState> {
         this.handleToggle = this.handleToggle.bind(this);
     }
 
-
-
-
     handleToggle() : void {
         this.setState({
         isOpen: !this.state.isOpen
       });
     }
-
-
 
     render() : any {
         return (
