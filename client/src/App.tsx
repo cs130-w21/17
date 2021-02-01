@@ -1,32 +1,60 @@
-import React, { useEffect } from 'react';
-import AppNavbar from './components/AppNavbar';
-import ShoppingList from './components/ShoppingList';
-import ItemModal from './components/ItemModal';
+import React from 'react';
+import { AppNavbar } from './components/AppNavbar';
 import { Container } from 'reactstrap';
-
-import { Provider } from 'react-redux';
-import store from './flux/store';
-import { loadUser } from './flux/actions/authActions';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import {IAppProps, IAppState, IUser} from "./types/interfaces";
 
-const App = () => {
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+class App extends React.Component<IAppProps, IAppState> {
 
-  return (
-    <Provider store={store}>
-      <div className="App">
-        <AppNavbar />
-        <Container>
-          <ItemModal />
-          <ShoppingList />
-        </Container>
-      </div>
-    </Provider>
-  );
-};
+    constructor(props : IAppProps) {
+        super(props);
+
+        this.state = {
+            isAuthenticated: false,
+            user: null
+        };
+
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+    }
+
+    /**
+     * Logs in a user by setting the overall state of the app.
+     * @param user - the user to be logged in.
+     */
+    login(user : IUser) : void {
+        this.setState({
+            isAuthenticated: true,
+            user: user
+        })
+    }
+
+    /**
+     * Logs a user out by changing the state of the app.
+     */
+    logout() : void {
+        this.setState({
+            isAuthenticated: false,
+            user: null
+        })
+    }
+
+    render() : any {
+        return (
+            <div className="App">
+                <AppNavbar isAuthenticated={this.state.isAuthenticated}
+                           user={this.state.user}
+                           login={this.login}
+                           logout={this.logout}
+                />
+                <Container>
+                    <h1>Hello, world!</h1>
+                </Container>
+            </div>
+        );
+    }
+}
 
 export default App;

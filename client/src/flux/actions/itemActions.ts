@@ -1,3 +1,8 @@
+/**
+ * We will not be using any of these flux files. They are
+ * only examples for making api calls to the backend.
+ */
+
 import axios from 'axios';
 import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from './types';
 import { tokenConfig } from './authActions';

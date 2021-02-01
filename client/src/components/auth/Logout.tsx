@@ -1,17 +1,25 @@
-import React, { Fragment } from 'react';
-import { NavLink } from 'reactstrap';
-import { connect } from 'react-redux';
-import { logout } from '../../flux/actions/authActions';
-import { ILogoutProps } from '../../types/interfaces';
+import React from 'react';
+import {ILogoutProps, ILogoutState} from '../../types/interfaces';
 
-export const Logout = ({ logout }: ILogoutProps) => {
-  return (
-    <Fragment>
-      <NavLink onClick={logout} href="#">
-        Logout
-      </NavLink>
-    </Fragment>
-  );
-};
+import { GoogleLogout } from 'react-google-login';
+import {OAUTH_CLIENT_ID} from "./AuthConstants";
 
-export default connect(null, { logout })(Logout);
+class Logout extends React.Component<ILogoutProps, ILogoutState> {
+    constructor(props : ILogoutProps) {
+        super(props);
+
+        this.state = {}
+    }
+
+    render () : any {
+        return (
+            <GoogleLogout
+                clientId={OAUTH_CLIENT_ID}
+                buttonText="Logout"
+                onLogoutSuccess={this.props.logout}
+            />
+        );
+    }
+}
+
+export { Logout };

@@ -1,3 +1,8 @@
+/**
+ * We will not be using any of these flux files. They are
+ * only examples for making api calls to the backend.
+ */
+
 import axios from 'axios';
 import { returnErrors } from './errorActions';
 import {
@@ -33,37 +38,7 @@ export const loadUser = () => (dispatch: Function, getState: Function) => {
     });
 };
 
-// Register User
-export const register = ({ name, email, password }: IAuthFunction) => (
-  dispatch: Function
-) => {
-  // Headers
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
 
-  // Request body
-  const body = JSON.stringify({ name, email, password });
-
-  axios
-    .post('/api/auth/register', body, config)
-    .then(res =>
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
-      })
-    )
-    .catch(err => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL')
-      );
-      dispatch({
-        type: REGISTER_FAIL
-      });
-    });
-};
 
 // Login User
 export const login = ({ email, password }: IAuthFunction) => (

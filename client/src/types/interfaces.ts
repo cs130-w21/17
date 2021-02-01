@@ -1,5 +1,3 @@
-import { E_ERROR } from './enum';
-
 // REACT
 export interface ITarget {
   target: {
@@ -15,38 +13,46 @@ export interface IMsg {
 
 // AUTH
 export interface IUser {
-  name?: string;
+  id: string;
+  fullName: string;
+  givenName: string;
+  familyName: string;
+  imageURL: string;
   email: string;
-  password: string;
 }
 
-export interface IAuthForm {
-  isAuthenticated?: boolean;
-  error: IError;
-  clearErrors(): void;
-}
-
-export interface ILoginModal extends IAuthForm {
+export interface IAuthHandlerProps {
+  isAuthenticated: boolean;
   login(user: IUser): void;
+  logout(): void;
 }
 
-export interface IRegisterModal extends IAuthForm {
-  register(user: IUser): void;
+export interface IAuthHandlerState {}
+
+export interface ILoginProps {
+  login(user : IUser): void;
 }
+
+export interface ILoginState {}
 
 export interface ILogoutProps {
   logout(): void;
 }
 
-export interface IError {
-  id: E_ERROR;
-  msg: IMsg;
+export interface ILogoutState {}
+
+
+
+//APP
+export interface IAppState {
+  isAuthenticated: boolean;
+  user: IUser | null;
 }
 
-export interface IAuthReduxProps {
-  auth: { isAuthenticated: boolean };
-  error: IError;
+export interface IAppProps {
+
 }
+
 
 export interface IConfigHeaders {
   headers: {
@@ -55,11 +61,16 @@ export interface IConfigHeaders {
 }
 
 // NAVBAR
-export interface IAppNavbar {
-  auth?: {
-    isAuthenticated: boolean;
-    user: IUser;
-  };
+export interface INavbarProps {
+  isAuthenticated: boolean;
+  user: IUser | null;
+
+  login(user: IUser): void;
+  logout(): void;
+}
+
+export interface INavbarState {
+  isOpen: boolean;
 }
 
 // ITEMS
@@ -78,11 +89,6 @@ export interface IItemModal {
   addItem(item: IItem): void;
 }
 
-export interface IItemReduxProps extends IAuthReduxProps {
-  item: {
-    items: IExistingItem[];
-  };
-}
 
 export interface IShoppingList {
   item: {

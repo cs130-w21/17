@@ -1,3 +1,8 @@
+/**
+ * We will not be using any of these flux files. They are
+ * only examples for making api calls to the backend.
+ */
+
 import { GET_ERRORS, CLEAR_ERRORS } from './types';
 import { IMsg } from '../../types/interfaces';
 
