@@ -1,61 +1,58 @@
-import React, { Fragment, useState } from 'react';
+import React from 'react';
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  Container
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    Nav,
+    Container
 } from 'reactstrap';
-import { connect } from 'react-redux';
 
-import { IAppNavbar, IAuthReduxProps } from '../types/interfaces';
 
-const AppNavbar = ({ auth }: IAppNavbar) => {
-  const [isOpen, setIsOpen] = useState(false);
+import { INavbarProps, INavbarState } from '../types/interfaces';
+import { AuthHandler } from "./auth/AuthHandler";
 
-  const handleToggle = () => setIsOpen(!isOpen);
+class AppNavbar extends React.Component<INavbarProps, INavbarState> {
+    constructor(props : INavbarProps) {
+        super(props);
 
-  const authLinks = (
-    <Fragment>
-      <NavItem>
-        <span className="navbar-text mr-3">
-          <strong>
-            {auth && auth.user ? `Welcome ${auth.user.givenName}` : ''}
-          </strong>
-        </span>
-      </NavItem>
-    </Fragment>
-  );
+        this.state = {
+            isOpen: true
+        };
 
-  const guestLinks = (
-    <Fragment>
-      <NavItem>
+        this.handleToggle = this.handleToggle.bind(this);
+    }
 
-      </NavItem>
-    </Fragment>
-  );
 
-  return (
-    <div>
-      <Navbar color="dark" dark expand="sm" className="mb-5">
-        <Container>
-          <NavbarBrand href="/">ShoppingList</NavbarBrand>
-          <NavbarToggler onClick={handleToggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              {auth && auth.isAuthenticated ? authLinks : guestLinks}
-            </Nav>
-          </Collapse>
-        </Container>
-      </Navbar>
-    </div>
-  );
-};
 
-const mapStateToProps = (state: IAuthReduxProps) => ({
-  auth: state.auth
-});
 
-export default connect(mapStateToProps, null)(AppNavbar);
+    handleToggle() : void {
+        this.setState({
+        isOpen: !this.state.isOpen
+      });
+    }
+
+
+
+    render() : any {
+        return (
+            <div>
+                <Navbar color="dark" dark expand="sm" className="navbar">
+                <Container>
+                <NavbarToggler onClick={this.handleToggle} />
+                <Collapse isOpen={this.state.isOpen} navbar>
+                <AuthHandler isAuthenticated={this.props.isAuthenticated}
+                             login={this.props.login}
+                             logout={this.props.logout}
+                />
+                <Nav className="ml-auto" navbar>
+                    {this.props.isAuthenticated && this.props.user ? `Welcome, ${this.props.user.givenName}` : ''}
+                </Nav>
+                </Collapse>
+                </Container>
+                </Navbar>
+            </div>
+        );
+    }
+}
+
+export { AppNavbar };

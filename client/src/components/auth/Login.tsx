@@ -12,6 +12,7 @@ class Login extends React.Component<ILoginProps, any> {
     }
 
     googleResponse (response : GoogleLoginResponse | GoogleLoginResponseOffline) : void {
+        //checking if GoogleLoginResponse
         if ("getBasicProfile" in response) {
             const profile = response.getBasicProfile();
 

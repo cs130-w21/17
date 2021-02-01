@@ -1,15 +1,11 @@
 import React from 'react';
-import AppNavbar from './components/AppNavbar';
+import { AppNavbar } from './components/AppNavbar';
 import ShoppingList from './components/ShoppingList';
 import ItemModal from './components/ItemModal';
 import { Container } from 'reactstrap';
 
-import { Provider } from 'react-redux';
-import store from './flux/store';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import {AuthHandler} from "./components/auth/AuthHandler";
 import {IAppProps, IAppState, IUser} from "./types/interfaces";
 
 class App extends React.Component<IAppProps, IAppState> {
@@ -27,7 +23,6 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     login(user : IUser) : void {
-        console.log(user.fullName);
         this.setState({
             isAuthenticated: true,
             user: user
@@ -35,30 +30,25 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     logout() : void {
-        console.log("Logged out");
-
         this.setState({
             isAuthenticated: false,
             user: null
         })
     }
 
-    render() :any {
+    render() : any {
         return (
-            <Provider store={store}>
-                <div className="App">
-                    <AppNavbar />
-                    <Container>
-                        <ItemModal />
-                        <ShoppingList />
-                    </Container>
-                    <Container>
-                        <AuthHandler isAuthenticated={this.state.isAuthenticated}
-                                     login={this.login}
-                                     logout={this.logout}/>
-                    </Container>
-                </div>
-            </Provider>
+            <div className="App">
+                <AppNavbar isAuthenticated={this.state.isAuthenticated}
+                           user={this.state.user}
+                           login={this.login}
+                           logout={this.logout}
+                />
+                <Container>
+                    <ItemModal />
+                    <ShoppingList />
+                </Container>
+            </div>
         );
     }
 }

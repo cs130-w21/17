@@ -15,24 +15,24 @@ export interface IMsg {
 
 // AUTH
 export interface IUser {
-  id : string;
-  fullName : string;
-  givenName : string;
-  familyName : string;
-  imageURL : string;
-  email : string;
+  id: string;
+  fullName: string;
+  givenName: string;
+  familyName: string;
+  imageURL: string;
+  email: string;
 }
 
 export interface IAuthHandlerProps {
-  isAuthenticated : boolean;
-  login(user: IUser) : void;
-  logout() : void;
+  isAuthenticated: boolean;
+  login(user: IUser): void;
+  logout(): void;
 }
 
 export interface IAuthHandlerState {}
 
 export interface ILoginProps {
-  login(user : IUser) : void
+  login(user : IUser): void
 }
 
 export interface ILogoutState {}
@@ -73,11 +73,16 @@ export interface IConfigHeaders {
 }
 
 // NAVBAR
-export interface IAppNavbar {
-  auth?: {
-    isAuthenticated: boolean;
-    user: IUser;
-  };
+export interface INavbarProps {
+  isAuthenticated: boolean;
+  user: IUser | null;
+
+  login(user: IUser): void;
+  logout(): void;
+}
+
+export interface INavbarState {
+  isOpen: boolean;
 }
 
 // ITEMS
