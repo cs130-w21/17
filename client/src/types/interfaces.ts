@@ -73,6 +73,14 @@ export interface INavbarState {
   isOpen: boolean;
 }
 
+
+//PAGES
+export interface HomePageProps {}
+export interface HomePageState {}
+
+export interface InvitationProps {}
+export interface InvitationState {}
+
 // ITEMS
 export interface IExistingItem {
   _id: string;

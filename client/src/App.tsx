@@ -1,10 +1,18 @@
 import React from 'react';
 import { AppNavbar } from './components/AppNavbar';
 import { Container } from 'reactstrap';
+import {
+    BrowserRouter as Router,
+    Route
+} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import {IAppProps, IAppState, IUser} from "./types/interfaces";
+
+import { PAGES } from "./components/pages/PageConstants";
+import {HomePage} from "./components/pages/HomePage";
+import {InvitationPage} from "./components/pages/InvitationPage";
 
 class App extends React.Component<IAppProps, IAppState> {
 
@@ -50,7 +58,10 @@ class App extends React.Component<IAppProps, IAppState> {
                            logout={this.logout}
                 />
                 <Container>
-                    <h1>Hello, world!</h1>
+                    <Router>
+                        <Route exact path={PAGES.HOME_PAGE} component={HomePage}/>
+                        <Route exact path={PAGES.INVITATION_PAGE} component={InvitationPage}/>
+                    </Router>
                 </Container>
             </div>
         );
