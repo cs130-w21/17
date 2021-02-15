@@ -11,7 +11,7 @@
   "opts" : {
       "encoding": "utf8",
       "readme": "./README.md",
-      "destination": "docs/",
+      "destination": "docs/server/",
       "recurse": true
   }
 }

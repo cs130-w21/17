@@ -35,7 +35,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "docs": "npx typedoc --readme README.md --out docs src/",
+    "docs": "npx typedoc",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

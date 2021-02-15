@@ -1,5 +1,6 @@
 {
   "entryPoints": ["src/"],
-  "out": "docs",
-  "exclude": ["src/components/auth/AuthConstants.tsx"]
+  "out": "../docs/client/",
+  "exclude": ["src/components/auth/AuthConstants.tsx"],
+  "readme": "README.md"
 }
