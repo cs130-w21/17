@@ -71,7 +71,9 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A class which handles rendering the login and logout buttons.</p>
+						<p>A class which handles rendering the login and logout buttons.
+							Deals with conditionally rendering the Login/Logout and passing
+						the correct props to them.</p>
 					</div>
 				</div>
 			</section>
@@ -143,7 +145,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cs130-w21/17/blob/bebc445/client/src/components/auth/AuthHandler.tsx#L10">src/components/auth/AuthHandler.tsx:10</a></li>
+									<li>Defined in <a href="https://github.com/cs130-w21/17/blob/9b9a24f/client/src/components/auth/AuthHandler.tsx#L12">src/components/auth/AuthHandler.tsx:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -724,9 +726,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/cs130-w21/17/blob/bebc445/client/src/components/auth/AuthHandler.tsx#L17">src/components/auth/AuthHandler.tsx:17</a></li>
+									<li>Defined in <a href="https://github.com/cs130-w21/17/blob/9b9a24f/client/src/components/auth/AuthHandler.tsx#L24">src/components/auth/AuthHandler.tsx:24</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Conditionally renders the Login/Logout components.
+										If the user is logged in, render the Logout button.
+									Otherwise, renders a Login button.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
@@ -850,16 +859,7 @@
 						<a href="../modules/components_pages_pageconstants.html">components/pages/<wbr>Page<wbr>Constants</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/flux_actions_authactions.html">flux/actions/auth<wbr>Actions</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/flux_actions_erroractions.html">flux/actions/error<wbr>Actions</a>
-					</li>
-					<li class=" tsd-kind-module">
 						<a href="../modules/flux_actions_itemactions.html">flux/actions/item<wbr>Actions</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/flux_actions_types.html">flux/actions/types</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/index.html">index</a>
@@ -964,7 +964,6 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">
