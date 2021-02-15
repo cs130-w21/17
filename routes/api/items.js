@@ -9,9 +9,11 @@ import Item from '../../models/Item';
 const router = Router();
 
 /**
- * @route   GET api/items
- * @desc    Get All Items
- * @access  Public
+ * A GET request to get Items.
+ *
+ * @name GetItems
+ * @route  {GET} api/items
+ * @bodyparam {ParamType} [paramName] Param description.
  */
 
 router.get('/', async (req, res) => {
@@ -25,11 +27,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-/**
- * @route   POST api/items
- * @desc    Create An Item
- * @access  Private
- */
 
 
 

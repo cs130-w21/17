@@ -1,0 +1,17 @@
+{
+    "source": {
+      "include": ["./models/", "./routes/"],
+      "includePattern": ".js$",
+      "excludePattern": "(node_modules/|docs)"
+    },
+  "plugins": [
+      "plugins/markdown",
+      "jsdoc-route-plugin"
+  ],
+  "opts" : {
+      "encoding": "utf8",
+      "readme": "./README.md",
+      "destination": "docs/",
+      "recurse": true
+  }
+}
