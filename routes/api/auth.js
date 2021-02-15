@@ -1,6 +1,7 @@
 /**
  * We will not be using any of these api files. They are
  * only examples for making api calls to the backend.
+ * You must make your own API file to handle requests.
  */
 
 import { Router } from 'express';
