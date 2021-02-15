@@ -1,6 +1,7 @@
 /**
  * We will not be using any of these api files. They are
- * only examples for making api calls to the backend.
+ * only examples for how backend calls work.
+ * You must make your own API file to handle requests.
  */
 
 import { Router } from 'express';
@@ -14,8 +15,10 @@ const { JWT_SECRET } = config;
 const router = Router();
 
 /**
- * @desc    Login user
- * @access  Public
+ * Logs in a user.
+ *
+ * @name Login
+ * @route {POST} /login
  */
 
 router.post('/login', async (req, res) => {
@@ -51,9 +54,11 @@ router.post('/login', async (req, res) => {
 });
 
 /**
- * @route   POST api/users
- * @desc    Register new user
- * @access  Public
+ * Registers a user.
+ *
+ * @name Register
+ * @route   {POST} api/users
+ *
  */
 
 router.post('/register', async (req, res) => {

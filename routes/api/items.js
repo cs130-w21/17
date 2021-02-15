@@ -1,7 +1,9 @@
 /**
  * We will not be using any of these api files. They are
- * only examples for making api calls to the backend.
+ * only examples for how backend calls work.
+ * You must make your own API file to handle requests.
  */
+
 import { Router } from 'express';
 // Item Model
 import Item from '../../models/Item';
@@ -9,9 +11,11 @@ import Item from '../../models/Item';
 const router = Router();
 
 /**
- * @route   GET api/items
- * @desc    Get All Items
- * @access  Public
+ * A GET request to get Items.
+ *
+ * @name GetItems
+ * @route  {GET} api/items
+ * @bodyparam {ParamType} [paramName] Param description.
  */
 
 router.get('/', async (req, res) => {
@@ -25,11 +29,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-/**
- * @route   POST api/items
- * @desc    Create An Item
- * @access  Private
- */
 
 
 

@@ -33,7 +33,9 @@ export interface ILoginProps {
   login(user : IUser): void;
 }
 
-export interface ILoginState {}
+export interface ILoginState {
+  failedLogin: boolean;
+}
 
 export interface ILogoutProps {
   logout(): void;
@@ -49,16 +51,8 @@ export interface IAppState {
   user: IUser | null;
 }
 
-export interface IAppProps {
+export interface IAppProps {}
 
-}
-
-
-export interface IConfigHeaders {
-  headers: {
-    [index: string]: string;
-  };
-}
 
 // NAVBAR
 export interface INavbarProps {
@@ -81,51 +75,5 @@ export interface HomePageState {}
 export interface InvitationProps {}
 export interface InvitationState {}
 
-// ITEMS
-export interface IExistingItem {
-  _id: string;
-  name: string;
-}
-
-export interface IItem {
-  _id?: string;
-  name: string;
-}
-
-export interface IItemModal {
-  isAuthenticated: boolean;
-  addItem(item: IItem): void;
-}
 
 
-export interface IShoppingList {
-  item: {
-    items: IExistingItem[];
-  };
-  getItems(): void;
-  deleteItem(id: string): void;
-  isAuthenticated: boolean;
-}
-
-// <<<<<<<<<<<>>>>>>>>>>>>
-// <<<<<<<< FLUX >>>>>>>>>
-// <<<<<<<<<<<>>>>>>>>>>>>
-
-export interface IAuthFunction {
-  name?: string;
-  email: string;
-  password: string;
-}
-
-export interface IReturnErrors {
-  msg: {
-    msg: string | any;
-  };
-  status: string;
-  id: any;
-}
-
-export interface IAction {
-  type: string;
-  payload?: any;
-}

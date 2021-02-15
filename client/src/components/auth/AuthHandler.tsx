@@ -6,6 +6,8 @@ import {Logout} from "./Logout";
 
 /**
  * A class which handles rendering the login and logout buttons.
+ * Deals with conditionally rendering the Login/Logout and passing
+ * the correct props to them.
  */
 class AuthHandler extends React.Component<IAuthHandlerProps, IAuthHandlerState> {
     constructor(props : IAuthHandlerProps) {
@@ -14,6 +16,11 @@ class AuthHandler extends React.Component<IAuthHandlerProps, IAuthHandlerState> 
         this.state = {}
     }
 
+    /**
+     * Conditionally renders the Login/Logout components.
+     * If the user is logged in, render the Logout button.
+     * Otherwise, renders a Login button.
+     */
     render() : any {
         return (
             <div>
