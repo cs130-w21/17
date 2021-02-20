@@ -72,8 +72,16 @@ export interface INavbarState {
 export interface HomePageProps {}
 export interface HomePageState {}
 
-export interface InvitationProps {}
-export interface InvitationState {}
+export interface InvitationProps {
+  user: IUser | null;
+}
+export interface InvitationState {
+  modal_opened?: boolean;
+  invitee_name?: string;
+  invitee_email?: string;
+  submitted?: boolean;
+  invite_sent?: boolean;
+}
 
 
 
