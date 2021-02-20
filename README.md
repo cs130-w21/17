@@ -1,5 +1,8 @@
 # EasyMeet
 
+## Our Website
+Visit [Easy Meet](http://www.easy-meet-w21project.com/)!
+
 ## API Documentation
 Visit our [GitHub Pages](https://cs130-w21.github.io/17/index.html) website to see the API documentation. It is separated between Client and Server documentation.
 
