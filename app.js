@@ -10,6 +10,7 @@ import config from './config';
 import authRoutes from './routes/api/auth';
 import itemRoutes from './routes/api/items';
 import inviteRoutes from './routes/api/invitations';
+import calendarRoutes from './routes/api/calendar'
 
 const { MONGO_URI, MONGO_DB_NAME } = config;
 
@@ -39,7 +40,7 @@ mongoose
 app.use('/api/items', itemRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/invitations', inviteRoutes );
-
+app.use('/api/calendar', calendarRoutes);
 
 
 // Serve static assets if in production
