@@ -13,6 +13,7 @@ import {IAppProps, IAppState, IUser} from "./types/interfaces";
 import { PAGES } from "./components/pages/PageConstants";
 import {HomePage} from "./components/pages/HomePage";
 import {InvitationPage} from "./components/pages/InvitationPage";
+import {LinkFormModal} from "./components/LinkFormModal";
 
 class App extends React.Component<IAppProps, IAppState> {
 
@@ -62,6 +63,8 @@ class App extends React.Component<IAppProps, IAppState> {
                         <Route exact path={PAGES.HOME_PAGE} component={HomePage}/>
                         <Route exact path={PAGES.INVITATION_PAGE} component={InvitationPage}/>
                     </Router>
+
+                    <>{this.state.isAuthenticated&&<LinkFormModal user={this.state.user} />}</>
                 </Container>
             </div>
         );
