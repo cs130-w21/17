@@ -81,6 +81,7 @@ export interface InvitationState {
   invitee_email?: string;
   submitted?: boolean;
   invite_sent?: boolean;
+  backend_error?: boolean;
 }
 
 

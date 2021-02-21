@@ -54,6 +54,7 @@ router.route('/add').post((req, res) => {
     let error_message = "";
     let error_flag = false;
 
+
     /**
      * Invitation Object
      * @type {Document}
@@ -116,25 +117,28 @@ router.route('/add').post((req, res) => {
      * Sends email using previously defined mail options.
      * @param mailOptions (includes from, to, subject, text and html data)
      */
-    transporter.sendMail(mailOptions, function (err, data) {
-        if (!error_flag) {
-            if (err) {
-                console.log('Error sending email');
-                error_message += 'Error sending invitation to the email: ' + invitee_email + '. Please check your inputs.';
-                error_flag = true;
+    if (!error_flag)
+    {
+        transporter.sendMail(mailOptions, function (err, data) {
+            if (!error_flag) {
+                if (err) {
+                    console.log('Error sending email');
+                    error_message += 'Error sending invitation to the email: ' + invitee_email + '. Please check your inputs.';
+                    error_flag = true;
 
-            } else {
-                console.log('Email sent');
-                error_message += 'Email sent.';
+                } else {
+                    console.log('Email sent');
+                    error_message += 'Email sent.';
+                }
             }
-        }
 
-        if (error_flag)
-            return res.status(400).json(error_message); // error
-        else{
-            return res.status(200).json(error_message); // success
-        }
-    });
+            if (error_flag)
+                return res.status(400).json(error_message); // error
+            else {
+                return res.status(200).json(error_message); // success
+            }
+        });
+    }
 });
 
 // I JUST TOOK THESE OFF THE TUTORIAL, DOES NOT DO ANYTHING YET

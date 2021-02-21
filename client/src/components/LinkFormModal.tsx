@@ -36,7 +36,8 @@ class LinkFormModal extends React.Component<InvitationProps, InvitationState, IA
             invitee_name: '',
             invitee_email:'',
             submitted: false,
-            invite_sent: false
+            invite_sent: false,
+            backend_error: false
         };
 
 
@@ -48,6 +49,7 @@ class LinkFormModal extends React.Component<InvitationProps, InvitationState, IA
 
     /**
      * Opens/Closes Modal
+     *  if reopening, re-initialize all states
      */
     toggle(): void {
         this.setState({
@@ -57,15 +59,16 @@ class LinkFormModal extends React.Component<InvitationProps, InvitationState, IA
 
     /**
      * Closes invite status alert,
-     * resets invite_sent & submitted state to false,
+     * resets invite_sent, backend_error & submitted state to false,
      * and resets invitee_name and invitee_email to empty strings
      */
     onAlertDismiss():void{
         this.setState({
             invite_sent: false, // email sent successfully
             submitted: false,   // form submitted
-            invitee_name: "",
-            invitee_email: ""
+            invitee_name: '',
+            invitee_email: '',
+            backend_error: false
         });
     }
 
@@ -84,7 +87,10 @@ class LinkFormModal extends React.Component<InvitationProps, InvitationState, IA
 
     /**
      * Sends invitation data to backend to be processed,
-     * closes modal, and sets submitted state to true
+     * closes modal, and sets submitted state to true.
+     *
+     * Also resets invitee_email and invitee_name states
+     * to empty strings.
      *
      *  (backend: adds invitation to database and sends invitation link)
      *
@@ -111,14 +117,22 @@ class LinkFormModal extends React.Component<InvitationProps, InvitationState, IA
             })
 
             //error found
-            .catch(err => console.log('Error', err));
+            .catch(err => {
+                console.log('Error with backend', err);
+                this.setState({
+                    backend_error: true
+                });
+
+            });
 
 
         // close modal
         this.toggle();
 
         this.setState({
-            submitted: true
+            submitted: true,
+            invitee_name: '',
+            invitee_email:''
         });
     }
 
@@ -135,12 +149,23 @@ class LinkFormModal extends React.Component<InvitationProps, InvitationState, IA
                 </Button>
 
                 {/*Alert: appears if invite sent successfully */}
-                <Alert color="info" isOpen={this.state.invite_sent} toggle={this.onAlertDismiss}>
-                    Invite sent to {this.state.invitee_email}!
+                <Alert color="success"
+                       isOpen={this.state.invite_sent}
+                       toggle={this.onAlertDismiss}>
+                    Invite sent!
+                </Alert>
+
+                {/*Alert: appears if attempting to send invite */}
+                <Alert color="warning"
+                       isOpen={this.state.submitted && !this.state.invite_sent && !this.state.backend_error}
+                       toggle={this.onAlertDismiss}>
+                    ... Attempting to send invite.
                 </Alert>
 
                 {/*Alert: appears if invite NOT sent successfully */}
-                <Alert color="danger" isOpen={this.state.submitted && !this.state.invite_sent} toggle={this.onAlertDismiss}>
+                <Alert color="danger"
+                       isOpen={this.state.submitted && this.state.backend_error}
+                       toggle={this.onAlertDismiss}>
                     Error sending invite. Please check your inputs.
                 </Alert>
 
