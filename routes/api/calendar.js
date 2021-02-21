@@ -3,7 +3,7 @@ import { Router } from 'express';
 import {google, GoogleApis} from 'googleapis';
 const OAUTH_CLIENT_ID = '201262134365-ljhubsb2b882k0723tviufaj761gsmvt.apps.googleusercontent.com';
 const OAUTH_CLIENT_SECRET = '5CNLHBEKPWk81VgC6bC_y2D8';
-const OAUTH_REDIRECT_URI = 'http://localhost:3000'
+const OAUTH_REDIRECT_URI = 'http://www.easy-meet-w21project.com'
 
 
 const router = Router();
