@@ -79,6 +79,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         <GoogleLogin
           clientId={OAUTH_CLIENT_ID}
           buttonText="Login"
+          scope="https://www.googleapis.com/auth/calendar"
           onSuccess={this.successfulGoogleLogin}
           onFailure={this.failedGoogleLogin}
           cookiePolicy={'single_host_origin'}
