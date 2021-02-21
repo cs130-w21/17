@@ -9,6 +9,7 @@ import config from './config';
 // routes
 import authRoutes from './routes/api/auth';
 import itemRoutes from './routes/api/items';
+import inviteRoutes from './routes/api/invitations';
 
 const { MONGO_URI, MONGO_DB_NAME } = config;
 
@@ -37,6 +38,9 @@ mongoose
 // Use Routes
 app.use('/api/items', itemRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/invitations', inviteRoutes );
+
+
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
