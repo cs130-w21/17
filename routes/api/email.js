@@ -20,16 +20,16 @@ const router = express();
 // View engine setup
 router.engine('handlebars', exphbs());
 router.set('view engine', 'handlebars');
-router.set('port', 3000);
+//router.set('port', 3000);
 
 // // Static folder
 // router.use('../../../client', express.static(path.join(__dirname, 'client')));
-
+/*
 let server = router.listen(router.get('port'), function() {
     let port = server.address().port;
     console.log('this port is open: ' + port);
 });
-
+*/
 // Body Parser Middleware
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
