@@ -19,6 +19,7 @@ export interface IUser {
   familyName: string;
   imageURL: string;
   email: string;
+  refreshToken: string;
 }
 
 export interface IAuthHandlerProps {
@@ -69,7 +70,11 @@ export interface INavbarState {
 
 
 //PAGES
-export interface HomePageProps {}
+export interface HomePageProps {
+  user:IUser | null;
+  isAuthenticated: boolean;
+
+}
 export interface HomePageState {}
 
 export interface InvitationProps {
