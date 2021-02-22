@@ -90,4 +90,15 @@ export interface InvitationState {
 }
 
 
+//CALENDAR
+
+export interface DemoProps {}
+export interface DemoState {
+  data: any
+  currentViewName: string
+}
+
+
+
+
 
