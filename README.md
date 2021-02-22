@@ -1,5 +1,9 @@
 # EasyMeet
 
+## Installation and usage
+The repo requires specific environment variables in order to work. Visit the team google drive and open a file called "logins". This file contains all the variables needed.
+
+
 ## Our Website
 Visit [Easy Meet](http://www.easy-meet-w21project.com/)!
 
