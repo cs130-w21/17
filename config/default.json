@@ -1,4 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://easy-meet-21:cs130groupprojectw21@easy-meet-21.pmpbt.mongodb.net/easy-meet-21-database?retryWrites=true&w=majority",
-  "jwtSecret": "sl_myJwtSecret"
-}
