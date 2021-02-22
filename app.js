@@ -8,7 +8,6 @@ import config from './config';
 
 // routes
 import authRoutes from './routes/api/auth';
-import itemRoutes from './routes/api/items';
 import inviteRoutes from './routes/api/invitations';
 import calendarRoutes from './routes/api/calendar'
 
@@ -37,7 +36,6 @@ mongoose
   .catch(err => console.log(err));
 
 // Use Routes
-app.use('/api/items', itemRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/invitations', inviteRoutes );
 app.use('/api/calendar', calendarRoutes);
