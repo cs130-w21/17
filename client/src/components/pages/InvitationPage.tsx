@@ -1,5 +1,6 @@
 import React from 'react';
 import {InvitationPageProps, InvitationPageState, InvitationState} from "../../types/interfaces";
+import axios from "axios";
 /**
  * This class serves as the invitation page for the application.
  * The invitee will be able to view the inviter's schedule here.
@@ -7,7 +8,9 @@ import {InvitationPageProps, InvitationPageState, InvitationState} from "../../t
 class InvitationPage extends React.Component<InvitationPageProps, InvitationPageState> {
     constructor(props : InvitationPageProps) {
         super(props);
-        this.state = {}
+        this.state = {
+            id: ''
+        }
     }
     getId(): string {
         let search = this.getUrlParams();
@@ -19,14 +22,17 @@ class InvitationPage extends React.Component<InvitationPageProps, InvitationPage
         return new URLSearchParams(this.props.location.search);
     }
 
-    findEmail(): string {
-
-    }
     render() : any {
-        let id = this.getId();
+        const i = {
+            id : this.getId()
+        }
+        //let id = this.getId();
+
+        axios.post('/api/invitationpage/token', i)
+
         return (
             <div>
-                id is: {id}
+                id is:
             </div>
             //<h1>Invitation Page!</h1>
         );
