@@ -6,7 +6,6 @@ import {
 } from 'react-google-login';
 import { IUser, ILoginProps, ILoginState } from '../../types/interfaces';
 import { OAUTH_CLIENT_ID } from './AuthConstants';
-import { Container } from 'reactstrap';
 
 /**
  * Handles logging in and creates the user object, which is passed up

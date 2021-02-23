@@ -1,30 +1,24 @@
-import React, { ReactNode, SyntheticEvent } from 'react';
+import React from 'react';
 import { HomePageProps, HomePageState } from '../../types/interfaces';
-import axios from 'axios';
-import { calendar } from 'googleapis/build/src/apis/calendar';
-import { Demo } from '../calendar/Demo';
+import SyncedCalender from '../calendar/SyncedCalender';
 /**
  * This class serves as the Home Page of the application.
  */
 class HomePage extends React.Component<HomePageProps, HomePageState> {
   constructor(props: HomePageProps) {
     super(props);
-    this.handleItemClick = this.handleItemClick.bind(this);
     this.renderschedular = this.renderschedular.bind(this);
     this.state = {};
   }
-  public handleItemClick(event: SyntheticEvent<any>, name: string): void {
-    if (name === 'add-event') {
-      const config = {
-        headers: { 'Content-Type': 'application/json' },
-      };
-      const body = JSON.stringify({ token: this.props.user?.refreshToken });
-      axios.post('/api/calendar/action', body, config);
-    }
-  }
+
   public renderschedular() {
     if (this.props.isAuthenticated) {
-      return <Demo></Demo>;
+      return (
+        <SyncedCalender
+          user={this.props.user}
+          isAuthenticated={this.props.isAuthenticated}
+        ></SyncedCalender>
+      );
     } else {
       return <div></div>;
     }

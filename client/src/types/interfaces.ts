@@ -107,7 +107,8 @@ export interface DemoState {
   currentViewName: string
 }
 
+export interface SyncedCalendarProps {
+  user:IUser | null;
+  isAuthenticated: boolean;
 
-
-
-
+}
