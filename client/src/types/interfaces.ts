@@ -81,9 +81,11 @@ export interface HomePageState {}
 
 export interface InvitationPageProps extends RouteComponentProps {
   user: IUser | null;
+  isAuthenticated: boolean;
 }
 
 export interface InvitationPageState {
+  token?: string;
 }
 
 export interface InvitationProps {
