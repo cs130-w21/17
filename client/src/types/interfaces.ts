@@ -1,4 +1,6 @@
 // REACT
+import {RouteComponentProps} from "react-router";
+
 export interface ITarget {
   target: {
     value: React.SetStateAction<string>;
@@ -76,6 +78,15 @@ export interface HomePageProps {
 
 }
 export interface HomePageState {}
+
+export interface InvitationPageProps extends RouteComponentProps {
+  user: IUser | null;
+  isAuthenticated: boolean;
+}
+
+export interface InvitationPageState {
+  token?: string;
+}
 
 export interface InvitationProps {
   user: IUser | null;
