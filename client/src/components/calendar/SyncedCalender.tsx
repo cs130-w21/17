@@ -1,10 +1,15 @@
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
-import { ViewState } from '@devexpress/dx-react-scheduler';
+import {
+  ViewState,
+  EditingState,
+  IntegratedEditing,
+} from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   WeekView,
   DayView,
+  MonthView,
   Appointments,
   Toolbar,
   DateNavigator,
@@ -12,6 +17,7 @@ import {
   AppointmentForm,
   AppointmentTooltip,
   TodayButton,
+  ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { SyncedCalendarProps } from '../../types/interfaces';
 import axios from 'axios';
@@ -36,6 +42,22 @@ const getData = (setData: any, refreshToken: any) => {
     });
 };
 
+/**
+ * makes a call to the backend to add an event to the users primary calendar
+ * @param setData
+ * @param refreshToken
+ */
+const addEvent = (event: any, refreshToken: any) => {
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+  };
+  const body = JSON.stringify({ token: refreshToken, appointment: event });
+
+  axios.post('/api/calendar/addEvent', body, config).then((response) => {
+    setTimeout(() => {}, 600);
+  });
+};
+
 const usaTime = (date: any) =>
   new Date(date).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
 
@@ -49,6 +71,7 @@ const mapAppointmentData = (appointment: any) => ({
   startDate: usaTime(appointment.start.dateTime),
   endDate: usaTime(appointment.end.dateTime),
   title: appointment.summary,
+  summary: appointment.title,
 });
 
 const initialState = {
@@ -65,6 +88,8 @@ const initialState = {
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
+    case 'addData':
+      return { ...state, data: action.payload };
     case 'setData':
       return { ...state, data: action.payload.map(mapAppointmentData) };
     case 'setCurrentViewName':
@@ -86,6 +111,18 @@ export default (props: SyncedCalendarProps) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const { data, currentViewName, currentDate } = state;
 
+  const commitChanges = (changes: any) => {
+    let { added, changed, deleted } = changes;
+    if (added) {
+      const startingAddedId =
+        data.length > 0 ? data[data.length - 1].id + 1 : 0;
+      const temp = [...data, { id: startingAddedId, ...added }];
+      dispatch({ type: 'addData', payload: temp });
+      addEvent(temp[temp.length - 1], props.user?.refreshToken);
+    } else if (changed) {
+    } else if (deleted !== undefined) {
+    }
+  };
   const setCurrentViewName = React.useCallback(
     (nextViewName) =>
       dispatch({
@@ -119,22 +156,27 @@ export default (props: SyncedCalendarProps) => {
 
   return (
     <Paper>
-      <Scheduler data={data} height={660}>
+      <Scheduler data={data} height={720}>
         <ViewState
           currentDate={currentDate}
           currentViewName={currentViewName}
           onCurrentViewNameChange={setCurrentViewName}
           onCurrentDateChange={setCurrentDate}
         />
+        <EditingState onCommitChanges={commitChanges} />
+        <MonthView />
+
         <DayView startDayHour={7.5} endDayHour={17.5} />
         <WeekView startDayHour={7.5} endDayHour={17.5} />
+        <ConfirmationDialog />
         <Appointments />
+        <AppointmentTooltip showCloseButton showOpenButton />
+        <AppointmentForm />
         <Toolbar />
         <DateNavigator />
         <TodayButton />
         <ViewSwitcher />
         <AppointmentTooltip showOpenButton showCloseButton />
-        <AppointmentForm readOnly />
       </Scheduler>
     </Paper>
   );
