@@ -25,24 +25,26 @@ router.route('/token').post((req, res) => {
     let id = req.body.id;
     let email = '';
     let token = '';
-    //console.log(id);
-
     //use id to find the email from mongodb database.
     Invitation.findOne({'_id': String(id)},function(err, result) {
-        if (err) throw err;
-        email = result.inviter_email;
-        //console.log(email);
-        //use email to find token
-        //email = 'b@';
-        //console.log(email);
-        //console.log(email||'');
-        User.findOne({'email': String(email||'')},function(err, result) {
+        try {
             if (err) throw err;
-            token = result.password;
-            //console.log(token);
-            res.status(200).json({t: token});
-        });
-
+            //console.log(result+ "1adadas");
+            email = result.inviter_email;
+            //use email to find token
+            //email = 'b@';
+            //console.log(email);
+            //console.log(email||'');
+            User.findOne({'email': String(email)}, function (err, result) {
+                if (err) throw err;
+                token = result.password;
+                //console.log(token);
+                res.status(200).json({t: token});
+            });
+        }
+        catch (e) {
+            res.status(400).json({message: e});
+        }
     });
 
 

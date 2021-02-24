@@ -71,7 +71,14 @@ class App extends React.Component<IAppProps, IAppState> {
             <Route
               exact
               path={PAGES.INVITATION_PAGE}
-              component={InvitationPage}
+              render={(props) => (
+                  <InvitationPage
+                      {...props}
+                      user={this.state.user}
+                      isAuthenticated={this.state.isAuthenticated}
+                  />
+              )}
+
             />
           </Router>
 

@@ -54,7 +54,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         email: profile.getEmail(),
         refreshToken: response.accessToken,
       };
-
       this.props.login(user);
     }
   }
@@ -82,6 +81,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
           onSuccess={this.successfulGoogleLogin}
           onFailure={this.failedGoogleLogin}
           cookiePolicy={'single_host_origin'}
+          responseType='code'
+          accessType='offline'
         />
         {this.state.failedLogin ? (
           <p className="loginfail">Login failed...</p>
