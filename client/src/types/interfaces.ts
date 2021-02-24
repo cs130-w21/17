@@ -85,7 +85,8 @@ export interface InvitationPageProps extends RouteComponentProps {
 }
 
 export interface InvitationPageState {
-  token?: string;
+  token: string | null;
+  user: IUser | null;
 }
 
 export interface InvitationProps {

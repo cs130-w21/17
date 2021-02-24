@@ -11,10 +11,13 @@ class InvitationPage extends React.Component<InvitationPageProps, InvitationPage
         super(props);
         this.state = {
             //id: '',
-            token : ''
+            user : null,
+            token : null
         }
     }
-
+    componentDidMount() : void {
+        this.getData();
+    }
     getId(): string {
         let search = this.getUrlParams();
         return search.get("id") || "";
@@ -26,45 +29,56 @@ class InvitationPage extends React.Component<InvitationPageProps, InvitationPage
     }
 
     public renderschedular() {
-
-        if (this.props.isAuthenticated) {
-            return (
+        if(this.state.token != null){
+            return(
                 <SyncedCalender
-                    user={this.props.user}
-                    isAuthenticated={this.props.isAuthenticated}
+                    user={this.state.user}
+                    isAuthenticated = {this.props.isAuthenticated}
                 ></SyncedCalender>
-            );
-        } else {
-            return <div></div>;
-        }
+            )}else{return <div></div>}
     }
 
-    render() : any {
+
+    getData(){
         const i = {
             id : this.getId()
         }
         let token: any;
         let token_s = '';
         //return axios.post('/api/invitationpage/token', i)
-         axios
+        axios
             .post('/api/invitationpage/token', i)
             .then((response) => {
                 setTimeout(() => {
-                   //const c = response.data;
-                    console.log(response.data);
                     token = response.data;
-                    this.setState({token : token.t});
-                    console.log(token.t);
-                    }, 600);
-                });
+                    const tempuser: IUser = {
+                        id: '',
+                        fullName: '',
+                        givenName: '',
+                        familyName: '',
+                        imageURL: '',
+                        email: '',
+                        refreshToken: token.t,
+                    };
+                    this.setState({user: tempuser, token: token.t});
+                }, 3000);
+
+            })
+            .catch(err => {
+                console.log('Error with backend', err);
+            });
+    }
+    render() : any {
+        this.getData();
+        //console.log("asdadaddasdsa")
         return (
 
             <div>
-                This is the token: {this.state.token}
                 {this.renderschedular()}
             </div>
             //<h1>Invitation Page!</h1>
         );
+
     }
 }
 
