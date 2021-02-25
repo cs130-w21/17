@@ -6,6 +6,7 @@ import {
 } from 'react-google-login';
 import { IUser, ILoginProps, ILoginState } from '../../types/interfaces';
 import { OAUTH_CLIENT_ID } from './AuthConstants';
+import axios from 'axios';
 
 /**
  * Handles logging in and creates the user object, which is passed up
@@ -31,31 +32,34 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   /**
    * Handles a successful Google Login. Creates the user,
    * and uses the login callback from props to update application state.
-   * @param response - Contains information about the Google User.
-   *          passed in via the GoogleLogin component.
+   * @param response {GoogleLoginResponseOffline} - Contains an authorization code
+   *    which can be used to get an access token and refresh token.
    */
-  successfulGoogleLogin(
-    response: GoogleLoginResponse | GoogleLoginResponseOffline
-  ): void {
+  successfulGoogleLogin(response: GoogleLoginResponse | GoogleLoginResponseOffline): void {
     this.setState({
       failedLogin: false,
     });
 
-    //checking if GoogleLoginResponse
-    if ('getBasicProfile' in response) {
-      const profile = response.getBasicProfile();
+    const req = {code: response.code};
 
-      const user: IUser = {
-        id: profile.getId(),
-        fullName: profile.getName(),
-        givenName: profile.getGivenName(),
-        familyName: profile.getFamilyName(),
-        imageURL: profile.getImageUrl(),
-        email: profile.getEmail(),
-        refreshToken: response.accessToken,
-      };
-      this.props.login(user);
-    }
+    axios.post('/api/auth/register', req)
+        .then(res => {
+          const user : IUser = {
+            id: res.data.profile.id,
+            fullName: `${res.data.profile.given_name} ${res.data.profile.family_name}`,
+            givenName: res.data.profile.given_name,
+            familyName: res.data.profile.family_name,
+            email: res.data.profile.email,
+            imageURL: res.data.profile.picture,
+            refreshToken: res.data.accessToken
+          };
+
+          this.props.login(user);
+        })
+        .catch(err => {
+          console.log("an error occurred " + err);
+        }
+    );
   }
 
   /**
@@ -77,18 +81,14 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         <GoogleLogin
           clientId={OAUTH_CLIENT_ID}
           buttonText="Login"
-          scope="https://www.googleapis.com/auth/calendar"
+          scope="https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
           onSuccess={this.successfulGoogleLogin}
           onFailure={this.failedGoogleLogin}
           cookiePolicy={'single_host_origin'}
           responseType='code'
           accessType='offline'
         />
-        {this.state.failedLogin ? (
-          <p className="loginfail">Login failed...</p>
-        ) : (
-          ''
-        )}
+        {this.state.failedLogin ? (<p className="loginfail">Login failed...</p>) : ('')}
       </>
     );
   }
