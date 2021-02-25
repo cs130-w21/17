@@ -21,7 +21,7 @@ export interface IUser {
   familyName: string;
   imageURL: string;
   email: string;
-  refreshToken: string;
+  accessToken: string;
 }
 
 export interface IAuthHandlerProps {
@@ -85,8 +85,8 @@ export interface InvitationPageProps extends RouteComponentProps {
 }
 
 export interface InvitationPageState {
-  token: string | null;
-  user: IUser | null;
+  inviterProfile: IUser | null;
+  inviteeProfile: IUser | null;
 }
 
 export interface InvitationProps {

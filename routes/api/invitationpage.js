@@ -1,58 +1,43 @@
 import { Router } from 'express';
 import Invitation from '../../models/Invitation';
 import User from '../../models/User';
-require('dotenv').config();
+import * as routeutils from "../utils/routeutils";
 const router = Router();
-const express = require('express');
-const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars');
-const nodemailer = require('nodemailer');
-const mongoose = require('mongoose')
 
-//router.use(bodyParser.urlencoded({ extended: false }));
-//router.use(bodyParser.json());
 
-/*pass the objectid from invitationpage.tsx
-const i = {
-            id : this.getId()
-        }
-        //let id = this.getId();
-        axios.post('/api/invitationpage/token', i)
- */
-router.route('/token').post((req, res) => {
-
+router.route('/accessToken').post(async (req, res) => {
     //get objectid from front end
-    let id = req.body.id;
-    let email = '';
-    let token = '';
+    const id = req.body.id;
+
     //use id to find the email from mongodb database.
-    Invitation.findOne({'_id': String(id)},function(err, result) {
+    Invitation.findOne({'_id': String(id)}, async (err, result) => {
         try {
-            if (err) throw err;
-            //console.log(result+ "1adadas");
-            email = result.inviter_email;
+            if(err) {
+                throw err;
+            }
+
+            const email = result.inviter_email;
+
             //use email to find token
-            //email = 'b@';
-            //console.log(email);
-            //console.log(email||'');
-            User.findOne({'email': String(email)}, function (err, result) {
-                if (err) throw err;
-                token = result.password;
-                //console.log(token);
-                res.status(200).json({t: token});
+            User.findOne({'email': String(email)}, async (err, result) => {
+                if(err) {
+                    throw err;
+                }
+
+                const token = result.refreshToken;
+                const accessToken = await routeutils.getAccessToken(token);
+                const userProfile = await routeutils.getUserProfile(accessToken);
+
+                res.status(200).json({
+                    accessToken: accessToken,
+                    profile: userProfile
+                });
             });
         }
         catch (e) {
             res.status(400).json({message: e});
         }
     });
-
-
-
-    //if i got the token, i will be able to open the calander
-
-
-
 });
 
 
