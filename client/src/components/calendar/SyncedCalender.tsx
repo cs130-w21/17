@@ -19,13 +19,13 @@ import axios from 'axios';
 /**
  * getData makes a backend call to get the latest set of events from the users calendar
  * @param setData
- * @param refreshToken
+ * @param accessToken
  */
-const getData = (setData: any, refreshToken: any) => {
+const getData = (setData: any, accessToken: any) => {
   const config = {
     headers: { 'Content-Type': 'application/json' },
   };
-  const body = JSON.stringify({ token: refreshToken });
+  const body = JSON.stringify({ token: accessToken });
 
   return axios
     .post('/api/calendar/getcalendar', body, config)
@@ -114,7 +114,7 @@ export default (props: SyncedCalendarProps) => {
   //useEffect() is a hook that calls a function everytime render is called
   //we call the getdata function to update the calendar information after rendering
   React.useEffect(() => {
-    getData(setData, props.user?.refreshToken);
+    getData(setData, props.user?.accessToken);
   }, [setData, currentViewName, currentDate]);
 
   return (

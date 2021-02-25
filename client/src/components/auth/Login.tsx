@@ -6,6 +6,7 @@ import {
 } from 'react-google-login';
 import { IUser, ILoginProps, ILoginState } from '../../types/interfaces';
 import { OAUTH_CLIENT_ID } from './AuthConstants';
+import { createUserFromServerResponse } from "../utils/utils";
 import axios from 'axios';
 
 /**
@@ -44,15 +45,9 @@ class Login extends React.Component<ILoginProps, ILoginState> {
 
     axios.post('/api/auth/register', req)
         .then(res => {
-          const user : IUser = {
-            id: res.data.profile.id,
-            fullName: `${res.data.profile.given_name} ${res.data.profile.family_name}`,
-            givenName: res.data.profile.given_name,
-            familyName: res.data.profile.family_name,
-            email: res.data.profile.email,
-            imageURL: res.data.profile.picture,
-            refreshToken: res.data.accessToken
-          };
+          const user : IUser = createUserFromServerResponse(res);
+
+          console.log(user);
 
           this.props.login(user);
         })
