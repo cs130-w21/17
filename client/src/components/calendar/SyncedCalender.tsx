@@ -22,6 +22,7 @@ import {
 import { SyncedCalendarProps } from '../../types/interfaces';
 import axios from 'axios';
 
+const timeout = 2000;
 const config = {
   headers: { 'Content-Type': 'application/json' },
 };
@@ -33,7 +34,7 @@ const getData = (setData: any, accessToken: any) => {
     .then((response) => {
       setTimeout(() => {
         setData(response.data.googleresponse.data.items);
-      }, 600);
+      }, timeout);
     });
 };
 
@@ -41,7 +42,7 @@ const addEvent = (event: any, accessToken: any) => {
   const body = JSON.stringify({ token: accessToken, appointment: event });
 
   axios.post('/api/calendar/addEvent', body, config).then((response) => {
-    setTimeout(() => {}, 600);
+    setTimeout(() => {}, timeout);
   });
 };
 
@@ -49,7 +50,7 @@ const removeEvent = (eventid: any, accessToken: any) => {
   const body = JSON.stringify({ token: accessToken, id: eventid });
 
   axios.post('/api/calendar/removeEvent', body, config).then((response) => {
-    setTimeout(() => {}, 600);
+    setTimeout(() => {}, timeout);
   });
 };
 
@@ -60,7 +61,7 @@ const editEvent = (eventid: any, event: any, accessToken: any) => {
     appointment: event,
   });
   axios.post('/api/calendar/editEvent', body, config).then((response) => {
-    setTimeout(() => {}, 600);
+    setTimeout(() => {}, timeout);
   });
 };
 
