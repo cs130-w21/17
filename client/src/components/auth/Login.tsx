@@ -47,8 +47,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         .then(res => {
           const user : IUser = createUserFromServerResponse(res);
 
-          console.log(user);
-
           this.props.login(user);
         })
         .catch(err => {
