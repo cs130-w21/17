@@ -1,6 +1,7 @@
 import React from 'react';
 import { HomePageProps, HomePageState } from '../../types/interfaces';
 import SyncedCalender from '../calendar/SyncedCalender';
+
 /**
  * This class serves as the Home Page of the application.
  */

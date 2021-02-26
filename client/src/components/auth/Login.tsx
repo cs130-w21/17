@@ -6,7 +6,7 @@ import {
 } from 'react-google-login';
 import { IUser, ILoginProps, ILoginState } from '../../types/interfaces';
 import { OAUTH_CLIENT_ID } from './AuthConstants';
-import { createUserFromServerResponse } from "../utils/utils";
+import { createUserFromServerResponse } from '../utils/utils';
 import axios from 'axios';
 
 /**
@@ -36,25 +36,25 @@ class Login extends React.Component<ILoginProps, ILoginState> {
    * @param response {GoogleLoginResponseOffline} - Contains an authorization code
    *    which can be used to get an access token and refresh token.
    */
-  successfulGoogleLogin(response: GoogleLoginResponse | GoogleLoginResponseOffline): void {
+  successfulGoogleLogin(
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ): void {
     this.setState({
       failedLogin: false,
     });
 
-    const req = {code: response.code};
+    const req = { code: response.code };
 
-    axios.post('/api/auth/register', req)
-        .then(res => {
-          const user : IUser = createUserFromServerResponse(res);
+    axios
+      .post('/api/auth/register', req)
+      .then((res) => {
+        const user: IUser = createUserFromServerResponse(res);
 
-          console.log(user);
-
-          this.props.login(user);
-        })
-        .catch(err => {
-          console.log("an error occurred " + err);
-        }
-    );
+        this.props.login(user);
+      })
+      .catch((err) => {
+        console.log('an error occurred ' + err);
+      });
   }
 
   /**
@@ -80,10 +80,14 @@ class Login extends React.Component<ILoginProps, ILoginState> {
           onSuccess={this.successfulGoogleLogin}
           onFailure={this.failedGoogleLogin}
           cookiePolicy={'single_host_origin'}
-          responseType='code'
-          accessType='offline'
+          responseType="code"
+          accessType="offline"
         />
-        {this.state.failedLogin ? (<p className="loginfail">Login failed...</p>) : ('')}
+        {this.state.failedLogin ? (
+          <p className="loginfail">Login failed...</p>
+        ) : (
+          ''
+        )}
       </>
     );
   }
