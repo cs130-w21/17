@@ -1,7 +1,7 @@
 {
   "name": "mern_typescript",
   "version": "1.0.0",
-  "description": "MERN Stack with ES6 and Typescript Boilerplate",
+  "description": "EasyMeet Server Side Dependencies",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
@@ -13,13 +13,14 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
-  "author": "Brad Traversy",
+  "author": "EasyMeet Team",
   "license": "MIT",
   "dependencies": {
     "@devexpress/dx-react-scheduler-material-ui": "^2.7.4",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@types/react-router-dom": "^5.1.7",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "concurrently": "^3.6.0",

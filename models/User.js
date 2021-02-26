@@ -2,7 +2,11 @@ import { Schema, model } from 'mongoose';
 
 // Create Schema
 const UserSchema = new Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
     type: String,
     required: true
   },
@@ -11,13 +15,9 @@ const UserSchema = new Schema({
     required: true,
     unique: true
   },
-  password: {
+  refreshToken: {
     type: String,
     required: true
-  },
-  register_date: {
-    type: Date,
-    default: Date.now
   }
 });
 

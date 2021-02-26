@@ -1,4 +1,6 @@
 // REACT
+import {RouteComponentProps} from "react-router";
+
 export interface ITarget {
   target: {
     value: React.SetStateAction<string>;
@@ -19,7 +21,7 @@ export interface IUser {
   familyName: string;
   imageURL: string;
   email: string;
-  refreshToken: string;
+  accessToken: string;
 }
 
 export interface IAuthHandlerProps {
@@ -77,6 +79,16 @@ export interface HomePageProps {
 }
 export interface HomePageState {}
 
+export interface InvitationPageProps extends RouteComponentProps {
+  user: IUser | null;
+  isAuthenticated: boolean;
+}
+
+export interface InvitationPageState {
+  inviterProfile: IUser | null;
+  inviteeProfile: IUser | null;
+}
+
 export interface InvitationProps {
   user: IUser | null;
 }
@@ -98,7 +110,8 @@ export interface DemoState {
   currentViewName: string
 }
 
+export interface SyncedCalendarProps {
+  user:IUser | null;
+  isAuthenticated: boolean;
 
-
-
-
+}

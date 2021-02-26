@@ -9,7 +9,8 @@ import config from './config';
 // routes
 import authRoutes from './routes/api/auth';
 import inviteRoutes from './routes/api/invitations';
-import calendarRoutes from './routes/api/calendar'
+import calendarRoutes from './routes/api/calendar';
+import invpageRoutes from './routes/api/invitationpage';
 
 const { MONGO_URI, MONGO_DB_NAME } = config;
 
@@ -39,7 +40,7 @@ mongoose
 app.use('/api/auth', authRoutes);
 app.use('/api/invitations', inviteRoutes );
 app.use('/api/calendar', calendarRoutes);
-
+app.use('/api/invitationpage', invpageRoutes);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
