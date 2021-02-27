@@ -19,7 +19,7 @@ router.use(bodyParser.json());
  * Creates transporter that connects to GMAIL services *
  * @type {transporter}
  */
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: process.env.EM_EMAIL,
