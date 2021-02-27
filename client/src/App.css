@@ -20,7 +20,14 @@
   transition: opacity 1000ms ease-in;
 }
 
-.navbar {
+.navbar p {
+  color: white;
+  float: right;
+  padding: 5px;
+}
+
+.navbar a {
+  padding: 15px;
   color: white;
 }
 
