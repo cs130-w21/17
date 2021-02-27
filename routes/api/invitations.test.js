@@ -1,29 +1,24 @@
 import app from '../../app';
-app.listen(process.env.PORT, () => {
-    console.log("Server has started!");
-});
-
 require('dotenv').config();
 const mongoose = require("mongoose");
 const supertest = require("supertest");
-test("GET /routes/api/invitations", async () => {
-    await supertest(app).get("/routes/api/invitations")
-        .expect(404)
-});
-/*
-let chai = require("chai");
-let chaiHttp = require("chai-http");
-chai.should()
-chai.use(chaiHttp);
 
-describe('Task API\'s', () => {
-    describe("GET /routes/api/invitations", () => {
-        chai.request(app)
-            .get("/routes/api/invitations")
-            .end((err, response) => {
-                expect(response).to.have.status(200);
-                done();
-            });
+describe('Get invitations', () => {
+    let user_data = {
+        invitee_name: 'Matthew the Great',
+        invitee_email: 'qqinglin0327@gmail.com',
+        inviter_name: 'EasyMeet',
+        inviter_email: 'easy.meet.21@gmail.com'
+    }
+    test("GET /api/invitations", async () => {
+        await supertest(app)
+            .get("/api/invitations/")
+            .expect(200)
+    });
+    test("POST /api/invitations", async() => {
+        await supertest(app)
+            .post('/api/invitations/add')
+            .send(user_data)
+            .expect(200)
     });
 });
-*/
