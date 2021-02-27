@@ -16,11 +16,14 @@
   "author": "EasyMeet Team",
   "license": "MIT",
   "dependencies": {
+<<<<<<< HEAD
     "@devexpress/dx-react-scheduler-material-ui": "^2.7.4",
     "@jest/globals": "^26.6.2",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@types/react-router-dom": "^5.1.7",
+=======
+>>>>>>> 0baf335fa13618745a61c0f414bf5526a427a590
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
