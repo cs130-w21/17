@@ -80,6 +80,12 @@ export interface HomePageProps {
 }
 export interface HomePageState {}
 
+export interface CalendarPageProps extends RouteComponentProps {
+  user:IUser | null;
+  isAuthenticated: boolean;
+}
+export interface CalendarPageState {}
+
 export interface InvitationPageProps extends RouteComponentProps {
   user: IUser | null;
   isAuthenticated: boolean;
