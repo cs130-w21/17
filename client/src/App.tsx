@@ -10,7 +10,7 @@ import { IAppProps, IAppState, IUser } from './types/interfaces';
 import { PAGES } from './components/pages/PageConstants';
 import { HomePage } from './components/pages/HomePage';
 import { InvitationPage } from './components/pages/InvitationPage';
-import { LinkFormModal } from './components/LinkFormModal';
+import { CalendarPage } from "./components/pages/CalendarPage";
 
 class App extends React.Component<IAppProps, IAppState> {
   constructor(props: IAppProps) {
@@ -49,45 +49,49 @@ class App extends React.Component<IAppProps, IAppState> {
   render(): any {
     return (
       <div className="App">
-        <AppNavbar
-          isAuthenticated={this.state.isAuthenticated}
-          user={this.state.user}
-          login={this.login}
-          logout={this.logout}
-        />
-        <Container>
           <Router>
-            <Route
-              exact
-              path={PAGES.HOME_PAGE}
-              render={(props) => (
-                <HomePage
-                  {...props}
-                  user={this.state.user}
-                  isAuthenticated={this.state.isAuthenticated}
-                />
-              )}
+            <AppNavbar
+                isAuthenticated={this.state.isAuthenticated}
+                user={this.state.user}
+                login={this.login}
+                logout={this.logout}
             />
-            <Route
-              exact
-              path={PAGES.INVITATION_PAGE}
-              render={(props) => (
-                  <InvitationPage
+            <Container>
+                <Route
+                  exact
+                  path={PAGES.HOME_PAGE}
+                  render={(props) => (
+                    <HomePage
                       {...props}
                       user={this.state.user}
                       isAuthenticated={this.state.isAuthenticated}
-                  />
-              )}
-
-            />
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path={PAGES.INVITATION_PAGE}
+                  render={(props) => (
+                      <InvitationPage
+                          {...props}
+                          user={this.state.user}
+                          isAuthenticated={this.state.isAuthenticated}
+                      />
+                  )}
+                />
+                <Route
+                    exact
+                    path={PAGES.CALENDAR_PAGE}
+                    render={(props) => (
+                        <CalendarPage
+                            {...props}
+                            user={this.state.user}
+                            isAuthenticated={this.state.isAuthenticated}
+                        />
+                    )}
+                />
+            </Container>
           </Router>
-
-          <>
-            {this.state.isAuthenticated && (
-              <LinkFormModal user={this.state.user} />
-            )}
-          </>
-        </Container>
       </div>
     );
   }
