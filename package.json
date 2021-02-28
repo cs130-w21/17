@@ -8,7 +8,7 @@
     "start": "npm run server",
     "server": "nodemon server.js --exec babel-node --presets babel-preset-env",
     "client": "npm start --prefix client",
-    "test": "jest",
+    "test": "",
     "docs": "./node_modules/.bin/jsdoc -c jsdoc.json README.md",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
@@ -37,7 +37,6 @@
     "react-scripts": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.13.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.3",
     "babel-preset-env": "^1.7.0",
