@@ -43,32 +43,13 @@ const router = Router();
   });
 router.post('/addEvent', async (req, res) => {
     try {
-       
         const oauth2Client = routeutils.createOauthClient();
-          
           oauth2Client.setCredentials( {
               access_token : req.body["token"]
             });  
           const calendar = google.calendar({version: 'v3', auth: oauth2Client});
-  
-          const appointment = req.body["appointment"];
-          const eventStartTime = new Date(appointment.startDate);
-          const eventEndTime = new Date(appointment.endDate);
-          const event = {
-            summary: appointment.title,
-            description: appointment.notes,
-            colorId: 1,
-            start: {
-              dateTime: eventStartTime,
-              timeZone: 'America/Denver',
-            },
-            end: {
-              dateTime: eventEndTime,
-              timeZone: 'America/Denver',
-            },
-          }
-          
-         calendar.events.insert({ calendarId: 'primary', resource: event });
+
+         calendar.events.insert({ calendarId: 'primary', resource: req.body["event"] });
         res.status(200).json({data: "success!!"});
     } catch (e) {
       res.status(400).json({ msg: e.message });
@@ -99,24 +80,7 @@ router.post('/addEvent', async (req, res) => {
              access_token : req.body["token"]
         });  
         const calendar = google.calendar({version: 'v3', auth: oauth2Client});
-        const id = req.body["id"];
-        const appointment = req.body["appointment"];
-          const eventStartTime = new Date(appointment.startDate);
-          const eventEndTime = new Date(appointment.endDate);
-          const event = {
-            summary: appointment.title,
-            description: appointment.notes,
-            colorId: 1,
-            start: {
-              dateTime: eventStartTime,
-              timeZone: 'America/Denver',
-            },
-            end: {
-              dateTime: eventEndTime,
-              timeZone: 'America/Denver',
-            },
-          }
-        calendar.events.patch({calendarId : 'primary', eventId : id, resource : event});
+        calendar.events.patch({calendarId : 'primary', eventId : req.body["id"], resource : req.body["event"]});
         res.status(200).json({data: "success!!"});
     } catch (e) {
       res.status(400).json({ msg: e.message });
