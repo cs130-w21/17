@@ -1,9 +1,14 @@
 import * as React from 'react';
+import { useState } from 'react';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl';
 import Paper from '@material-ui/core/Paper';
 import {
   ViewState,
   EditingState,
   IntegratedEditing,
+  Appointment,
 } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
@@ -20,13 +25,119 @@ import {
   ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { SyncedCalendarProps } from '../../types/interfaces';
+import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
+import { customAppointment, Event, FormProps } from '../../types/interfaces';
+import { Description } from '@material-ui/icons';
+const messages = {
+  moreInformationLabel: '',
+};
+
+const newAppointment = {
+  id: '',
+  startDate: '',
+  endDate: '',
+  title: '',
+  location: '',
+  description: '',
+  attendees: [],
+};
+
+const TextEditor = (props: any) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  if (props.type === 'multilineTextEditor') {
+    return null;
+  }
+  return <AppointmentForm.TextEditor {...props} />;
+};
+
+const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
+  const [guest, setGuest] = useState('');
+  appointmentData = { ...newAppointment, ...appointmentData };
+  const handleClick = () => {
+    onAddAttendee({ email: guest });
+    setGuest('');
+  };
+
+  const onLocationChange = (nextValue: any) => {
+    onFieldChange({ location: nextValue });
+  };
+  const onDescriptionChange = (nextValue: any) => {
+    onFieldChange({ description: nextValue });
+  };
+
+  const onAddAttendee = (nextValue: any) => {
+    const temp = appointmentData.attendees
+      ? [...appointmentData.attendees, nextValue]
+      : [nextValue];
+    onFieldChange({
+      attendees: temp,
+    });
+  };
+
+  return (
+    <AppointmentForm.BasicLayout
+      appointmentData={appointmentData}
+      fullSize={true}
+      onFieldChange={onFieldChange}
+      {...restProps}
+    >
+      <AppointmentForm.TextEditor
+        value={appointmentData.location}
+        onValueChange={onLocationChange}
+        placeholder="Add a location"
+        readOnly={false}
+        type={'ordinaryTextEditor'}
+      />
+
+      <AppointmentForm.TextEditor
+        value={appointmentData.description}
+        onValueChange={onDescriptionChange}
+        placeholder="Add a description"
+        readOnly={false}
+        type={'multilineTextEditor'}
+      />
+
+      <InputGroup className="mb-3">
+        <InputGroup.Prepend>
+          <Button onClick={handleClick} variant="outline-secondary">
+            +
+          </Button>
+        </InputGroup.Prepend>
+        <FormControl
+          aria-describedby="basic-addon1"
+          placeholder="Add Guest"
+          aria-label="Add Guest"
+          value={guest}
+          onChange={(e: any) => {
+            setGuest(e.target.value);
+          }}
+        />
+      </InputGroup>
+      <AppointmentForm.Label
+        text={'Invited Guest'}
+        type={'titleLabel'}
+      ></AppointmentForm.Label>
+      <ListGroup>
+        {appointmentData.attendees ? (
+          appointmentData.attendees.map((d: any) => (
+            <div>
+              <ListGroup.Item key={d.email}>{d.email}</ListGroup.Item>
+            </div>
+          ))
+        ) : (
+          <div></div>
+        )}
+      </ListGroup>
+    </AppointmentForm.BasicLayout>
+  );
+};
 
 const timeout = 2000;
 const config = {
   headers: { 'Content-Type': 'application/json' },
 };
-const getData = (setData: any, accessToken: any) => {
+const getData = (setData: any, accessToken?: string) => {
   const body = JSON.stringify({ token: accessToken });
 
   return axios
@@ -38,15 +149,18 @@ const getData = (setData: any, accessToken: any) => {
     });
 };
 
-const addEvent = (event: any, accessToken: any) => {
-  const body = JSON.stringify({ token: accessToken, appointment: event });
+const addEvent = (appointment: customAppointment, accessToken?: string) => {
+  const body = JSON.stringify({
+    token: accessToken,
+    event: mapAppointmentToEvent(appointment),
+  });
 
   axios.post('/api/calendar/addEvent', body, config).then((response) => {
     setTimeout(() => {}, timeout);
   });
 };
 
-const removeEvent = (eventid: any, accessToken: any) => {
+const removeEvent = (eventid: string, accessToken?: string) => {
   const body = JSON.stringify({ token: accessToken, id: eventid });
 
   axios.post('/api/calendar/removeEvent', body, config).then((response) => {
@@ -54,11 +168,15 @@ const removeEvent = (eventid: any, accessToken: any) => {
   });
 };
 
-const editEvent = (eventid: any, event: any, accessToken: any) => {
+const editEvent = (
+  eventid: string,
+  appointment: customAppointment,
+  accessToken?: string
+) => {
   const body = JSON.stringify({
     token: accessToken,
     id: eventid,
-    appointment: event,
+    event: mapAppointmentToEvent(appointment),
   });
   axios.post('/api/calendar/editEvent', body, config).then((response) => {
     setTimeout(() => {}, timeout);
@@ -73,17 +191,34 @@ const usaTime = (date: any) =>
  * to the data structure used by the schedular.
  * @param appointment
  */
-const mapAppointmentData = (appointment: any) => ({
+const mapEventToAppointment = (googleEvent: Event): customAppointment => ({
+  id: googleEvent.id,
+  startDate: usaTime(googleEvent.start.dateTime),
+  endDate: usaTime(googleEvent.end.dateTime),
+  title: googleEvent.summary,
+  location: googleEvent.location,
+  description: googleEvent.description,
+  attendees: googleEvent.attendees,
+});
+
+const mapAppointmentToEvent = (appointment: customAppointment): Event => ({
   id: appointment.id,
-  startDate: usaTime(appointment.start.dateTime),
-  endDate: usaTime(appointment.end.dateTime),
-  title: appointment.summary,
+  location: appointment.location,
+  summary: appointment.title,
+  description: appointment.description,
+  start: {
+    dateTime: new Date(appointment.startDate),
+  },
+  end: {
+    dateTime: new Date(appointment.endDate),
+  },
+  attendees: appointment.attendees,
 });
 
 const initialState = {
   data: [],
-  currentDate: '2021-01-23',
-  currentViewName: 'Day',
+  currentDate: Date().toLocaleString(),
+  currentViewName: 'Week',
 };
 
 /**
@@ -101,7 +236,7 @@ const reducer = (state: any, action: any) => {
     case 'addData':
       return { ...state, data: action.payload };
     case 'setData':
-      return { ...state, data: action.payload.map(mapAppointmentData) };
+      return { ...state, data: action.payload.map(mapEventToAppointment) };
     case 'setCurrentViewName':
       return { ...state, currentViewName: action.payload };
     case 'setCurrentDate':
@@ -186,7 +321,7 @@ export default (props: SyncedCalendarProps) => {
 
   return (
     <Paper>
-      <Scheduler data={data} height={720}>
+      <Scheduler data={data} height={1080}>
         <ViewState
           currentDate={currentDate}
           currentViewName={currentViewName}
@@ -202,7 +337,11 @@ export default (props: SyncedCalendarProps) => {
         <ConfirmationDialog />
         <Appointments />
         <AppointmentTooltip showCloseButton showOpenButton showDeleteButton />
-        <AppointmentForm />
+        <AppointmentForm
+          basicLayoutComponent={BasicLayout}
+          textEditorComponent={TextEditor}
+          messages={messages}
+        />
         <Toolbar />
         <DateNavigator />
         <TodayButton />

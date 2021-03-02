@@ -1,4 +1,5 @@
 // REACT
+import { SchedulerDateTime } from "@devexpress/dx-react-scheduler";
 import {RouteComponentProps} from "react-router";
 
 export interface ITarget {
@@ -121,3 +122,43 @@ export interface SyncedCalendarProps {
   isAuthenticated: boolean;
 
 }
+interface Attendee {
+  email: string;
+
+}
+export interface Event {
+  id: string;
+  location: string;
+  summary: string;
+  description: string;
+  start: {
+    date?: any,
+    dateTime: any,
+    timeZone?: string
+  }
+  end: {
+    date?: any,
+    dateTime: any,
+    timeZone?: string
+  }
+  attendees:Attendee[]
+}
+
+export interface customAppointment {
+  startDate:SchedulerDateTime
+  endDate:SchedulerDateTime
+  title: string;
+  allDay?:boolean
+  id: string;
+  rRule?:string;
+  exDate?: string;
+
+  location: string;
+  description: string;
+  attendees: Attendee[];
+}
+
+export interface FormProps
+  { onFieldChange: any;
+     appointmentData: customAppointment;
+      restProps: any }
