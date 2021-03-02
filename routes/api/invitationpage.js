@@ -17,7 +17,7 @@ router.route('/accessToken').post(async (req, res) => {
             }
 
             const email = result.inviter_email;
-
+            const invitee_email = result.invitee_email;
             //use email to find token
             User.findOne({'email': String(email)}, async (err, result) => {
                 if(err) {
@@ -30,7 +30,8 @@ router.route('/accessToken').post(async (req, res) => {
 
                 res.status(200).json({
                     accessToken: accessToken,
-                    profile: userProfile
+                    profile: userProfile,
+                    inviteeEmail: invitee_email
                 });
             });
         }
