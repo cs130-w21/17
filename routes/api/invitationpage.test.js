@@ -16,7 +16,7 @@ describe('Post invitation page', () => {
     let new_data = {
         //random ID found within database,
         //probably don't do this
-        id: '6035a9283b26a90c68e8edab'
+        id: process.env.TEST_ID
     }
     test("POST valid /api/invitationpage/", async() => {
         await supertest(app)
