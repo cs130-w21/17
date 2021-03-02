@@ -89,11 +89,13 @@ export interface CalendarPageState {}
 export interface InvitationPageProps extends RouteComponentProps {
   user: IUser | null;
   isAuthenticated: boolean;
+
 }
 
 export interface InvitationPageState {
   inviterProfile: IUser | null;
   inviteeProfile: IUser | null;
+  isExpired: boolean;
 }
 
 export interface InvitationProps {
