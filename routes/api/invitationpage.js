@@ -2,7 +2,6 @@ import { Router } from 'express';
 import Invitation from '../../models/Invitation';
 import User from '../../models/User';
 import * as routeutils from "../utils/routeutils";
-import * as dates from "nodemailer";
 const router = Router();
 
 
@@ -44,7 +43,6 @@ router.route('/accessToken').post(async (req, res) => {
                 }
 
                 const token = result.refreshToken;
-                console.log("this should not");
                 const accessToken = await routeutils.getAccessToken(token);
                 const userProfile = await routeutils.getUserProfile(accessToken);
 
