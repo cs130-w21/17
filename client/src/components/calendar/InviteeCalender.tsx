@@ -64,7 +64,7 @@ const customAppointmentComp = ({ children, style, ...restProps }: any) => (
       borderRadius: '8px',
     }}
   >
-    {restProps.data.visible ? children : ''}
+    {restProps.data.visible ? children : 'Unavailable'}
   </Appointments.Appointment>
 );
 
@@ -79,11 +79,13 @@ const TextEditor = (props: any) => {
 const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
   const [guest, setGuest] = useState('');
   appointmentData = { ...newAppointment, ...appointmentData };
+  console.log(appointmentData);
   const handleClick = () => {
-    onAddAttendee({ email: guest });
-    setGuest('');
+    if (!appointmentData.readOnly) {
+      onAddAttendee({ email: guest });
+      setGuest('');
+    }
   };
-
   const onLocationChange = (nextValue: any) => {
     onFieldChange({ location: nextValue });
   };
@@ -106,12 +108,13 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
       fullSize={true}
       onFieldChange={onFieldChange}
       {...restProps}
+      readOnly={appointmentData.readOnly}
     >
       <AppointmentForm.TextEditor
         value={appointmentData.location}
         onValueChange={onLocationChange}
         placeholder="Add a location"
-        readOnly={false}
+        readOnly={appointmentData.readOnly}
         type={'ordinaryTextEditor'}
       />
 
@@ -119,7 +122,7 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
         value={appointmentData.description}
         onValueChange={onDescriptionChange}
         placeholder="Add a description"
-        readOnly={false}
+        readOnly={appointmentData.readOnly}
         type={'multilineTextEditor'}
       />
 
@@ -130,6 +133,7 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
           </Button>
         </InputGroup.Prepend>
         <FormControl
+          readOnly={appointmentData.readOnly}
           aria-describedby="basic-addon1"
           placeholder="Add Guest"
           aria-label="Add Guest"
@@ -174,13 +178,25 @@ const getData = (setData: any, accessToken?: string) => {
     });
 };
 
-const addEvent = (appointment: customAppointment, accessToken?: string) => {
+const addEvent = (
+  appointment: customAppointment,
+  accessToken?: string,
+  setSuccess?: any,
+  getId?: any
+) => {
   const body = JSON.stringify({
     token: accessToken,
     event: mapAppointmentToEvent(appointment),
   });
 
   axios.post('/api/calendar/addEvent', body, config).then((response) => {
+    const invitation = getId();
+    console.log(invitation);
+    const body = JSON.stringify({ id: invitation });
+    axios.post('/api/invitations/delete', body, config).then((response) => {
+      setTimeout(() => {}, timeout);
+    });
+    setSuccess();
     setTimeout(() => {}, timeout);
   });
 };
@@ -224,6 +240,7 @@ const mapEventToAppointment = (googleEvent: Event): customAppointment => ({
   location: googleEvent.location,
   description: googleEvent.description,
   attendees: googleEvent.attendees,
+  readOnly: true,
 });
 
 const mapAppointmentToEvent = (appointment: customAppointment): Event => ({
@@ -274,7 +291,6 @@ const reducer = (state: any, action: any) => {
           },
         })
       );
-      console.log(temp2);
       return { ...state, data: temp2 };
     case 'setCurrentViewName':
       return { ...state, currentViewName: action.payload };
@@ -295,14 +311,34 @@ export default (props: InviteeCalendarProps) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const { data, currentViewName, currentDate } = state;
 
+  const AddAttendee = (appointmentData: customAppointment, nextValue: any) => {
+    const temp = appointmentData.attendees
+      ? [...appointmentData.attendees, nextValue]
+      : [nextValue];
+    return temp;
+  };
+
   const commitChanges = (changes: any) => {
     let { added, changed, deleted } = changes;
+
     if (added) {
+      const new_attendees = AddAttendee(added, { email: props.inviteeEmail });
       const startingAddedId =
         data.length > 0 ? data[data.length - 1].id + 1 : 0;
-      const temp = [...data, { id: startingAddedId, ...added }];
+      const temp = [
+        ...data,
+        {
+          id: startingAddedId,
+          ...{ ...added, ...{ attendees: new_attendees } },
+        },
+      ];
       dispatch({ type: 'addData', payload: temp });
-      addEvent(temp[temp.length - 1], props.user?.accessToken);
+      addEvent(
+        temp[temp.length - 1],
+        props.user?.accessToken,
+        props.setSuccess,
+        props.getId
+      );
     } else if (changed) {
       const temp = data.map((appointment: any) =>
         changed[appointment.id]

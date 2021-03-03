@@ -21,13 +21,20 @@ class InvitationPage extends React.Component<
       inviterProfile: null,
       inviteeProfile: this.props.user,
       inviteeEmail: null,
+      success: false,
+      error: false,
     };
+
+    this.setSuccess = this.setSuccess.bind(this);
+    this.getId = this.getId.bind(this);
   }
 
   componentDidMount(): void {
     this.getData();
   }
-
+  setSuccess(): void {
+    this.setState({ success: true });
+  }
   getId(): string {
     let search = this.getUrlParams();
     return search.get('id') || '';
@@ -39,14 +46,23 @@ class InvitationPage extends React.Component<
   }
 
   public renderScheduler(): any {
-    if (this.state.inviterProfile != null && this.state.inviteeEmail != null) {
+    if (this.state.success) {
+      return <p>Successfully added an event to the calender.</p>;
+    } else if (
+      this.state.inviterProfile != null &&
+      this.state.inviteeEmail != null
+    ) {
       return (
         <InviteeCalender
           user={this.state.inviterProfile}
           isAuthenticated={this.props.isAuthenticated}
           inviteeEmail={this.state.inviteeEmail}
+          setSuccess={this.setSuccess}
+          getId={this.getId}
         />
       );
+    } else if (this.state.error) {
+      return <p>invalid invite Link</p>;
     } else {
       return <p>Loading...</p>;
     }
@@ -67,6 +83,7 @@ class InvitationPage extends React.Component<
         }, 5000);
       })
       .catch((err) => {
+        this.setState({ error: true });
         console.log('Error with backend', err);
       });
   }
