@@ -11,6 +11,7 @@ import InviteeCalender from '../calendar/InviteeCalender';
  * This class serves as the invitation page for the application.
  * The invitee will be able to view the inviter's schedule here.
  */
+
 class InvitationPage extends React.Component<
   InvitationPageProps,
   InvitationPageState
@@ -23,6 +24,7 @@ class InvitationPage extends React.Component<
       inviteeEmail: null,
       success: false,
       error: false,
+      isExpired: false,
     };
 
     this.setSuccess = this.setSuccess.bind(this);
@@ -77,9 +79,17 @@ class InvitationPage extends React.Component<
       .post('/api/invitationpage/accessToken', i)
       .then((res) => {
         setTimeout(() => {
-          const inviter: IUser = createUserFromServerResponse(res);
-          this.setState({ inviterProfile: inviter });
-          this.setState({ inviteeEmail: res.data.inviteeEmail });
+          //set expired to ture if the invitation is expired, otherwise set up the inviter's info
+          if (res.data.expired === true) {
+            console.log(res.data.expired);
+            this.setState({ isExpired: true });
+          } else {
+            const inviter: IUser = createUserFromServerResponse(res);
+            this.setState({
+              inviterProfile: inviter,
+              inviteeEmail: res.data.inviteeEmail,
+            });
+          }
         }, 5000);
       })
       .catch((err) => {
@@ -89,7 +99,13 @@ class InvitationPage extends React.Component<
   }
 
   render(): any {
-    return <div>{this.renderScheduler()}</div>;
+    if (this.state.isExpired || this.state.inviterProfile == null) {
+      return (
+        <div>This Invitation has been expired. Please make another one.</div>
+      );
+    } else {
+      return <div>{this.renderScheduler()}</div>;
+    }
   }
 }
 
