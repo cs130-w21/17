@@ -22,6 +22,7 @@ class InvitationPage extends React.Component<
       inviterProfile: null,
       inviteeProfile: this.props.user,
       inviteeEmail: null,
+      inviteeName:null,
       success: false,
       error: false,
       isExpired: false,
@@ -36,6 +37,8 @@ class InvitationPage extends React.Component<
   }
   setSuccess(): void {
     this.setState({ success: true });
+
+
   }
   getId(): string {
     let search = this.getUrlParams();
@@ -47,8 +50,34 @@ class InvitationPage extends React.Component<
     return new URLSearchParams(this.props.location.search);
   }
 
+  sendConfirmation(): void{
+    console.log("sending Confirmation function");
+
+    const email_info={
+      invitee_name: this.state.inviteeName,
+      invitee_email: this.state.inviteeEmail,
+      inviter_name: this.state.inviterProfile?.fullName,
+      inviter_email: this.state.inviterProfile?.email
+      // How do I access calendar info?
+    }
+
+    console.log("email info");
+    console.log(email_info);
+
+
+    axios.post('/api/confirmation/added', email_info)
+        .then((res) => {
+          console.log('email confirmation sent');
+        })
+        .catch(err => {
+          console.log('Error with confirmation backend', err);
+        });
+
+  }
+
   public renderScheduler(): any {
     if (this.state.success) {
+      this.sendConfirmation()
       return <p>Successfully added an event to the calender.</p>;
     } else if (
       this.state.inviterProfile != null &&
@@ -88,6 +117,7 @@ class InvitationPage extends React.Component<
             this.setState({
               inviterProfile: inviter,
               inviteeEmail: res.data.inviteeEmail,
+              inviteeName: res.data.inviteeName
             });
           }
         }, 5000);

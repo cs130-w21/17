@@ -96,6 +96,7 @@ export interface InvitationPageState {
   inviterProfile: IUser | null;
   inviteeProfile: IUser | null;
   inviteeEmail: string | null;
+  inviteeName: string | null;
   success: boolean;
   error:boolean;
   isExpired: boolean;
