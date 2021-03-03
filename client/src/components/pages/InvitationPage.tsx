@@ -12,7 +12,8 @@ class InvitationPage extends React.Component<InvitationPageProps, InvitationPage
         super(props);
         this.state = {
             inviterProfile: null,
-            inviteeProfile: this.props.user
+            inviteeProfile: this.props.user,
+            isExpired: false
         }
     }
 
@@ -52,8 +53,15 @@ class InvitationPage extends React.Component<InvitationPageProps, InvitationPage
             .post('/api/invitationpage/accessToken', i)
             .then((res) => {
                 setTimeout(() => {
+                    //set expired to ture if the invitation is expired, otherwise set up the inviter's info
+                   if(res.data.expired === true){
+                       console.log(res.data.expired);
+                       this.setState({isExpired: true})
+                    }else{
+
                     const inviter : IUser = createUserFromServerResponse(res);
                     this.setState({inviterProfile: inviter});
+                    }
                 }, 5000);
 
             })
@@ -63,11 +71,20 @@ class InvitationPage extends React.Component<InvitationPageProps, InvitationPage
     }
 
     render() : any {
+        if(this.state.isExpired || this.state.inviterProfile == null){
+        return (
+            <div>
+                This Invitation has been expired. Please make another one.
+            </div>
+        );
+        }
+        else{
         return (
             <div>
                 {this.renderScheduler()}
             </div>
         );
+        }
     }
 }
 
