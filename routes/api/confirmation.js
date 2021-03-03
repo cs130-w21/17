@@ -25,11 +25,11 @@ const transporter = nodemailer.createTransport({
 
 /**
  * @route   POST api/confirmation
- * @desc
+ * @desc    Sends the inviter and invitee confirmation email for new event.
  * @access  public
  */
 router.route('/added').post((req, res) => {
-
+    // info from front end
     const invitee_name = req.body.invitee_name;
     const invitee_email = req.body.invitee_email;
     const inviter_name = req.body.inviter_name;
@@ -71,31 +71,25 @@ router.route('/added').post((req, res) => {
         , html: inviter_email_html
     };
 
-    // send to invitee
+    // sends confirmation email to invitee
     transporter.sendMail(invitee_mailOptions, function (err, data) {
         if (err) {
             console.log('Error sending confirmation email to invitee');
         }
         else {
             console.log('Email confirmation sent to invitee');
-
         }
     });
 
-    // send to inviter
+    // send confirmation to inviter
     transporter.sendMail(inviter_mailOptions, function (err, data) {
         if (err) {
             console.log('Error sending confirmation email to inviter');
         }
         else {
             console.log('Email confirmation sent to inviter');
-
         }
     });
-
-
-
-
 });
 
 export default router;

@@ -50,6 +50,10 @@ class InvitationPage extends React.Component<
     return new URLSearchParams(this.props.location.search);
   }
 
+  /**
+   * Sends the inviter and invitee's names and emails to backend
+   * to send confirmation email for added event.
+   */
   sendConfirmation(): void{
     console.log("sending Confirmation function");
 

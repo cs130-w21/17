@@ -57,11 +57,12 @@ router.post('/delete', async (req, res) => {
   
 
 /**
- * @route   POST api/items
+ * @route   POST api/invitations
  * @desc    Create An Invitation & emails invitation link (appends id to invitation page)
  * @access  public
  */
 router.route('/add').post((req, res) => {
+    // info from front end
     const invitee_name = req.body.invitee_name;
     const invitee_email = req.body.invitee_email;
     const inviter_name = req.body.inviter_name;
@@ -125,7 +126,7 @@ router.route('/add').post((req, res) => {
     const mailOptions = {
         from: 'easymeethermes@gmail.com',
         to: invitee_email,
-        subject: 'Hello EasyMeet Invitation!',
+        subject: 'EasyMeet Invitation!',
         text: 'insert link here'
         , html: email_html
     };
