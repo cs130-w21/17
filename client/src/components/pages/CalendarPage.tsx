@@ -9,6 +9,10 @@ import {Redirect} from 'react-router-dom';
  * and view/modify their schedule.
  */
 class CalendarPage extends React.Component<CalendarPageProps, CalendarPageState> {
+    /**
+     * Call super constructor and set empty state. Bind methods.
+     * @param props - Contains information about the user.
+     */
     constructor(props: CalendarPageProps) {
         super(props);
 
@@ -37,6 +41,10 @@ class CalendarPage extends React.Component<CalendarPageProps, CalendarPageState>
             return <Redirect to="/" />;
         }
     }
+
+    /**
+     * Simply render the return value of renderScheduler.
+     */
     render(): any {
         return <div>{this.renderScheduler()}</div>;
     }

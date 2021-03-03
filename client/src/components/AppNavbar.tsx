@@ -13,7 +13,16 @@ import { INavbarProps, INavbarState } from '../types/interfaces';
 import { AuthHandler } from "./auth/AuthHandler";
 import { PAGES } from "./pages/PageConstants";
 
+/**
+ * The navbar of the app. Contains the login button as well
+ * as links to different pages.
+ */
 class AppNavbar extends React.Component<INavbarProps, INavbarState> {
+    /**
+     * Call super constructor and initialize state. Setting isOpen to
+     * true so that the navbar won't be collapsed like a mobile app.
+     * @param props - Contains information about the user.
+     */
     constructor(props : INavbarProps) {
         super(props);
 
@@ -24,12 +33,20 @@ class AppNavbar extends React.Component<INavbarProps, INavbarState> {
         this.handleToggle = this.handleToggle.bind(this);
     }
 
+    /**
+     * Handles the toggling of the navbar. Opens/closes it.
+     */
     handleToggle() : void {
         this.setState({
         isOpen: !this.state.isOpen
       });
     }
 
+    /**
+     * Renders the Login/Logout button as well as the various link.
+     * Conditionally renders some links depending on whether user
+     * is logged in/out.
+     */
     render() : any {
         return (
             <div>
