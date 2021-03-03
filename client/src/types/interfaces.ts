@@ -99,6 +99,7 @@ export interface InvitationPageState {
   success: boolean;
   error:boolean;
   isExpired: boolean;
+  isLoading: boolean;
 }
 
 export interface InvitationProps {

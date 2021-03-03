@@ -27,7 +27,11 @@ router.route('/accessToken').post(async (req, res) => {
             //check the dates to see if it is expired
             if(Date.now() >= result.expiration_date)
             {
-
+                Invitation.deleteOne({'_id': String(id)}, async (err, result) => {
+                    if(err) {
+                        throw err;
+                    }
+                });
                 res.status(200).json({
                     accessToken: null,
                     profile: null,
