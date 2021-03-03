@@ -56,7 +56,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 login={this.login}
                 logout={this.logout}
             />
-            <Container>
+            
                 <Route
                   exact
                   path={PAGES.HOME_PAGE}
@@ -68,6 +68,7 @@ class App extends React.Component<IAppProps, IAppState> {
                     />
                   )}
                 />
+            <Container>
                 <Route
                   exact
                   path={PAGES.INVITATION_PAGE}
