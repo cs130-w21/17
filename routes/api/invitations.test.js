@@ -5,10 +5,10 @@ const supertest = require("supertest");
 
 describe('Get invitations', () => {
     let user_data = {
-        invitee_name: 'Matthew the Great',
-        invitee_email: 'qqinglin0327@gmail.com',
+        invitee_name: 'Test Subject',
+        invitee_email: process.env.TEST_EMAIL,
         inviter_name: 'EasyMeet',
-        inviter_email: 'easy.meet.21@gmail.com'
+        inviter_email: process.env.EM_EMAIL
     }
     test("GET /api/invitations", async () => {
         await supertest(app)
