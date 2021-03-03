@@ -37,3 +37,177 @@
   padding-left: 10px;
   font-size: 24px
 }
+
+button.Button1 {
+  position: relative;
+  display: block;
+  margin: 30px auto;
+  padding: 0;
+
+  overflow: hidden;
+
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+  background-color: #164aba;
+  color: white;
+
+  transition: background-color .3s;
+  padding: 10px 20px;
+
+  font-weight:bold;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+
+
+
+div.Div1 {
+  padding-top: 250px;
+  padding-bottom: 250px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url("https://i.redd.it/52f61nfzmwl51.jpg");
+  background-size: cover;
+}
+
+h1.Head1 {
+  font-size: 4.5rem;
+  line-height: 1.1;
+  margin-top: 20px;
+  margin-bottom: 20ps;
+  font-weight: 300;
+  font-family: Quicksand, Helvetica, sans-serif;
+  color: white;
+}
+
+h1.Head2 {
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-top: 70px;
+  margin-bottom: 30px;
+  font-weight: 400;
+  font-family: Quicksand, Helvetica, sans-serif;
+  color: black;
+}
+
+h1.Head3 {
+  font-size: 3rem;
+  line-height: 1.1;
+  margin-top: 175px;
+  margin-bottom: 30px;
+  margin-left: 50px;
+  font-weight: 300;
+  font-family: Quicksand, Helvetica, sans-serif;
+  color: white;
+}
+
+p.Sub1 {
+  font-size: 1.5rem;
+  line-height: 1.1;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  font-weight: 400;
+  font-family: Quicksand, Helvetica, sans-serif;
+  color: white;
+}
+
+p.Sub2 {
+  font-size: 1.25rem;
+  line-height: 1.1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 400;
+  font-family: Quicksand, Helvetica, sans-serif;
+  color: black;
+}
+
+p.Sub3 {
+  font-size: 1.5rem;
+  line-height: 1.1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 50px;
+  font-weight: 400;
+  font-family: Quicksand, Helvetica, sans-serif;
+  color: white;
+}
+
+div.Div2 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+}
+div.Div2_Left {
+  float: left;
+  width: 33.3%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+}
+div.Div2_Center {
+  float: left;
+  width: 33.3%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+}
+div.Div2_Right {
+  float: left;
+  width: 33.3%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+}
+
+img.Icon{
+  padding-top: 15px;
+  max-width:30%;
+  padding-bottom: 50px;
+}
+
+div.Div3 {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  
+}
+
+div.Div3_Left {
+  float: left;
+  width: 50%;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  background-image: url(./components/img/UIHero2.png);
+  background-size: cover;
+}
+div.Div3_Right {
+  float: left;
+  width: 50%;
+  height: 500px;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  background-color: #385180;
+}
