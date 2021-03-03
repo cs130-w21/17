@@ -1,12 +1,6 @@
 import { containeranalysis } from 'googleapis/build/src/apis/containeranalysis';
 import React from 'react';
 import { HomePageProps, HomePageState } from '../../types/interfaces';
-import SyncedCalender from '../calendar/SyncedCalender';
-//const Background = require('../../public/Background.jpg');
-//const IconEasy = require('../img/icon_easy.png');
-//const IconInstant = require('../img/icon_instant.png');
-//const IconProfessional = require('../img/icon_professional.png');
-
 
 /**
  * This class serves as the Home Page of the application.
@@ -19,39 +13,9 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
   }
 
   public renderschedular() {
-    /*if (this.props.isAuthenticated) {
-      return (
-        <SyncedCalender
-          user={this.props.user}
-          isAuthenticated={this.props.isAuthenticated}
-        ></SyncedCalender>
-      );
-    } else {
-      return <div></div>;
-    }*/
+
   }
   render(): any {
-    var style_HeroText = {
-      fontSize: 80,
-      fontFamily: "Verdana",
-      color: '#FFFFFF',
-      //textAlign: 'center'
-    }
-    var style_HeroSubText = {
-      fontSize: 40,
-      fontFamily: "Verdana",
-      color: '#111111',
-    }
-    var style_div = {
-      paddingTop: 250,
-      paddingBottom: 500,
-
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundSize: "cover",
-      backgroundImage: 'url("https://i.redd.it/52f61nfzmwl51.jpg")'
-    }
     return <section className="Block1">
       <div className="Div1">
         <h1 className="Head1">
@@ -75,7 +39,7 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
           <p className="Sub2">
             automagically
           </p>
-          <img className="Icon" src={require('../img/Icon_easy.png')}/>
+          <img className="Icon" src={"https://i.imgur.com/3LQUIx8.png"}/>
         </div>
         <div className="Div2_Center">
           <h1 className="Head2">
@@ -87,7 +51,7 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
           <p className="Sub2">
             immediately
           </p>
-          <img className="Icon" src={require('../img/Icon_instant.png')}/>
+          <img className="Icon" src={"https://i.imgur.com/JEck6o7.png"}/>
         </div>
         <div className="Div2_Right">
           <h1 className="Head2">
@@ -99,7 +63,7 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
           <p className="Sub2">
             with clients
           </p>
-          <img className="Icon" src={require('../img/Icon_professional.png')}/>
+          <img className="Icon" src={"https://i.imgur.com/tcatZ56.png"}/>
         </div>
       </div>
       <div className="Div3">
@@ -119,18 +83,8 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
         </div>
       </div>
 
-
-
-
     </section>;
 
-
-/*
-
-      <h1 style = {style_HeroText}>Meet EasyMeet</h1>
-
-
-*/
   }
 }
 
