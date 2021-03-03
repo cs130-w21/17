@@ -95,13 +95,10 @@ export interface InvitationPageProps extends RouteComponentProps {
 export interface InvitationPageState {
   inviterProfile: IUser | null;
   inviteeProfile: IUser | null;
-<<<<<<< HEAD
   inviteeEmail: string | null;
   success: boolean;
   error:boolean;
-=======
   isExpired: boolean;
->>>>>>> b5093b8859047eb288059b23b851d2cb71bc9e75
 }
 
 export interface InvitationProps {

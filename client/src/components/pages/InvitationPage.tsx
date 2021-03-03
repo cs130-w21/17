@@ -100,9 +100,7 @@ class InvitationPage extends React.Component<
 
   render(): any {
     if (this.state.isExpired || this.state.inviterProfile == null) {
-      return (
-        <div>This Invitation has been expired. Please make another one.</div>
-      );
+      return <div>This Invitation has expired. Please make another one.</div>;
     } else {
       return <div>{this.renderScheduler()}</div>;
     }
