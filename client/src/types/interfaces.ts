@@ -95,6 +95,9 @@ export interface InvitationPageProps extends RouteComponentProps {
 export interface InvitationPageState {
   inviterProfile: IUser | null;
   inviteeProfile: IUser | null;
+  inviteeEmail: string | null;
+  success: boolean;
+  error:boolean;
   isExpired: boolean;
 }
 
@@ -113,16 +116,18 @@ export interface InvitationState {
 
 //CALENDAR
 
-export interface DemoProps {}
-export interface DemoState {
-  data: any
-  currentViewName: string
-}
 
 export interface SyncedCalendarProps {
   user:IUser | null;
   isAuthenticated: boolean;
+}
 
+export interface InviteeCalendarProps {
+  user:IUser | null;
+  isAuthenticated: boolean;
+  inviteeEmail: string | null;
+  setSuccess(): void;
+  getId(): string;
 }
 interface Attendee {
   email: string;
@@ -154,7 +159,7 @@ export interface customAppointment {
   id: string;
   rRule?:string;
   exDate?: string;
-
+  readOnly?: boolean;
   location: string;
   description: string;
   attendees: Attendee[];
