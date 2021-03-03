@@ -24,7 +24,9 @@ class CalendarPage extends React.Component<CalendarPageProps, CalendarPageState>
         if (this.props.isAuthenticated) {
             return (
                 <div>
+                    <br/>
                     <LinkFormModal user={this.props.user}/>
+                    <br/>
                     <SyncedCalender
                     user={this.props.user}
                     isAuthenticated={this.props.isAuthenticated}

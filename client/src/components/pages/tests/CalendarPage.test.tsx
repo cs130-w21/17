@@ -2,10 +2,10 @@ import React from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import { CalendarPage } from './CalendarPage';
+import { CalendarPage } from '../CalendarPage';
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import SyncedCalender from "../calendar/SyncedCalender";
-import {IUser} from "../../types/interfaces";
+import SyncedCalender from "../../calendar/SyncedCalender";
+import {IUser} from "../../../types/interfaces";
 
 configure({ adapter: new Adapter() });
 
