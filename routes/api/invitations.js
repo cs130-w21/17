@@ -39,6 +39,23 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.post('/delete', async (req, res) => {
+    try {
+      const invite = await Invitation.findById(req.body['id']);
+      console.log(req.body['id']);
+      if (!invite) throw Error('No item found');
+  
+      const removed = await invite.remove();
+      if (!removed)
+        throw Error('Something went wrong while trying to delete the item');
+  
+      res.status(200).json({ success: true });
+    } catch (e) {
+      res.status(400).json({ msg: e.message, success: false });
+    }
+  });
+  
+
 /**
  * @route   POST api/items
  * @desc    Create An Invitation & emails invitation link (appends id to invitation page)
