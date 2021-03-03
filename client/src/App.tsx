@@ -12,7 +12,18 @@ import { HomePage } from './components/pages/HomePage';
 import { InvitationPage } from './components/pages/InvitationPage';
 import { CalendarPage } from "./components/pages/CalendarPage";
 
+/**
+ * The super component for the entire application. Handles passing
+ * state to all components, such as user login/logout. Also handles
+ * setting up the router for routing to different links depending on
+ * the current URL.
+ */
 class App extends React.Component<IAppProps, IAppState> {
+    /**
+     * Call super constructor and set initial state such that
+     * there is no user. Bind methods.
+     * @param props - Default props passed in by React.
+     */
   constructor(props: IAppProps) {
     super(props);
 
@@ -46,6 +57,11 @@ class App extends React.Component<IAppProps, IAppState> {
     });
   }
 
+  /**
+   * Handles rendering which page depending on the URL. Also
+   * renders the Navbar. Handles state by passing in information
+   * about the user to all components.
+   */
   render(): any {
     return (
       <div className="App">
