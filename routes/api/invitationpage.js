@@ -48,7 +48,19 @@ router.route('/accessToken').post(async (req, res) => {
                 if(err) {
                     throw err;
                 }
-
+                if(result == null){
+                    Invitation.deleteOne({'_id': String(id)}, async (err, result) => {
+                        if(err) {
+                            throw err;
+                        }
+                    });
+                    res.status(200).json({
+                        accessToken: null,
+                        profile: null,
+                        expired: true
+                    });
+                    return;
+                }
                 const token = result.refreshToken;
                 const accessToken = await routeutils.getAccessToken(token);
                 const userProfile = await routeutils.getUserProfile(accessToken);
