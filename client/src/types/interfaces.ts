@@ -96,10 +96,12 @@ export interface InvitationPageState {
   inviterProfile: IUser | null;
   inviteeProfile: IUser | null;
   inviteeEmail: string | null;
+  inviteeName: string | null;
   success: boolean;
   error:boolean;
   isExpired: boolean;
   isLoading: boolean;
+
 }
 
 export interface InvitationProps {
@@ -129,6 +131,7 @@ export interface InviteeCalendarProps {
   inviteeEmail: string | null;
   setSuccess(): void;
   getId(): string;
+  sendConfirmation(start: SchedulerDateTime, end: SchedulerDateTime, location: string): void;
 }
 interface Attendee {
   email: string;
