@@ -24,7 +24,7 @@ import {
   TodayButton,
   ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { InviteeCalendarProps } from '../../types/interfaces';
+import { InviteeCalendarProps, IUser } from '../../types/interfaces';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
 import { customAppointment, Event, FormProps } from '../../types/interfaces';
@@ -49,7 +49,7 @@ const empty = () => {
 };
 const customAppointmentComp = ({ children, style, ...restProps }: any) => (
   <Appointments.Appointment
-    {...(restProps.data.visible
+    {...(restProps.data.visible || restProps.data.isInviteeEvent
       ? restProps
       : {
           ...restProps,
@@ -61,11 +61,17 @@ const customAppointmentComp = ({ children, style, ...restProps }: any) => (
         })}
     style={{
       ...style,
-      backgroundColor: restProps.data.visible ? '#1E90FF' : '#FFC107',
+      backgroundColor: restProps.data.isInviteeEvent
+        ? '#8A2BE2'
+        : restProps.data.visible
+        ? '#1E90FF'
+        : '#FFC107',
       borderRadius: '8px',
     }}
   >
-    {restProps.data.visible ? children : 'Unavailable'}
+    {restProps.data.visible || restProps.data.isInviteeEvent
+      ? children
+      : 'Unavailable'}
   </Appointments.Appointment>
 );
 
@@ -102,20 +108,26 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
       attendees: temp,
     });
   };
-
+  const readOnly = () => {
+    if (appointmentData.isInviteeEvent) {
+      return false;
+    } else {
+      return appointmentData.readOnly;
+    }
+  };
   return (
     <AppointmentForm.BasicLayout
       appointmentData={appointmentData}
       fullSize={true}
       onFieldChange={onFieldChange}
       {...restProps}
-      readOnly={appointmentData.readOnly}
+      readOnly={readOnly()}
     >
       <AppointmentForm.TextEditor
         value={appointmentData.location}
         onValueChange={onLocationChange}
         placeholder="Add a location"
-        readOnly={appointmentData.readOnly}
+        readOnly={readOnly()}
         type={'ordinaryTextEditor'}
       />
 
@@ -123,7 +135,7 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
         value={appointmentData.description}
         onValueChange={onDescriptionChange}
         placeholder="Add a description"
-        readOnly={appointmentData.readOnly}
+        readOnly={readOnly()}
         type={'multilineTextEditor'}
       />
 
@@ -134,7 +146,7 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
           </Button>
         </InputGroup.Prepend>
         <FormControl
-          readOnly={appointmentData.readOnly}
+          readOnly={readOnly()}
           aria-describedby="basic-addon1"
           placeholder="Add Guest"
           aria-label="Add Guest"
@@ -163,18 +175,45 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
   );
 };
 
-const timeout = 2000;
+const timeout = 3000;
 const config = {
   headers: { 'Content-Type': 'application/json' },
 };
-const getData = (setData: any, accessToken?: string) => {
+const getData = (
+  setData: any,
+  isAuthenticated: boolean,
+  inviteeProfile: IUser | null,
+  accessToken?: string
+) => {
   const body = JSON.stringify({ token: accessToken });
 
   return axios
     .post('/api/calendar/getcalendar', body, config)
     .then((response) => {
+      const inviterEvents = response.data.googleresponse.data.items.map(
+        (n: any) => {
+          return { ...n, ...{ isInviteeEvent: false } };
+        }
+      );
       setTimeout(() => {
-        setData(response.data.googleresponse.data.items);
+        if (isAuthenticated) {
+          const body = JSON.stringify({ token: inviteeProfile?.accessToken });
+          axios
+            .post('/api/calendar/getcalendar', body, config)
+            .then((response2) => {
+              setTimeout(() => {
+                const inviteeEvents = response2.data.googleresponse.data.items.map(
+                  (n: any) => {
+                    return { ...n, ...{ isInviteeEvent: true } };
+                  }
+                );
+
+                setData([...inviterEvents, ...inviteeEvents]);
+              }, timeout);
+            });
+        } else {
+          setData(inviterEvents);
+        }
       }, timeout);
     });
 };
@@ -366,7 +405,12 @@ export default (props: InviteeCalendarProps) => {
   //useEffect() is a hook that calls a function everytime render is called
   //we call the getdata function to update the calendar information after rendering
   React.useEffect(() => {
-    getData(setData, props.user?.accessToken);
+    getData(
+      setData,
+      props.isAuthenticated,
+      props.inviteeProfile,
+      props.user?.accessToken
+    );
   }, [setData, currentViewName, currentDate]);
 
   return (

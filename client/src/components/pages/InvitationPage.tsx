@@ -25,7 +25,7 @@ class InvitationPage extends React.Component<
       success: false,
       error: false,
       isExpired: false,
-      isLoading: true
+      isLoading: true,
     };
 
     this.setSuccess = this.setSuccess.bind(this);
@@ -58,6 +58,7 @@ class InvitationPage extends React.Component<
       return (
         <InviteeCalender
           user={this.state.inviterProfile}
+          inviteeProfile={this.props.user}
           isAuthenticated={this.props.isAuthenticated}
           inviteeEmail={this.state.inviteeEmail}
           setSuccess={this.setSuccess}
@@ -81,7 +82,7 @@ class InvitationPage extends React.Component<
       .then((res) => {
         setTimeout(() => {
           //set expired to ture if the invitation is expired, otherwise set up the inviter's info
-          this.setState({isLoading: false});
+          this.setState({ isLoading: false });
           if (res.data.expired === true) {
             this.setState({ isExpired: true });
           } else {
@@ -90,7 +91,6 @@ class InvitationPage extends React.Component<
               inviterProfile: inviter,
               inviteeEmail: res.data.inviteeEmail,
             });
-
           }
         }, 5000);
       })
@@ -101,15 +101,18 @@ class InvitationPage extends React.Component<
   }
 
   render(): any {
-    if(this.state.error == true){
+    if (this.state.error == true) {
       return <div>Invalid Invitation ID.</div>;
     }
-    if(this.state.isLoading == true){
+    if (this.state.isLoading == true) {
       return <div>loading...</div>;
     }
     if (this.state.isExpired || this.state.inviterProfile == null) {
-
-      return <div>This Invitation is invalid or expired. Please make another one.</div>;
+      return (
+        <div>
+          This Invitation is invalid or expired. Please make another one.
+        </div>
+      );
     } else {
       return <div>{this.renderScheduler()}</div>;
     }
