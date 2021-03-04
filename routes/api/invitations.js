@@ -96,9 +96,6 @@ router.route('/add').post((req, res) => {
         });
 
 
-    // console.log("Invitation id: ");
-    // console.log(newInvitation._id);
-
     // Email contents
     let email_html = '<p> Hello ' + invitee_name + '. <br>' +
         'Click the following link to make an appointment with ' + inviter_name + ': ' +
@@ -108,16 +105,12 @@ router.route('/add').post((req, res) => {
 
     // Use local host if in testing mode
     if (process.env.NODE_ENV !== 'production') {
-        console.log('in testing mode');
         email_html = '<p> Hello ' + invitee_name + '. <br />' +
             'Click the following link to make an appointment with ' + inviter_name + ': ' +
             '<a href=' +
             'http://localhost:3000/invitation?id=' + newInvitation._id + '>' +
             'EasyMeet</a></p>';
-        console.log('email string');
-        console.log(email_html);
     }
-
 
     /**
      * Email Options
@@ -140,12 +133,10 @@ router.route('/add').post((req, res) => {
         transporter.sendMail(mailOptions, function (err, data) {
             if (!error_flag) {
                 if (err) {
-                    console.log('Error sending email');
                     error_message += 'Error sending invitation to the email: ' + invitee_email + '. Please check your inputs.';
                     error_flag = true;
 
                 } else {
-                    console.log('Email sent');
                     error_message += 'Email sent.';
                 }
             }
@@ -158,20 +149,5 @@ router.route('/add').post((req, res) => {
         });
     }
 });
-
-// I JUST TOOK THESE OFF THE TUTORIAL, DOES NOT DO ANYTHING YET
-
-// router.route('/:id').get((req, res) => {
-//     Invitation.findById(req.params.id)
-//         .then(invitation => res.json(invitation))
-//         .catch(err => res.status(400).json('Error: ' + err));
-// });
-//
-// router.route('/:id').delete((req, res) => {
-//     Invitation.findByIdAndDelete(req.params.id)
-//         .then(() => res.json('Invitation deleted.'))
-//         .catch(err => res.status(400).json('Error: ' + err));
-// });
-
 
 export default router;

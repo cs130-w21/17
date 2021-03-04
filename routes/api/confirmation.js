@@ -25,11 +25,11 @@ const transporter = nodemailer.createTransport({
 
 /**
  * @route   POST api/confirmation
- * @desc    Sends the inviter and invitee confirmation email for new event.
+ * @desc    Sends the inviter and invitee confirmation email for a newly scheduled event.
  * @access  public
  */
 router.route('/added').post((req, res) => {
-    // info from front end
+    // Email info from front end
     const invitee_name = req.body.invitee_name;
     const invitee_email = req.body.invitee_email;
     const inviter_name = req.body.inviter_name;
@@ -38,26 +38,21 @@ router.route('/added').post((req, res) => {
     let event_end = new Date(req.body.event_end);
     const event_location = req.body.event_location;
 
-
-
-    // invitee email content
+    // INVITEE EMAIL html content
     let invitee_email_html = '<p> Hello <b>' + invitee_name + '</b>. <br>' +
         'You have successfully made an appointment with ' + inviter_name + '.<br>' +
         'Your appointment is from <b>' + event_start + '</b> to <b>' + event_end + '</b>';
-
     if (event_location != undefined)
         invitee_email_html += ' at <b>' + event_location + '</b>';
-
     invitee_email_html +='.</p>';
 
-    // inviter email content
+    // INVITER EMAIL html content
     let inviter_email_html = '<p> Hello <b>' + inviter_name + '</b>. <br>' +
         '<b>' + invitee_name + '</b>' + ' recently scheduled a new appointment with you.<br>' +
         'Your appointment is from <b>' + event_start + '</b> to <b>' + event_end + '</b>';
     if (event_location != undefined)
         inviter_email_html += ' at ' + '<b>' + event_location + '</b>';
     inviter_email_html +='<br>View your calendar for more details!' + '</p>';
-
 
     /**
      * Email Options for the INVITEE
@@ -83,7 +78,7 @@ router.route('/added').post((req, res) => {
         , html: inviter_email_html
     };
 
-    // sends confirmation email to invitee
+    // Sends confirmation to invitee
     transporter.sendMail(invitee_mailOptions, function (err, data) {
         if (err) {
             console.log('Error sending confirmation email to invitee');
@@ -93,7 +88,7 @@ router.route('/added').post((req, res) => {
         }
     });
 
-    // send confirmation to inviter
+    // Sends confirmation to inviter
     transporter.sendMail(inviter_mailOptions, function (err, data) {
         if (err) {
             console.log('Error sending confirmation email to inviter');

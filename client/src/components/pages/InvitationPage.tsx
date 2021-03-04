@@ -53,23 +53,20 @@ class InvitationPage extends React.Component<
     return new URLSearchParams(this.props.location.search);
   }
 
-  setEventInfo(start: SchedulerDateTime, end: SchedulerDateTime,
-               location: string): void{
-    // this.setState({
-    //   eventStart:start,
-    //   eventEnd: end,
-    //   eventLocation: location
-    // });
-  }
-
   /**
-   * Sends the inviter and invitee's names and emails to backend
-   * to send confirmation email for added event.
+   * Sends the inviter and invitee's names and emails,
+   * as well as the new event info (time and location)
+   * to backend.
+   *
+   * (backend sends confirmation email to inviter and invitee
+   * for added event.)
+   *
+   * @param start event start time
+   * @param end event end time
+   * @param location name of location
    */
   sendConfirmation(start: SchedulerDateTime, end: SchedulerDateTime,
                    location: string): void{
-    console.log("sending Confirmation function");
-
     const email_info={
       invitee_name: this.state.inviteeName,
       invitee_email: this.state.inviteeEmail,
@@ -80,18 +77,14 @@ class InvitationPage extends React.Component<
       event_location: location
     }
 
-    console.log("got the event info!");
-    console.log(start, end, location);
-
-
+    // sending email_info to backend
     axios.post('/api/confirmation/added', email_info)
         .then((res) => {
-          console.log('email confirmation sent');
+          console.log('Email confirmation sent');
         })
         .catch(err => {
           console.log('Error with confirmation backend', err);
         });
-
   }
 
   public renderScheduler(): any {
@@ -110,7 +103,6 @@ class InvitationPage extends React.Component<
           setSuccess={this.setSuccess}
           getId={this.getId}
           sendConfirmation={this.sendConfirmation}
-          setEventInfo={this.setEventInfo}
 
         />
       );

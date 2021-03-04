@@ -132,8 +132,6 @@ export interface InviteeCalendarProps {
   setSuccess(): void;
   getId(): string;
   sendConfirmation(start: SchedulerDateTime, end: SchedulerDateTime, location: string): void;
-  setEventInfo(start: SchedulerDateTime, end: SchedulerDateTime, location: string): void;
-
 }
 interface Attendee {
   email: string;

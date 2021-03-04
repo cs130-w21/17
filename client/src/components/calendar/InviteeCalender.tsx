@@ -200,11 +200,8 @@ const addEvent = (
     });
     setSuccess();
 
-    console.log("testing params:")
-    console.log(appointment.startDate, appointment.endDate, appointment.location);
-
+    // sends confirmation email on successfully added event
     sendConfirmation(appointment.startDate, appointment.endDate, appointment.location);
-
     setTimeout(() => {}, timeout);
   });
 };
