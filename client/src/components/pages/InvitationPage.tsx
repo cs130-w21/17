@@ -7,6 +7,7 @@ import {
 import { createUserFromServerResponse } from '../utils/utils';
 import axios from 'axios';
 import InviteeCalender from '../calendar/InviteeCalender';
+import {SchedulerDateTime} from "@devexpress/dx-react-scheduler";
 /**
  * This class serves as the invitation page for the application.
  * The invitee will be able to view the inviter's schedule here.
@@ -31,6 +32,7 @@ class InvitationPage extends React.Component<
 
     this.setSuccess = this.setSuccess.bind(this);
     this.getId = this.getId.bind(this);
+    this.sendConfirmation = this.sendConfirmation.bind(this);
   }
 
   componentDidMount(): void {
@@ -51,24 +53,35 @@ class InvitationPage extends React.Component<
     return new URLSearchParams(this.props.location.search);
   }
 
-
+  setEventInfo(start: SchedulerDateTime, end: SchedulerDateTime,
+               location: string): void{
+    // this.setState({
+    //   eventStart:start,
+    //   eventEnd: end,
+    //   eventLocation: location
+    // });
+  }
 
   /**
    * Sends the inviter and invitee's names and emails to backend
    * to send confirmation email for added event.
    */
-  sendConfirmation(): void{
+  sendConfirmation(start: SchedulerDateTime, end: SchedulerDateTime,
+                   location: string): void{
     console.log("sending Confirmation function");
 
     const email_info={
       invitee_name: this.state.inviteeName,
       invitee_email: this.state.inviteeEmail,
       inviter_name: this.state.inviterProfile?.fullName,
-      inviter_email: this.state.inviterProfile?.email
-      // How do I access calendar info?
+      inviter_email: this.state.inviterProfile?.email,
+      event_start: start,
+      event_end: end,
+      event_location: location
     }
 
-
+    console.log("got the event info!");
+    console.log(start, end, location);
 
 
     axios.post('/api/confirmation/added', email_info)
@@ -83,7 +96,7 @@ class InvitationPage extends React.Component<
 
   public renderScheduler(): any {
     if (this.state.success) {
-      this.sendConfirmation()
+      //this.sendConfirmation()
       return <p>Successfully added an event to the calender.</p>;
     } else if (
       this.state.inviterProfile != null &&
@@ -96,6 +109,9 @@ class InvitationPage extends React.Component<
           inviteeEmail={this.state.inviteeEmail}
           setSuccess={this.setSuccess}
           getId={this.getId}
+          sendConfirmation={this.sendConfirmation}
+          setEventInfo={this.setEventInfo}
+
         />
       );
     } else if (this.state.error) {

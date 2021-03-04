@@ -34,17 +34,27 @@ router.route('/added').post((req, res) => {
     const invitee_email = req.body.invitee_email;
     const inviter_name = req.body.inviter_name;
     const inviter_email = req.body.inviter_email;
+    const event_start = req.body.event_start;
+    const event_end = req.body.event_end;
+    const event_location = req.body.event_location;
 
     // invitee email content
     let invitee_email_html = '<p> Hello ' + invitee_name + '. <br>' +
-        'You have successfully made an appointment with ' + inviter_name + '.' +
-        '</p>';
+        'You have successfully made an appointment with ' + inviter_name + '.<br>' +
+        'Your appointment is from ' + event_start + ' to ' + event_end;
+
+    if (event_location !=null)
+        invitee_email_html += ' at ' + event_location;
+
+    invitee_email_html +='.</p>';
 
     // inviter email content
     let inviter_email_html = '<p> Hello ' + inviter_name + '. <br>' +
         invitee_name + ' recently scheduled a new appointment with you.<br>' +
-        'View your calendar for more details!' +
-        '</p>';
+        'Your appointment is from ' + event_start + ' to ' + event_end;
+    if (event_location !=null)
+        inviter_email_html += ' at ' + event_location;
+    inviter_email_html +='<br>View your calendar for more details!' + '</p>';
 
 
     /**

@@ -182,7 +182,8 @@ const addEvent = (
   appointment: customAppointment,
   accessToken?: string,
   setSuccess?: any,
-  getId?: any
+  getId?: any,
+  sendConfirmation?: any
 ) => {
   const body = JSON.stringify({
     token: accessToken,
@@ -197,6 +198,12 @@ const addEvent = (
       setTimeout(() => {}, timeout);
     });
     setSuccess();
+
+    console.log("testing params:")
+    console.log(appointment.startDate, appointment.endDate, appointment.location);
+
+    sendConfirmation(appointment.startDate, appointment.endDate, appointment.location);
+
     setTimeout(() => {}, timeout);
   });
 };
@@ -337,7 +344,9 @@ export default (props: InviteeCalendarProps) => {
         temp[temp.length - 1],
         props.user?.accessToken,
         props.setSuccess,
-        props.getId
+        props.getId,
+        props.sendConfirmation
+
       );
     } else if (changed) {
       const temp = data.map((appointment: any) =>
