@@ -50,6 +50,8 @@ class InvitationPage extends React.Component<
     return new URLSearchParams(this.props.location.search);
   }
 
+
+
   /**
    * Sends the inviter and invitee's names and emails to backend
    * to send confirmation email for added event.
@@ -65,8 +67,7 @@ class InvitationPage extends React.Component<
       // How do I access calendar info?
     }
 
-    console.log("email info");
-    console.log(email_info);
+
 
 
     axios.post('/api/confirmation/added', email_info)
