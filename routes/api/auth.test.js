@@ -2,21 +2,40 @@ import app from '../../app';
 require('dotenv').config();
 const supertest = require("supertest");
 
-describe('Invalid register', () => {
+/**
+ * @name Auth Functionality
+ * @route /api/auth
+ * @desc Unit tests for routes in /api/auth
+ */
+describe('Auth functionality', () => {
     let user_data = {
         code: 'bogus-code',
         refreshToken: process.env.REFRESH_TOKEN
     }
-    test("POST REGISTER /api/auth", async () => {
+    /**
+     * @name Invalid Register
+     * @route {POST} /api/auth/register
+     * @routeparam {request} Sends in user data with the field 'code' and tries to register
+     *    the new user to the database. Invalid codes should throw a 400 code.
+     */
+    test("POST INVALID AUTH REGISTER", async (done) => {
         await supertest(app)
             .post("/api/auth/register")
             .send(user_data)
             .expect(400)
+        done()
     })
-    test("POST ACCESS TOKEN /api/auth", async () => {
+    /**
+     * @name Access Token
+     * @route {POST} /api/auth/accessToken
+     * @routeparam {request} Sends in the refresh token from the EasyMeet Gmail. We expect
+     *     this route to succeed, given a valid refresh token.
+     */
+    test("POST AUTH ACCESS TOKEN", async (done) => {
         await supertest(app)
             .post("/api/auth/accessToken")
             .send(user_data)
             .expect(200)
+        done()
     });
 });
