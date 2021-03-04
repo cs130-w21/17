@@ -28,6 +28,7 @@ import { InviteeCalendarProps } from '../../types/interfaces';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
 import { customAppointment, Event, FormProps } from '../../types/interfaces';
+import { mapEventToAppointment, mapAppointmentToEvent } from './CalenderUtils';
 const messages = {
   moreInformationLabel: '',
 };
@@ -224,38 +225,11 @@ const editEvent = (
   });
 };
 
-const usaTime = (date: any) =>
-  new Date(date).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
-
 /**
  * mapAPpointmentData takes a list of appointments from google and maps them
  * to the data structure used by the schedular.
  * @param appointment
  */
-const mapEventToAppointment = (googleEvent: Event): customAppointment => ({
-  id: googleEvent.id,
-  startDate: usaTime(googleEvent.start.dateTime),
-  endDate: usaTime(googleEvent.end.dateTime),
-  title: googleEvent.summary,
-  location: googleEvent.location,
-  description: googleEvent.description,
-  attendees: googleEvent.attendees,
-  readOnly: true,
-});
-
-const mapAppointmentToEvent = (appointment: customAppointment): Event => ({
-  id: appointment.id,
-  location: appointment.location,
-  summary: appointment.title,
-  description: appointment.description,
-  start: {
-    dateTime: new Date(appointment.startDate),
-  },
-  end: {
-    dateTime: new Date(appointment.endDate),
-  },
-  attendees: appointment.attendees,
-});
 
 const initialState = {
   data: [],
