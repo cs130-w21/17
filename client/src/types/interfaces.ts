@@ -186,7 +186,7 @@ interface Attendee {
 
 }
 export interface Event {
-  id: string;
+  id?: string;
   location: string;
   summary: string;
   description: string;
@@ -208,7 +208,7 @@ export interface customAppointment {
   endDate:SchedulerDateTime
   title: string;
   allDay?:boolean
-  id: string;
+  id?: string;
   rRule?:string;
   exDate?: string;
   readOnly?: boolean;
