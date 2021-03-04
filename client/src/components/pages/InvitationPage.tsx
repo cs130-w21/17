@@ -101,12 +101,15 @@ class InvitationPage extends React.Component<
   }
 
   render(): any {
-    if(this.state.isLoading == true){
+    if(this.state.error === true){
+      return <div>Invalid Invitation Id.</div>;
+    }
+    if(this.state.isLoading === true){
       return <div>loading...</div>;
     }
     if (this.state.isExpired || this.state.inviterProfile == null) {
 
-      return <div>This Invitation has expired. Please make another one.</div>;
+      return <div>This Invitation is invalid or expired. Please make another one.</div>;
     } else {
       return <div>{this.renderScheduler()}</div>;
     }
