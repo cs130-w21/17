@@ -26,6 +26,7 @@ class InvitationPage extends React.Component<
       success: false,
       error: false,
       isExpired: false,
+      isLoading: true
     };
 
     this.setSuccess = this.setSuccess.bind(this);
@@ -114,8 +115,8 @@ class InvitationPage extends React.Component<
       .then((res) => {
         setTimeout(() => {
           //set expired to ture if the invitation is expired, otherwise set up the inviter's info
+          this.setState({isLoading: false});
           if (res.data.expired === true) {
-            console.log(res.data.expired);
             this.setState({ isExpired: true });
           } else {
             const inviter: IUser = createUserFromServerResponse(res);
@@ -124,6 +125,7 @@ class InvitationPage extends React.Component<
               inviteeEmail: res.data.inviteeEmail,
               inviteeName: res.data.inviteeName
             });
+
           }
         }, 5000);
       })
@@ -134,7 +136,11 @@ class InvitationPage extends React.Component<
   }
 
   render(): any {
+    if(this.state.isLoading == true){
+      return <div>loading...</div>;
+    }
     if (this.state.isExpired || this.state.inviterProfile == null) {
+
       return <div>This Invitation has expired. Please make another one.</div>;
     } else {
       return <div>{this.renderScheduler()}</div>;
