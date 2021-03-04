@@ -34,26 +34,28 @@ router.route('/added').post((req, res) => {
     const invitee_email = req.body.invitee_email;
     const inviter_name = req.body.inviter_name;
     const inviter_email = req.body.inviter_email;
-    const event_start = req.body.event_start;
-    const event_end = req.body.event_end;
+    let event_start = new Date(req.body.event_start);
+    let event_end = new Date(req.body.event_end);
     const event_location = req.body.event_location;
 
-    // invitee email content
-    let invitee_email_html = '<p> Hello ' + invitee_name + '. <br>' +
-        'You have successfully made an appointment with ' + inviter_name + '.<br>' +
-        'Your appointment is from ' + event_start + ' to ' + event_end;
 
-    if (event_location !=null)
-        invitee_email_html += ' at ' + event_location;
+
+    // invitee email content
+    let invitee_email_html = '<p> Hello <b>' + invitee_name + '</b>. <br>' +
+        'You have successfully made an appointment with ' + inviter_name + '.<br>' +
+        'Your appointment is from <b>' + event_start + '</b> to <b>' + event_end + '</b>';
+
+    if (event_location != undefined)
+        invitee_email_html += ' at <b>' + event_location + '</b>';
 
     invitee_email_html +='.</p>';
 
     // inviter email content
-    let inviter_email_html = '<p> Hello ' + inviter_name + '. <br>' +
-        invitee_name + ' recently scheduled a new appointment with you.<br>' +
-        'Your appointment is from ' + event_start + ' to ' + event_end;
-    if (event_location !=null)
-        inviter_email_html += ' at ' + event_location;
+    let inviter_email_html = '<p> Hello <b>' + inviter_name + '</b>. <br>' +
+        '<b>' + invitee_name + '</b>' + ' recently scheduled a new appointment with you.<br>' +
+        'Your appointment is from <b>' + event_start + '</b> to <b>' + event_end + '</b>';
+    if (event_location != undefined)
+        inviter_email_html += ' at ' + '<b>' + event_location + '</b>';
     inviter_email_html +='<br>View your calendar for more details!' + '</p>';
 
 
