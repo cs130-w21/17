@@ -1,6 +1,5 @@
 import app from '../../app';
 require('dotenv').config();
-const mongoose = require("mongoose");
 const supertest = require("supertest");
 
 describe('Post invitation page', () => {
@@ -14,8 +13,6 @@ describe('Post invitation page', () => {
             .expect(400)
     });
     let new_data = {
-        //random ID found within database,
-        //probably don't do this
         id: process.env.TEST_ID
     }
     test("POST valid /api/invitationpage/", async() => {
