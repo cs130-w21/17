@@ -4,12 +4,20 @@ import User from '../../models/User';
 import * as routeutils from "../utils/routeutils";
 const router = Router();
 
-
+/**
+* @route   GET api/invitationpage
+* @desc    Get object id to search the user information
+* @access  Public
+**/
 router.route('/accessToken').post(async (req, res) => {
-    //get objectid from front end
+    /**
+     * get objectid from front end
+     **/
     const id = req.body.id;
 
-    //use id to find the email from mongodb database.
+    /**
+     * use id to find the email from mongodb database.
+     **/
     Invitation.findOne({'_id': String(id)}, async (err, result) => {
         try {
             if(err) {
@@ -41,7 +49,9 @@ router.route('/accessToken').post(async (req, res) => {
             }
             const email = result.inviter_email;
             const invitee_email = result.invitee_email;
-            //use email to find token
+            /**
+             * use email to find token
+             **/
             User.findOne({'email': String(email)}, async (err, result) => {
                 if(err) {
                     throw err;

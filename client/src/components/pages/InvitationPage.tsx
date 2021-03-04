@@ -38,16 +38,27 @@ class InvitationPage extends React.Component<
   setSuccess(): void {
     this.setState({ success: true });
   }
+  /**
+   * Search and get the object id from the invitationpage url.
+   */
   getId(): string {
     let search = this.getUrlParams();
     return search.get('id') || '';
   }
-
+  /**
+   * get the url.
+   */
   getUrlParams(): URLSearchParams {
     if (!this.props.location.search) return new URLSearchParams();
     return new URLSearchParams(this.props.location.search);
   }
 
+  /**
+   * show the loading page
+   * show the calendar if the invitation id is valid
+   * show the error if the invitation id is invalid
+   * show the success page after the appointment is added
+   */
   public renderScheduler(): any {
     if (this.state.success) {
       return <p>Successfully added an event to the calender.</p>;
@@ -100,6 +111,9 @@ class InvitationPage extends React.Component<
       });
   }
 
+  /**
+   * call the the renderscheduler if the invitation is valid and not expired.
+   */
   render(): any {
     if(this.state.error == true){
       return <div>Invalid Invitation ID.</div>;
