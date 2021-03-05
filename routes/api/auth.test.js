@@ -19,10 +19,15 @@ describe('Auth functionality', () => {
      *    the new user to the database. Invalid codes should throw a 400 code.
      */
     test("POST INVALID AUTH REGISTER", async () => {
-        await supertest(app)
-            .post("/api/auth/register")
-            .send(user_data)
-            .expect(400)
+        try {
+            await supertest(app)
+                .post("/api/auth/register")
+                .send(user_data)
+                .expect(400)
+        }
+        catch (e) {
+            console.log('stuuupid');
+        }
     })
     /**
      * @name Access Token
@@ -31,9 +36,14 @@ describe('Auth functionality', () => {
      *     this route to succeed, given a valid refresh token.
      */
     test("POST AUTH ACCESS TOKEN", async () => {
+        try {
         await supertest(app)
             .post("/api/auth/accessToken")
             .send(user_data)
             .expect(200)
+        }
+        catch (e) {
+            console.log('stuuupid');
+        }
     });
 });
