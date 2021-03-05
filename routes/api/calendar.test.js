@@ -7,15 +7,15 @@ let user_data = {
     refreshToken: process.env.REFRESH_TOKEN
 }
 let event = {
-    id: 'asdf',
-    location: 'asdf',
-    summary: 'asdf',
-    description: 'asdf',
+    id: 'ASDF',
+    location: 'Somewhere',
+    summary: 'Appointment',
+    description: 'Get to it',
     start: {
-        dateTime: 'asdf'
+        dateTime: '2021-12-16T10:00:00.000-07:00'
     },
     end: {
-        dateTime: 'asdf'
+        dateTime: '2021-12-16T10:25:00.000-07:00'
     }
 }
 /**
@@ -29,10 +29,6 @@ beforeAll(async() => {
         .send(user_data)
         .then((res) => {
             user_data.token = res.body.accessToken;
-            console.log('printing user_data and access token');
-            console.log(user_data);
-            console.log(user_data.token);
-            console.log(res.body.accessToken);
         });
 });
 /**

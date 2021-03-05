@@ -24,9 +24,6 @@ describe('Post invitation page', () => {
             .expect(400)
         done()
     });
-    let new_data = {
-        id: process.env.TEST_ID
-    }
     /**
      * @name Post invalid invitation page access token
      * @route {POST} /api/invitationpage/accessToken
@@ -35,6 +32,9 @@ describe('Post invitation page', () => {
      *      set to expire years from now, to ensure the test doesn't suddenly fail in the future.
      */
     test("POST VALID INVITATION PAGE ACCESS TOKEN", async(done) => {
+        let new_data = {
+            id: process.env.TEST_ID
+        }
         await supertest(app)
             .post('/api/invitationpage/accessToken')
             .send(new_data)
