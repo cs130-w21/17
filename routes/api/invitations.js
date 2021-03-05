@@ -39,10 +39,15 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+/**
+ * @route   POST api/invitations
+ * @desc    Delete an invitation given invitation ID
+ * @access  Public
+ */
 router.post('/delete', async (req, res) => {
     try {
       const invite = await Invitation.findById(req.body['id']);
-      console.log(req.body['id']);
+
       if (!invite) throw Error('No item found');
   
       const removed = await invite.remove();
