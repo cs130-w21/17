@@ -34,9 +34,14 @@ describe('Post invitation page', () => {
         let new_data = {
             id: process.env.TEST_ID
         }
+        try {
         await supertest(app)
             .post('/api/invitationpage/accessToken')
             .send(new_data)
             .expect(200)
-    });
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+        });
 });
