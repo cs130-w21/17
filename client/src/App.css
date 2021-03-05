@@ -105,7 +105,6 @@ h1.Head3 {
   color: white;
 }
 
-<<<<<<< HEAD
 h1.Head4 {
   font-size: 4.5rem;
   line-height: 1.1;
@@ -116,8 +115,6 @@ h1.Head4 {
   color: black;
 }
 
-=======
->>>>>>> 3bdf7785a7a955eee80e4978be87c118b1c325e2
 p.Sub1 {
   font-size: 1.5rem;
   line-height: 1.1;
@@ -149,7 +146,6 @@ p.Sub3 {
   color: white;
 }
 
-<<<<<<< HEAD
 p.Sub4 {
   font-size: 1.25rem;
   line-height: 1.1;
@@ -160,8 +156,16 @@ p.Sub4 {
   color: black;
 }
 
-=======
->>>>>>> 3bdf7785a7a955eee80e4978be87c118b1c325e2
+p.Sub4 {
+  font-size: 1.25rem;
+  line-height: 1.1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 400;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: black;
+}
+
 div.Div2 {
   padding-top: 5px;
   padding-bottom: 5px;
@@ -208,15 +212,12 @@ img.Icon{
   padding-bottom: 50px;
 }
 
-<<<<<<< HEAD
 img.Icon2{
   padding-top: 15px;
   max-width:350px;
   padding-bottom: 50px;
 }
 
-=======
->>>>>>> 3bdf7785a7a955eee80e4978be87c118b1c325e2
 div.Div3 {
   justify-content: center;
   display: flex;
@@ -256,7 +257,6 @@ div.IconEasy {
   padding-bottom: 50px;
   background-image: url(./components/img/Icon_easy.png);
   background-size: contain;
-<<<<<<< HEAD
 }
 
 div.C_Div1 {
@@ -287,6 +287,4 @@ div.c_Div2_Right {
   align-items: left;
   text-align: left;
   background-color: white;
-=======
->>>>>>> 3bdf7785a7a955eee80e4978be87c118b1c325e2
 }

@@ -131,6 +131,12 @@ export interface ConfirmationPageProps {
   message?: string;
 }
 
+export interface LoadingPageState {}
+
+export interface LoadingPageProps {
+  message?: string;
+}
+
 
 //CALENDAR
 
