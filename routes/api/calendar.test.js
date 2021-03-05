@@ -29,8 +29,10 @@ beforeAll(async() => {
         .send(user_data)
         .then((res) => {
             user_data.token = res.body.accessToken;
-            console.log('printing user_data');
+            console.log('printing user_data and access token');
             console.log(user_data);
+            console.log(user_data.token);
+            console.log(res.body.accessToken);
         });
 });
 /**
