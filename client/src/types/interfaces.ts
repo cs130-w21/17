@@ -168,6 +168,27 @@ export interface InvitationState {
 }
 
 
+//MISCELLANEOUS
+
+export interface ErrorPageState {}
+
+export interface ErrorPageProps {
+  message: string;
+}
+
+export interface ConfirmationPageState {}
+
+export interface ConfirmationPageProps {
+  message?: string;
+}
+
+export interface LoadingPageState {}
+
+export interface LoadingPageProps {
+  message?: string;
+}
+
+
 //CALENDAR
 
 
