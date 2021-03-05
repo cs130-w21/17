@@ -28,6 +28,7 @@ import { InviteeCalendarProps } from '../../types/interfaces';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
 import { customAppointment, Event, FormProps } from '../../types/interfaces';
+import { mapEventToAppointment, mapAppointmentToEvent } from './CalenderUtils';
 const messages = {
   moreInformationLabel: '',
 };
@@ -182,7 +183,8 @@ const addEvent = (
   appointment: customAppointment,
   accessToken?: string,
   setSuccess?: any,
-  getId?: any
+  getId?: any,
+  sendConfirmation?: any
 ) => {
   const body = JSON.stringify({
     token: accessToken,
@@ -197,6 +199,9 @@ const addEvent = (
       setTimeout(() => {}, timeout);
     });
     setSuccess();
+
+    // sends confirmation email on successfully added event
+    sendConfirmation(appointment.startDate, appointment.endDate, appointment.location);
     setTimeout(() => {}, timeout);
   });
 };
@@ -224,38 +229,11 @@ const editEvent = (
   });
 };
 
-const usaTime = (date: any) =>
-  new Date(date).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
-
 /**
  * mapAPpointmentData takes a list of appointments from google and maps them
  * to the data structure used by the schedular.
  * @param appointment
  */
-const mapEventToAppointment = (googleEvent: Event): customAppointment => ({
-  id: googleEvent.id,
-  startDate: usaTime(googleEvent.start.dateTime),
-  endDate: usaTime(googleEvent.end.dateTime),
-  title: googleEvent.summary,
-  location: googleEvent.location,
-  description: googleEvent.description,
-  attendees: googleEvent.attendees,
-  readOnly: true,
-});
-
-const mapAppointmentToEvent = (appointment: customAppointment): Event => ({
-  id: appointment.id,
-  location: appointment.location,
-  summary: appointment.title,
-  description: appointment.description,
-  start: {
-    dateTime: new Date(appointment.startDate),
-  },
-  end: {
-    dateTime: new Date(appointment.endDate),
-  },
-  attendees: appointment.attendees,
-});
 
 const initialState = {
   data: [],
@@ -337,7 +315,9 @@ export default (props: InviteeCalendarProps) => {
         temp[temp.length - 1],
         props.user?.accessToken,
         props.setSuccess,
-        props.getId
+        props.getId,
+        props.sendConfirmation
+
       );
     } else if (changed) {
       const temp = data.map((appointment: any) =>

@@ -1,7 +1,6 @@
 import { containeranalysis } from 'googleapis/build/src/apis/containeranalysis';
 import React from 'react';
 import { HomePageProps, HomePageState } from '../../types/interfaces';
-import { Confirmation } from '../miscellaneous/Confirmation';
 
 /**
  * This class serves as the Home Page of the application.
@@ -17,10 +16,7 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
 
   }
   render(): any {
-    return <div>
-      <Confirmation/>
-    </div>
-    /*<section className="Block1">
+    return <section className="Block1">
       <div className="Div1">
         <h1 className="Head1">
           EasyMeet
@@ -87,7 +83,7 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
         </div>
       </div>
 
-    </section>; */
+    </section>;
 
   }
 

@@ -27,7 +27,11 @@ router.route('/accessToken').post(async (req, res) => {
             //check the dates to see if it is expired
             if(Date.now() >= result.expiration_date)
             {
-
+                Invitation.deleteOne({'_id': String(id)}, async (err, result) => {
+                    if(err) {
+                        throw err;
+                    }
+                });
                 res.status(200).json({
                     accessToken: null,
                     profile: null,
@@ -37,12 +41,26 @@ router.route('/accessToken').post(async (req, res) => {
             }
             const email = result.inviter_email;
             const invitee_email = result.invitee_email;
+            const invitee_name = result.invitee_name;
+
             //use email to find token
             User.findOne({'email': String(email)}, async (err, result) => {
                 if(err) {
                     throw err;
                 }
-
+                if(result == null){
+                    Invitation.deleteOne({'_id': String(id)}, async (err, result) => {
+                        if(err) {
+                            throw err;
+                        }
+                    });
+                    res.status(200).json({
+                        accessToken: null,
+                        profile: null,
+                        expired: true
+                    });
+                    return;
+                }
                 const token = result.refreshToken;
                 const accessToken = await routeutils.getAccessToken(token);
                 const userProfile = await routeutils.getUserProfile(accessToken);
@@ -51,6 +69,7 @@ router.route('/accessToken').post(async (req, res) => {
                     accessToken: accessToken,
                     profile: userProfile,
                     inviteeEmail: invitee_email,
+                    inviteeName: invitee_name,
                     expired: false
                 });
             });
