@@ -43,12 +43,11 @@ describe('Calendar functionality', () => {
      * @routeparam {request} Send a refresh token to see if the get calendar route works.
      *      This is expected to succeed givenn a valid refresh token.
      */
-    test("POST get calendar", async (done) => {
+    test("POST get calendar", async () => {
         await supertest(app)
             .post("/api/calendar/getcalendar")
             .send(user_data)
             .expect(200)
-        done()
     });
     /**
      * @name Post add event
@@ -56,12 +55,11 @@ describe('Calendar functionality', () => {
      * @routeparam {request} Given a valid token as well as an event object to be added, we can expect
      *      this test to succeed and add the event to the calendar
      */
-    test("POST add event", async (done) => {
+    test("POST add event", async () => {
         await supertest(app)
             .post("/api/calendar/addEvent")
             .send(user_data, event)
             .expect(200)
-        done()
     });
     /**
      * @name Post edit event
@@ -71,13 +69,12 @@ describe('Calendar functionality', () => {
      *      This test should succeed given a valid token along with a mocked event object found in
      *      /client/src/types/interfaces.
      */
-    test("POST edit event", async (done) => {
+    test("POST edit event", async () => {
         await supertest(app)
             .post("/api/calendar/editEvent")
             .send(user_data)
             .send(event)
             .expect(200)
-        done()
     });
     /**
      * @name Post remove event
@@ -86,12 +83,11 @@ describe('Calendar functionality', () => {
      *      the event from the calendar. This test should succeed as we have added the event in the
      *      previous test and kept the event object with all its parameters intact.
      */
-    test("POST remove event", async (done) => {
+    test("POST remove event", async () => {
         await supertest(app)
             .post("/api/calendar/removeEvent")
             .send(user_data)
             .send(event)
             .expect(200)
-        done()
     });
 });

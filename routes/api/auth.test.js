@@ -18,12 +18,11 @@ describe('Auth functionality', () => {
      * @routeparam {request} Sends in user data with the field 'code' and tries to register
      *    the new user to the database. Invalid codes should throw a 400 code.
      */
-    test("POST INVALID AUTH REGISTER", async (done) => {
+    test("POST INVALID AUTH REGISTER", async () => {
         await supertest(app)
             .post("/api/auth/register")
             .send(user_data)
             .expect(400)
-        done()
     })
     /**
      * @name Access Token
@@ -31,11 +30,10 @@ describe('Auth functionality', () => {
      * @routeparam {request} Sends in the refresh token from the EasyMeet Gmail. We expect
      *     this route to succeed, given a valid refresh token.
      */
-    test("POST AUTH ACCESS TOKEN", async (done) => {
+    test("POST AUTH ACCESS TOKEN", async () => {
         await supertest(app)
             .post("/api/auth/accessToken")
             .send(user_data)
             .expect(200)
-        done()
     });
 });
