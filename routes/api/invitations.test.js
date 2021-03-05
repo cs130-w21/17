@@ -16,28 +16,6 @@ describe('Get invitations', () => {
         id: 'impossible_id'
     }
     /**
-     * @name Get list of invitations
-     * @route {GET} /api/invitations/
-     * @routeparam {response} We expect a list of invitations taken from MongoDB
-     */
-    test("GET INVITATIONS", async () => {
-        await supertest(app)
-            .get("/api/invitations/")
-            .expect(200)
-    });
-    /**
-     * @name Add an invitation
-     * @route {POST} /api/invitations/add
-     * @routeparam {request} We send in user data with the required fields to make
-     *      and invitation. We expect this to succeed given valid information
-     */
-    test("POST ADD INVITATION", async() => {
-        await supertest(app)
-            .post('/api/invitations/add')
-            .send(user_data)
-            .expect(200)
-    });
-    /**
      * @name Delete invalid invitation
      * @route {POST} /api/invitations/delete
      * @routeparam {request} We send in user data with the required fields id to try
