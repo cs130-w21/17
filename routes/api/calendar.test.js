@@ -44,13 +44,9 @@ describe('Calendar functionality', () => {
      *      This is expected to succeed givenn a valid refresh token.
      */
     test("POST get calendar", async () => {
-        try {
-            await supertest(app)
-                .post("/api/calendar/getcalendar")
-                .send(user_data)
-                .expect(200)
-        } catch (e) {
-            console.log('stupid');
-        }
+        await supertest(app)
+            .post("/api/calendar/getcalendar")
+            .send(user_data)
+            .expect(200)
     });
 });

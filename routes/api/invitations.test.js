@@ -21,14 +21,9 @@ describe('Get invitations', () => {
      * @routeparam {response} We expect a list of invitations taken from MongoDB
      */
     test("GET INVITATIONS", async () => {
-        try {
-            await supertest(app)
-                .get("/api/invitations/")
-                .expect(200)
-        }
-        catch (e) {
-            console.log('stupid');
-        }
+        await supertest(app)
+            .get("/api/invitations/")
+            .expect(200)
     });
     /**
      * @name Add an invitation
@@ -37,15 +32,10 @@ describe('Get invitations', () => {
      *      and invitation. We expect this to succeed given valid information
      */
     test("POST ADD INVITATION", async() => {
-        try {
-            await supertest(app)
-                .post('/api/invitations/add')
-                .send(user_data)
-                .expect(200)
-        }
-        catch (e) {
-            console.log('stupid');
-        }
+        await supertest(app)
+            .post('/api/invitations/add')
+            .send(user_data)
+            .expect(200)
     });
     /**
      * @name Delete invalid invitation
@@ -55,14 +45,9 @@ describe('Get invitations', () => {
      *      This is good since we don't want random deletions for any type of id.
      */
     test("POST INVALID DELETE INVITATION", async() => {
-        try {
-            await supertest(app)
-                .post('/api/invitations/delete')
-                .send(user_data)
-                .expect(400)
-        }
-        catch (e) {
-            console.log('stupid');
-        }
+        await supertest(app)
+            .post('/api/invitations/delete')
+            .send(user_data)
+            .expect(400)
     });
 });

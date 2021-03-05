@@ -18,15 +18,10 @@ describe('Post invitation page', () => {
      *      This test is expected to fail given a fake id
      */
     test("POST INVALID INVITATION PAGE ACCESS TOKEN", async() => {
-        try {
-            await supertest(app)
-                .post('/api/invitationpage/accessToken')
-                .send(user_data)
-                .expect(400)
-        }
-        catch (e) {
-            console.log('stupid');
-        }
+        await supertest(app)
+            .post('/api/invitationpage/accessToken')
+            .send(user_data)
+            .expect(400)
     });
     /**
      * @name Post invalid invitation page access token
@@ -39,14 +34,9 @@ describe('Post invitation page', () => {
         let new_data = {
             id: process.env.TEST_ID
         }
-        try {
-            await supertest(app)
-                .post('/api/invitationpage/accessToken')
-                .send(new_data)
-                .expect(200)
-        }
-        catch (e) {
-            console.log('stupid');
-        }
+        await supertest(app)
+            .post('/api/invitationpage/accessToken')
+            .send(new_data)
+            .expect(200)
     });
 });
