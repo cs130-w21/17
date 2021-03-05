@@ -24,9 +24,6 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
         <p className="Sub1">
           Simplify scheduling with your clients
         </p>
-        <button className="Button1">
-          GET STARTED
-        </button>
       </div>
       <div className="Div2">
         <div className="Div2_Left">
