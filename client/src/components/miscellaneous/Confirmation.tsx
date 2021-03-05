@@ -2,11 +2,16 @@ import React, { ComponentProps } from 'react';
 import {render} from 'react-dom';
 import { ConfirmationPageProps, ConfirmationPageState } from '../../types/interfaces';
 
+/**
+ * This class serves as the Confirmation Page of the application.
+ * Used when an event is successfully scheduled.
+ */
 class Confirmation extends React.Component<ConfirmationPageProps, ConfirmationPageState> {
     constructor(props : ConfirmationPageProps){
         super(props);
-        //this.state = {greeting: "Fantastic!"};
+        this.state = {};
     }
+    
     render(): any {
         return <section>
             <div className="C_Div1">
