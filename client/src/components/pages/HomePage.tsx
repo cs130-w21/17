@@ -86,6 +86,6 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
     </section>;
 
   }
-}
 
+}
 export { HomePage };
