@@ -4,12 +4,18 @@ import User from '../../models/User';
 import * as routeutils from "../utils/routeutils";
 const router = Router();
 
-
+/**
+ * @route   POST api/invitationpage
+ * @desc    Get object id of invitation, and use the id to search the refresh token from the database.
+ * @access  public
+ */
 router.route('/accessToken').post(async (req, res) => {
     //get objectid from front end
     const id = req.body.id;
 
-    //use id to find the email from mongodb database.
+    /**
+    * use id to find the email from mongodb database.
+    */
     Invitation.findOne({'_id': String(id)}, async (err, result) => {
         try {
             if(err) {
@@ -24,9 +30,12 @@ router.route('/accessToken').post(async (req, res) => {
                 });
                 return;
             }
-            //check the dates to see if it is expired
+
             if(Date.now() >= result.expiration_date)
             {
+                /**
+                 * if the invitation is expired, delete the invitation from the database.
+                 */
                 Invitation.deleteOne({'_id': String(id)}, async (err, result) => {
                     if(err) {
                         throw err;
@@ -43,12 +52,17 @@ router.route('/accessToken').post(async (req, res) => {
             const invitee_email = result.invitee_email;
             const invitee_name = result.invitee_name;
 
-            //use email to find token
+            /**
+             * use email to find token
+             */
             User.findOne({'email': String(email)}, async (err, result) => {
                 if(err) {
                     throw err;
                 }
                 if(result == null){
+                    /**
+                     * If we cannot find such a user using the id, delete the invitation from the database.
+                     */
                     Invitation.deleteOne({'_id': String(id)}, async (err, result) => {
                         if(err) {
                             throw err;
@@ -64,7 +78,7 @@ router.route('/accessToken').post(async (req, res) => {
                 const token = result.refreshToken;
                 const accessToken = await routeutils.getAccessToken(token);
                 const userProfile = await routeutils.getUserProfile(accessToken);
-
+                //construct the return body
                 res.status(200).json({
                     accessToken: accessToken,
                     profile: userProfile,

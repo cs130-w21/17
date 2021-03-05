@@ -38,20 +38,32 @@ class InvitationPage extends React.Component<
     this.getId = this.getId.bind(this);
     this.sendConfirmation = this.sendConfirmation.bind(this);
   }
- 
+
+  /**
+   * This function is called automatically when constructing.
+   */
   componentDidMount(): void {
     this.getData();
   }
+
+  /**
+   * set the success state to true.
+   */
   setSuccess(): void {
     this.setState({ success: true });
- 
- 
   }
+
+  /**
+   * get the id string from url.
+   */
   getId(): string {
     let search = this.getUrlParams();
     return search.get('id') || '';
   }
- 
+
+  /**
+   * get the url string from the website.
+   */
   getUrlParams(): URLSearchParams {
     if (!this.props.location.search) return new URLSearchParams();
     return new URLSearchParams(this.props.location.search);
@@ -90,7 +102,12 @@ class InvitationPage extends React.Component<
           console.log('Error with confirmation backend', err);
         });
   }
- 
+
+  /**
+   * create the calendar if the invitation id is valid
+   * show the error if the invitation is invalid
+   * show the success page after the appointment is added.
+   */
   public renderScheduler(): any {
     if (this.state.success) {
       return <Confirmation/>;
@@ -113,12 +130,15 @@ class InvitationPage extends React.Component<
       return <Error message="Internal Server Error"/>
     }
   }
- 
+
+  /**
+   * assign the object id to the private variable id.
+   */
   getData() {
     const i = {
       id: this.getId(),
     };
- 
+    //return info/error to the frontend
     axios
       .post('/api/invitationpage/accessToken', i)
       .then((res) => {
@@ -143,7 +163,13 @@ class InvitationPage extends React.Component<
         console.log('Error with backend', err);
       });
   }
- 
+
+  /**
+   * show the loading page while loading
+   * show the error page if errors occured
+   * sho the expiration page if the id is expired
+   * otherwise display the calendar
+   */
   render(): any {
     if(this.state.isLoading){
       return <Loading/>;
