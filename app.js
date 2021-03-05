@@ -11,6 +11,8 @@ import authRoutes from './routes/api/auth';
 import inviteRoutes from './routes/api/invitations';
 import calendarRoutes from './routes/api/calendar';
 import invpageRoutes from './routes/api/invitationpage';
+import confirmRoutes from './routes/api/confirmation';
+
 
 const { MONGO_URI, MONGO_DB_NAME } = config;
 
@@ -41,6 +43,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/invitations', inviteRoutes );
 app.use('/api/calendar', calendarRoutes);
 app.use('/api/invitationpage', invpageRoutes);
+app.use('/api/confirmation', confirmRoutes);
+
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

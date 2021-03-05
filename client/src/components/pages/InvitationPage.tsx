@@ -7,21 +7,23 @@ import {
 import { createUserFromServerResponse } from '../utils/utils';
 import axios from 'axios';
 import InviteeCalender from '../calendar/InviteeCalender';
+import {SchedulerDateTime} from "@devexpress/dx-react-scheduler";
 /**
  * This class serves as the invitation page for the application.
  * The invitee will be able to view the inviter's schedule here.
  */
 
 class InvitationPage extends React.Component<
-  InvitationPageProps,
-  InvitationPageState
-> {
+    InvitationPageProps,
+    InvitationPageState
+    > {
   constructor(props: InvitationPageProps) {
     super(props);
     this.state = {
       inviterProfile: null,
       inviteeProfile: this.props.user,
       inviteeEmail: null,
+      inviteeName:null,
       success: false,
       error: false,
       isExpired: false,
@@ -30,6 +32,7 @@ class InvitationPage extends React.Component<
 
     this.setSuccess = this.setSuccess.bind(this);
     this.getId = this.getId.bind(this);
+    this.sendConfirmation = this.sendConfirmation.bind(this);
   }
 
   componentDidMount(): void {
@@ -37,43 +40,71 @@ class InvitationPage extends React.Component<
   }
   setSuccess(): void {
     this.setState({ success: true });
+
+
   }
-  /**
-   * Search and get the object id from the invitationpage url.
-   */
   getId(): string {
     let search = this.getUrlParams();
     return search.get('id') || '';
   }
-  /**
-   * get the url.
-   */
+
   getUrlParams(): URLSearchParams {
     if (!this.props.location.search) return new URLSearchParams();
     return new URLSearchParams(this.props.location.search);
   }
 
   /**
-   * show the loading page
-   * show the calendar if the invitation id is valid
-   * show the error if the invitation id is invalid
-   * show the success page after the appointment is added
+   * Sends the inviter and invitee's names and emails,
+   * as well as the new event info (time and location)
+   * to backend.
+   *
+   * (backend sends confirmation email to inviter and invitee
+   * for added event.)
+   *
+   * @param start event start time
+   * @param end event end time
+   * @param location name of location
    */
+  sendConfirmation(start: SchedulerDateTime, end: SchedulerDateTime,
+                   location: string): void{
+    const email_info={
+      invitee_name: this.state.inviteeName,
+      invitee_email: this.state.inviteeEmail,
+      inviter_name: this.state.inviterProfile?.fullName,
+      inviter_email: this.state.inviterProfile?.email,
+      event_start: start,
+      event_end: end,
+      event_location: location
+    }
+
+    // sending email_info to backend
+    axios.post('/api/confirmation/added', email_info)
+        .then((res) => {
+          console.log('Email confirmation sent');
+        })
+        .catch(err => {
+          console.log('Error with confirmation backend', err);
+        });
+  }
+
   public renderScheduler(): any {
     if (this.state.success) {
+      //this.sendConfirmation()
       return <p>Successfully added an event to the calender.</p>;
     } else if (
-      this.state.inviterProfile != null &&
-      this.state.inviteeEmail != null
+        this.state.inviterProfile != null &&
+        this.state.inviteeEmail != null
     ) {
       return (
-        <InviteeCalender
-          user={this.state.inviterProfile}
-          isAuthenticated={this.props.isAuthenticated}
-          inviteeEmail={this.state.inviteeEmail}
-          setSuccess={this.setSuccess}
-          getId={this.getId}
-        />
+          <InviteeCalender
+              user={this.state.inviterProfile}
+              isAuthenticated={this.props.isAuthenticated}
+              inviteeEmail={this.state.inviteeEmail}
+              setSuccess={this.setSuccess}
+              getId={this.getId}
+              sendConfirmation={this.sendConfirmation}
+
+          />
       );
     } else if (this.state.error) {
       return <p>invalid invite Link</p>;
@@ -88,32 +119,30 @@ class InvitationPage extends React.Component<
     };
 
     axios
-      .post('/api/invitationpage/accessToken', i)
-      .then((res) => {
-        setTimeout(() => {
-          //set expired to ture if the invitation is expired, otherwise set up the inviter's info
-          this.setState({isLoading: false});
-          if (res.data.expired === true) {
-            this.setState({ isExpired: true });
-          } else {
-            const inviter: IUser = createUserFromServerResponse(res);
-            this.setState({
-              inviterProfile: inviter,
-              inviteeEmail: res.data.inviteeEmail,
-            });
+        .post('/api/invitationpage/accessToken', i)
+        .then((res) => {
+          setTimeout(() => {
+            //set expired to ture if the invitation is expired, otherwise set up the inviter's info
+            this.setState({isLoading: false});
+            if (res.data.expired === true) {
+              this.setState({ isExpired: true });
+            } else {
+              const inviter: IUser = createUserFromServerResponse(res);
+              this.setState({
+                inviterProfile: inviter,
+                inviteeEmail: res.data.inviteeEmail,
+                inviteeName: res.data.inviteeName
+              });
 
-          }
-        }, 5000);
-      })
-      .catch((err) => {
-        this.setState({ error: true });
-        console.log('Error with backend', err);
-      });
+            }
+          }, 5000);
+        })
+        .catch((err) => {
+          this.setState({ error: true });
+          console.log('Error with backend', err);
+        });
   }
 
-  /**
-   * call the the renderscheduler if the invitation is valid and not expired.
-   */
   render(): any {
     if(this.state.error == true){
       return <div>Invalid Invitation ID.</div>;
