@@ -114,6 +114,21 @@ export interface InvitationState {
 }
 
 
+//MISCELLANEOUS
+
+export interface ErrorPageState {}
+
+export interface ErrorPageProps {
+  message: string;
+}
+
+export interface ConfirmationPageState {}
+
+export interface ConfirmationPageProps {
+  message?: string;
+}
+
+
 //CALENDAR
 
 

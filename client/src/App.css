@@ -105,6 +105,16 @@ h1.Head3 {
   color: white;
 }
 
+h1.Head4 {
+  font-size: 4.5rem;
+  line-height: 1.1;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-family: Quicksand, Helvetica, sans-serif;
+  color: black;
+}
+
 p.Sub1 {
   font-size: 1.5rem;
   line-height: 1.1;
@@ -134,6 +144,16 @@ p.Sub3 {
   font-weight: 400;
   font-family: Quicksand, Helvetica, sans-serif;
   color: white;
+}
+
+p.Sub4 {
+  font-size: 1.25rem;
+  line-height: 1.1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 400;
+  font-family: Quicksand, Helvetica, sans-serif;
+  color: black;
 }
 
 div.Div2 {
@@ -182,6 +202,12 @@ img.Icon{
   padding-bottom: 50px;
 }
 
+img.Icon2{
+  padding-top: 15px;
+  max-width:350px;
+  padding-bottom: 50px;
+}
+
 div.Div3 {
   justify-content: center;
   display: flex;
@@ -221,4 +247,34 @@ div.IconEasy {
   padding-bottom: 50px;
   background-image: url(./components/img/Icon_easy.png);
   background-size: contain;
+}
+
+div.C_Div1 {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  
+}
+
+div.C_Div1_Left {
+  float: left;
+  width: 50%;
+  height: 500px;
+  justify-content: center;
+  align-items: right;
+  text-align: center;
+  background-color: white;
+  background-size: cover;
+}
+
+div.c_Div2_Right {
+  float: left;
+  width: 50%;
+  height: 500px;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  background-color: white;
 }
