@@ -23,12 +23,14 @@ let event = {
  * @route /api/auth/accessToken
  * @desc This just gathers a valid access token to use for testing the calendar's functionality.
  */
-beforeEach(async() => {
+beforeAll(async() => {
     await supertest(app)
         .post('/api/auth/accessToken')
         .send(user_data)
         .then((res) => {
             user_data.token = res.body.accessToken;
+            console.log('printing user_data');
+            console.log(user_data);
         });
 });
 /**
