@@ -27,7 +27,7 @@ import {
 import { SyncedCalendarProps } from '../../types/interfaces';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
-import { customAppointment, Event, FormProps } from '../../types/interfaces';
+import { customAppointment } from '../../types/interfaces';
 import { mapEventToAppointment, mapAppointmentToEvent } from './CalenderUtils';
 
 const messages = {
@@ -155,7 +155,6 @@ const addEvent = (appointment: customAppointment, accessToken?: string) => {
     token: accessToken,
     event: mapAppointmentToEvent(appointment),
   });
-
   axios.post('/api/calendar/addEvent', body, config).then((response) => {
     setTimeout(() => {}, timeout);
   });
