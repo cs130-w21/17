@@ -15,7 +15,10 @@ export const mapEventToAppointment = (
   attendees: googleEvent.attendees,
   readOnly: true,
   isInviteeEvent: googleEvent.isInviteeEvent,
+<<<<<<< HEAD
   rRule: googleEvent.recurrence ? googleEvent.recurrence[0] : undefined,
+=======
+>>>>>>> 4df434238ee4bef06ff28b6df9dcbef5bb1d9ccc
 });
 
 export const mapAppointmentToEvent = (
