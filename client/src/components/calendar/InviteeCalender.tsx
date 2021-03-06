@@ -8,7 +8,6 @@ import {
   ViewState,
   EditingState,
   IntegratedEditing,
-  Appointment,
 } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
@@ -27,7 +26,7 @@ import {
 import { InviteeCalendarProps, IUser } from '../../types/interfaces';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
-import { customAppointment, Event, FormProps } from '../../types/interfaces';
+import { customAppointment } from '../../types/interfaces';
 import { mapEventToAppointment, mapAppointmentToEvent } from './CalenderUtils';
 const messages = {
   moreInformationLabel: '',

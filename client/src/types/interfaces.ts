@@ -218,12 +218,12 @@ export interface Event {
   description: string;
   start: {
     date?: any,
-    dateTime: any,
+    dateTime?: any,
     timeZone?: string
   }
   end: {
     date?: any,
-    dateTime: any,
+    dateTime?: any,
     timeZone?: string
   }
   recurrence?:string[];

@@ -27,6 +27,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.2.1",
     "googleapis": "^67.1.0",
+    "http2": "^3.3.7",
     "jsdoc-route-plugin": "^0.1.0",
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.1.6",
