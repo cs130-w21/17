@@ -8,7 +8,6 @@ import {
   ViewState,
   EditingState,
   IntegratedEditing,
-  Appointment,
 } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
@@ -23,11 +22,12 @@ import {
   AppointmentTooltip,
   TodayButton,
   ConfirmationDialog,
+  AllDayPanel,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { InviteeCalendarProps, IUser } from '../../types/interfaces';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
-import { customAppointment, Event, FormProps } from '../../types/interfaces';
+import { customAppointment } from '../../types/interfaces';
 import { mapEventToAppointment, mapAppointmentToEvent } from './CalenderUtils';
 const messages = {
   moreInformationLabel: '',
@@ -417,12 +417,14 @@ export default (props: InviteeCalendarProps) => {
 
         <ConfirmationDialog />
         <Appointments appointmentComponent={customAppointmentComp} />
+
         <AppointmentTooltip showCloseButton showOpenButton />
         <AppointmentForm
           basicLayoutComponent={BasicLayout}
           textEditorComponent={TextEditor}
           messages={messages}
         />
+
         <Toolbar />
         <DateNavigator />
         <TodayButton />
