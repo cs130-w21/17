@@ -14,10 +14,7 @@ export const mapEventToAppointment = (
   description: googleEvent.description,
   attendees: googleEvent.attendees,
   readOnly: true,
-<<<<<<< HEAD
   isInviteeEvent: googleEvent.isInviteeEvent,
-=======
->>>>>>> c2def46aaa8c394572050cb7732e77e3fe1fef01
 });
 
 export const mapAppointmentToEvent = (
