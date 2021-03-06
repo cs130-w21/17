@@ -109,11 +109,7 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
     });
   };
   const readOnly = () => {
-    if (appointmentData.isInviteeEvent) {
-      return false;
-    } else {
-      return appointmentData.readOnly;
-    }
+    return appointmentData.readOnly;
   };
   return (
     <AppointmentForm.BasicLayout
@@ -218,25 +214,12 @@ const getData = (
     });
 };
 
-const addEvent = (
-  appointment: customAppointment,
-  accessToken?: string,
-  setSuccess?: any,
-  getId?: any
-) => {
+const addEvent = (appointment: customAppointment, accessToken?: string) => {
   const body = JSON.stringify({
     token: accessToken,
     event: mapAppointmentToEvent(appointment),
   });
-
   axios.post('/api/calendar/addEvent', body, config).then((response) => {
-    const invitation = getId();
-    console.log(invitation);
-    const body = JSON.stringify({ id: invitation });
-    axios.post('/api/invitations/delete', body, config).then((response) => {
-      setTimeout(() => {}, timeout);
-    });
-    setSuccess();
     setTimeout(() => {}, timeout);
   });
 };
@@ -336,6 +319,7 @@ export default (props: InviteeCalendarProps) => {
 
     if (added) {
       const new_attendees = AddAttendee(added, { email: props.inviteeEmail });
+
       const startingAddedId =
         data.length > 0 ? data[data.length - 1].id + 1 : 0;
       const temp = [
@@ -346,12 +330,14 @@ export default (props: InviteeCalendarProps) => {
         },
       ];
       dispatch({ type: 'addData', payload: temp });
-      addEvent(
-        temp[temp.length - 1],
-        props.user?.accessToken,
-        props.setSuccess,
-        props.getId
-      );
+      addEvent(temp[temp.length - 1], props.user?.accessToken);
+
+      const invitation = props.getId();
+      const body = JSON.stringify({ id: invitation });
+      axios.post('/api/invitations/delete', body, config).then((response) => {
+        setTimeout(() => {}, timeout);
+      });
+      props.setSuccess();
     } else if (changed) {
       const temp = data.map((appointment: any) =>
         changed[appointment.id]
@@ -361,18 +347,13 @@ export default (props: InviteeCalendarProps) => {
       const targetEvent = temp.filter(
         (appointment: any) => appointment.id in changed
       );
-      editEvent(targetEvent[0].id, targetEvent[0], props.user?.accessToken);
+      editEvent(
+        targetEvent[0].id,
+        targetEvent[0],
+        props.inviteeProfile?.accessToken
+      );
       dispatch({ type: 'updateData', payload: temp });
     } else if (deleted !== undefined) {
-      const targetEvent = data.filter(
-        (appointment: any) => appointment.id === deleted
-      );
-
-      removeEvent(targetEvent[0].id, props.user?.accessToken);
-      const temp = data.filter(
-        (appointment: any) => appointment.id !== deleted
-      );
-      dispatch({ type: 'removeData', payload: temp });
     }
   };
 
@@ -430,7 +411,7 @@ export default (props: InviteeCalendarProps) => {
 
         <ConfirmationDialog />
         <Appointments appointmentComponent={customAppointmentComp} />
-        <AppointmentTooltip showCloseButton showOpenButton showDeleteButton />
+        <AppointmentTooltip showCloseButton showOpenButton />
         <AppointmentForm
           basicLayoutComponent={BasicLayout}
           textEditorComponent={TextEditor}
