@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/api/invitations.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/api/invitations.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Router } from 'express';
+
+// Invitation Model
+import Invitation from '../../models/Invitation';
+
+require('dotenv').config();
+const router = Router();
+const express = require('express');
+const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const nodemailer = require('nodemailer');
+
+// Body Parser Middleware
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
+
+
+
+//Get transporter that connects to GMAIL services *
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EM_EMAIL,
+        pass: process.env.EM_PW
+    }
+});
+
+/**
+ * Finds all invitations.
+ * @name GetInvitation
+ * @route   {GET} api/invitations
+ * @access  Public
+ */
+
+router.route('/').get((req, res) => {
+    Invitation.find()
+        .then(invitations => res.json(invitations))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+/**
+ * Deletes an invitation once it is used (ie, the invitee schedules a meeting) based on its id.
+ * @name DeleteInvitation
+ * @route   {POST} api/invitations
+ * @access  Public
+ */
+router.post('/delete', async (req, res) => {
+    try {
+      const invite = await Invitation.findById(req.body['id']);
+
+      if (!invite) throw Error('No item found');
+  
+      const removed = await invite.remove();
+      if (!removed)
+        throw Error('Something went wrong while trying to delete the item');
+  
+      res.status(200).json({ success: true });
+    } catch (e) {
+      res.status(400).json({ msg: e.message, success: false });
+    }
+  });
+  
+
+/**
+ * Create An Invitation &amp; emails invitation link (appends id to invitation page)
+ * @name CreateInvitation
+ * @route   {POST} api/invitations
+ * @access  public
+ */
+router.route('/add').post((req, res) => {
+    // info from front end
+    const invitee_name = req.body.invitee_name;
+    const invitee_email = req.body.invitee_email;
+    const inviter_name = req.body.inviter_name;
+    const inviter_email = req.body.inviter_email;
+    // const expiration_date = Date.parse(req.body.expiration_date);
+
+    let error_message = "";
+    let error_flag = false;
+
+
+    /**
+     * Invitation Object
+     * @type {Document}
+     */
+    const newInvitation = new Invitation({
+        invitee_name,
+        invitee_email,
+        inviter_email
+        // expiration_date
+    });
+
+
+    /**
+     * Saves invitation to database
+     */
+    newInvitation.save()
+        .then(() => error_message += 'Invitation added!')
+        .catch(err => {
+            error_flag = true;
+            error_message = "Error adding invitation to db. Please check your inputs."
+        });
+
+
+    // Email contents
+    let email_html = '&lt;p> Hello ' + invitee_name + '. &lt;br>' +
+        'Click the following link to make an appointment with ' + inviter_name + ': ' +
+        '&lt;a href=' +
+        'http://www.easy-meet-w21project.com/invitation?id=' + newInvitation._id + '>' +
+        'EasyMeet&lt;/a>&lt;/p>';
+
+    // Use local host if in testing mode
+    if (process.env.NODE_ENV !== 'production') {
+        email_html = '&lt;p> Hello ' + invitee_name + '. &lt;br />' +
+            'Click the following link to make an appointment with ' + inviter_name + ': ' +
+            '&lt;a href=' +
+            'http://localhost:3000/invitation?id=' + newInvitation._id + '>' +
+            'EasyMeet&lt;/a>&lt;/p>';
+    }
+
+    /**
+     * Email Options
+     * @type {{subject: string, from: string, html: string, to: (*|string|string), text: string}}
+     */
+    const mailOptions = {
+        from: 'easymeethermes@gmail.com',
+        to: invitee_email,
+        subject: 'EasyMeet Invitation!',
+        text: 'insert link here'
+        , html: email_html
+    };
+
+    /**
+     * Sends email using previously defined mail options.
+     * @param mailOptions (includes from, to, subject, text and html data)
+     */
+    if (!error_flag)
+    {
+        transporter.sendMail(mailOptions, function (err, data) {
+            if (!error_flag) {
+                if (err) {
+                    error_message += 'Error sending invitation to the email: ' + invitee_email + '. Please check your inputs.';
+                    error_flag = true;
+
+                } else {
+                    error_message += 'Email sent.';
+                }
+            }
+
+            if (error_flag)
+                return res.status(400).json(error_message); // error
+            else {
+                return res.status(200).json(error_message); // success
+            }
+        });
+    }
+});
+
+export default router;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="InvitationSchema.html">InvitationSchema</a></li><li><a href="UserSchema.html">UserSchema</a></li></ul><h3>Global</h3><ul><li><a href="global.html">accessToken</a></li><li><a href="global.html">AddEvent</a></li><li><a href="global.html">ConfirmationEmail</a></li><li><a href="global.html">CreateInvitation</a></li><li><a href="global.html#createOauthClient">createOauthClient</a></li><li><a href="global.html">DeleteInvitation</a></li><li><a href="global.html">EditEvent</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html">GetCalendar</a></li><li><a href="global.html">GetInvitation</a></li><li><a href="global.html#getUserProfile">getUserProfile</a></li><li><a href="global.html">InviterAccessToken</a></li><li><a href="global.html">Register</a></li><li><a href="global.html">RemoveEvent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Mar 05 2021 18:26:30 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

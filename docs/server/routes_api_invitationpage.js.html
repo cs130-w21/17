@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/api/invitationpage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/api/invitationpage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Router } from 'express';
+import Invitation from '../../models/Invitation';
+import User from '../../models/User';
+import * as routeutils from "../utils/routeutils";
+const router = Router();
+
+/**
+ * Get object id of invitation, and use the id to search the inviter's User object in the database.
+ * Then, use the inviter's refreshToken to receive a new accessToken.
+ *
+ * @name InviterAccessToken
+ * @route   {POST} api/invitationpage
+ * @access  public
+ */
+router.route('/accessToken').post(async (req, res) => {
+    //get objectid from front end
+    const id = req.body.id;
+
+    /**
+    * use id to find the email from mongodb database.
+    */
+    Invitation.findOne({'_id': String(id)}, async (err, result) => {
+        try {
+            if(err) {
+                throw err;
+            }
+            //check if the invitation still exists
+            if(result == null){
+                res.status(200).json({
+                    accessToken: null,
+                    profile: null,
+                    expired: true
+                });
+                return;
+            }
+
+            if(Date.now() >= result.expiration_date)
+            {
+                /**
+                 * if the invitation is expired, delete the invitation from the database.
+                 */
+                Invitation.deleteOne({'_id': String(id)}, async (err, result) => {
+                    if(err) {
+                        throw err;
+                    }
+                });
+                res.status(200).json({
+                    accessToken: null,
+                    profile: null,
+                    expired: true
+                });
+                return;
+            }
+            const email = result.inviter_email;
+            const invitee_email = result.invitee_email;
+            const invitee_name = result.invitee_name;
+
+            /**
+             * use email to find token
+             */
+            User.findOne({'email': String(email)}, async (err, result) => {
+                if(err) {
+                    throw err;
+                }
+                if(result == null){
+                    /**
+                     * If we cannot find such a user using the id, delete the invitation from the database.
+                     */
+                    Invitation.deleteOne({'_id': String(id)}, async (err, result) => {
+                        if(err) {
+                            throw err;
+                        }
+                    });
+                    res.status(200).json({
+                        accessToken: null,
+                        profile: null,
+                        expired: true
+                    });
+                    return;
+                }
+                const token = result.refreshToken;
+                const accessToken = await routeutils.getAccessToken(token);
+                const userProfile = await routeutils.getUserProfile(accessToken);
+                //construct the return body
+                res.status(200).json({
+                    accessToken: accessToken,
+                    profile: userProfile,
+                    inviteeEmail: invitee_email,
+                    inviteeName: invitee_name,
+                    expired: false
+                });
+            });
+        }
+        catch (e) {
+            res.status(400).json({message: e});
+        }
+    });
+});
+
+
+export default router;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="InvitationSchema.html">InvitationSchema</a></li><li><a href="UserSchema.html">UserSchema</a></li></ul><h3>Global</h3><ul><li><a href="global.html">accessToken</a></li><li><a href="global.html">AddEvent</a></li><li><a href="global.html">ConfirmationEmail</a></li><li><a href="global.html">CreateInvitation</a></li><li><a href="global.html#createOauthClient">createOauthClient</a></li><li><a href="global.html">DeleteInvitation</a></li><li><a href="global.html">EditEvent</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html">GetCalendar</a></li><li><a href="global.html">GetInvitation</a></li><li><a href="global.html#getUserProfile">getUserProfile</a></li><li><a href="global.html">InviterAccessToken</a></li><li><a href="global.html">Register</a></li><li><a href="global.html">RemoveEvent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Mar 05 2021 18:26:30 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

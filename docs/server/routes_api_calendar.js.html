@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/api/calendar.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/api/calendar.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+import { Router } from 'express';
+import {google, GoogleApis} from 'googleapis';
+import dotenv from 'dotenv';
+import * as routeutils from '../utils/routeutils'
+
+dotenv.config();
+
+const router = Router();
+
+  /**
+   * Returns a user's google calendar events.
+   *
+   * @name GetCalendar
+   * @route   {POST} api/calendar/getcalendar
+   * @routeparam {request} req - contains a field 'token' which contains an access token for the calendar.
+   */
+  router.post('/getcalendar', async (req, res) => {
+    try {
+      const oauth2Client = routeutils.createOauthClient();
+          oauth2Client.setCredentials( {
+              access_token : req.body["token"]
+            });
+
+          const calendar = google.calendar({version: 'v3', auth: oauth2Client});
+          const events = calendar.events.list({ calendarId: 'primary'})
+          events.then((value) => {
+            res.status(200).json({googleresponse : value});})
+
+    } catch (e) {
+      res.status(400).json({ msg: e.message });
+    }
+  });
+
+
+/**
+ * Adds an event to a user's Google Calendar.
+ *
+ * @name AddEvent
+ * @route   {POST} api/calendar/addEvent
+ * @routeparam {request} req - contains a field 'token' which contains an access token for the calendar,
+ * as well as a field 'event' which contains data about the event.
+ */
+router.post('/addEvent', async (req, res) => {
+    try {
+        const oauth2Client = routeutils.createOauthClient();
+          oauth2Client.setCredentials( {
+              access_token : req.body["token"]
+            });  
+          const calendar = google.calendar({version: 'v3', auth: oauth2Client});
+
+         calendar.events.insert({ calendarId: 'primary', resource: req.body["event"] });
+        res.status(200).json({data: "success!!"});
+    } catch (e) {
+      res.status(400).json({ msg: e.message });
+    }
+  });
+
+/**
+ * Removes an event from a user's Google Calendar.
+ *
+ * @name RemoveEvent
+ * @route   {POST} api/calendar/removeEvent
+ * @routeparam {request} req - contains a field 'token' which contains an access token for the calendar,
+ * and a field 'id' which is the id of the event to remove.
+ */
+
+  router.post('/removeEvent', async (req, res) => {
+    try {
+        const oauth2Client = routeutils.createOauthClient();
+           oauth2Client.setCredentials( {
+             access_token : req.body["token"]
+            });  
+          const calendar = google.calendar({version: 'v3', auth: oauth2Client});
+          const id = req.body["id"];
+         calendar.events.delete({calendarId : 'primary', eventId : id});
+        res.status(200).json({data: "success!!"});
+    } catch (e) {
+      res.status(400).json({ msg: e.message });
+    }
+  });
+
+/**
+ * Edits an event on a user's Google Calendar.
+ *
+ * @name EditEvent
+ * @route   {POST} api/calendar/editEvent
+ * @routeparam {request} req - contains a field 'token' which contains an access token for the calendar,
+ * a field 'id' which is the id of the event to edit, and 'event' which contains the new event info.
+ */
+
+  router.post('/editEvent', async (req, res) => {
+    try {
+
+        const oauth2Client = routeutils.createOauthClient();
+
+        oauth2Client.setCredentials( {
+             access_token : req.body["token"]
+        });  
+        const calendar = google.calendar({version: 'v3', auth: oauth2Client});
+        calendar.events.patch({calendarId : 'primary', eventId : req.body["id"], resource : req.body["event"]});
+        res.status(200).json({data: "success!!"});
+    } catch (e) {
+      res.status(400).json({ msg: e.message });
+    }
+  });
+
+export default router;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="InvitationSchema.html">InvitationSchema</a></li><li><a href="UserSchema.html">UserSchema</a></li></ul><h3>Global</h3><ul><li><a href="global.html">accessToken</a></li><li><a href="global.html">AddEvent</a></li><li><a href="global.html">ConfirmationEmail</a></li><li><a href="global.html">CreateInvitation</a></li><li><a href="global.html#createOauthClient">createOauthClient</a></li><li><a href="global.html">DeleteInvitation</a></li><li><a href="global.html">EditEvent</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html">GetCalendar</a></li><li><a href="global.html">GetInvitation</a></li><li><a href="global.html#getUserProfile">getUserProfile</a></li><li><a href="global.html">InviterAccessToken</a></li><li><a href="global.html">Register</a></li><li><a href="global.html">RemoveEvent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Mar 05 2021 18:26:30 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

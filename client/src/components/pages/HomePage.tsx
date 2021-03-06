@@ -24,9 +24,6 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
         <p className="Sub1">
           Simplify scheduling with your clients
         </p>
-        <button className="Button1">
-          GET STARTED
-        </button>
       </div>
       <div className="Div2">
         <div className="Div2_Left">
@@ -66,9 +63,25 @@ class HomePage extends React.Component<HomePageProps, HomePageState> {
           <img className="Icon" src={"https://i.imgur.com/tcatZ56.png"}/>
         </div>
       </div>
+      <div className="DivInfo">
+        <h1 className="HeadInfo"> 
+          Why Choose EasyMeet?
+        </h1>
+        <p className="SubInfo">
+          Many other calendar and scheduling applications including Google 
+          Calendar offer similar functionality to EasyMeet. In fact, EasyMeet 
+          uses the Google Calendar API to gather existing information about 
+          your schedule! What EasyMeet does differently, however, is allow 
+          event inviters to share their calendars and let invitees make their 
+          own events without exposing sensitive calendar information. Invitees 
+          don’t need to make accounts, inviters don’t need to make their 
+          calendars public, and you can sleep easy at night knowing that your 
+          invitation links are one-time-use only, meaning absolutely no harm 
+          will be done to your picture perfect schedule. 
+        </p>
+      </div>
       <div className="Div3">
         <div className="Div3_Left">
-          
         </div>
         <div className="Div3_Right">
           <h1 className="Head3">

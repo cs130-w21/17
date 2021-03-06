@@ -1,13 +1,20 @@
 import React from 'react';
-import {render} from 'react-dom';
 import { ErrorPageProps, ErrorPageState } from '../../types/interfaces';
 
+/**
+ * This class serves as the Error Page of the application.
+ * Used when the generated link has expired, a link is invalid, or there
+ * is a server side error.
+ */
 class Error extends React.Component<ErrorPageProps, ErrorPageState> {
     constructor(props : ErrorPageProps){
         super(props);
-        //this.state = {greeting: "Uh-Oh!"};
         this.state = {};
     }
+
+    /**
+     * Displays an error message with a graphic.
+     */
     render(): any {
         return <section>
             <div className="C_Div1">
@@ -21,7 +28,7 @@ class Error extends React.Component<ErrorPageProps, ErrorPageState> {
                     <p className="Sub4">
                         Something went wrong. We're crying too.
                     </p>
-                    <p className="Sub4">
+                    <p className="Sub5">
                         {this.props.message}
                     </p>
                 </div>

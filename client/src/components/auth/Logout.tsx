@@ -9,6 +9,11 @@ import {OAUTH_CLIENT_ID} from "./AuthConstants";
  * the logout prop passed to it.
  */
 class Logout extends React.Component<ILogoutProps, ILogoutState> {
+    /**
+     * Call super constructor and set empty state.
+     * @param props - Contains logout callback function
+     * for setting state of the App.
+     */
     constructor(props : ILogoutProps) {
         super(props);
 

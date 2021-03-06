@@ -98,7 +98,7 @@
 
         
             
-<h4 class="name" id="GetItems"><span class="type-signature">(route) </span>GetItems<span class="type-signature"></span></h4>
+<h4 class="name" id="accessToken"><span class="type-signature">(route) </span>accessToken<span class="type-signature"></span></h4>
 
 
 
@@ -108,28 +108,30 @@
                             <table class="params">
                             <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
                             <tr>
-                            <td class="type">GET</td>
-                            <td class="name last">api/items</td>
+                            <td class="type">POST</td>
+                            <td class="name last">api/auth</td>
                             </tr>
                             </table>
-                            <p>A GET request to get Items.</p>
-                            <h5>Body Parameters:</h5>
+                            <p>Exchanges a refresh token for an access token.</p>
+                            <h5>Route Parameters:</h5>
           <table class="params">
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Type</th>
-                <th>Attributes</th>
+                
                 
                 <th class="last">Description</th>
               </tr>
             </thead>
             <tr>
-            <td class="name">paramName</td>
-            <td class="type">ParamType</td>
-            <td class="attributes">optional</td>
+            <td class="name">req</td>
+            <td class="type">request</td>
             
-            <td class="description last">Param description.</td>
+            
+            <td class="description last">Should contain a single field of refreshToken which is
+retrieved from the database. Exchanges it for an access token and puts it in the response
+field 'accessToken'.</td>
           </tr>
           </table>
 </div>
@@ -169,7 +171,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="items.js.html">items.js</a>, <a href="items.js.html#line13">line 13</a>
+        <a href="routes_api_auth.js.html">routes/api/auth.js</a>, <a href="routes_api_auth.js.html#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -187,7 +189,7 @@
 
         
             
-<h4 class="name" id="Login"><span class="type-signature">(route) </span>Login<span class="type-signature"></span></h4>
+<h4 class="name" id="AddEvent"><span class="type-signature">(route) </span>AddEvent<span class="type-signature"></span></h4>
 
 
 
@@ -198,10 +200,30 @@
                             <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
                             <tr>
                             <td class="type">POST</td>
-                            <td class="name last">/login</td>
+                            <td class="name last">api/calendar/addEvent</td>
                             </tr>
                             </table>
-                            <p>Logs in a user.</p>
+                            <p>Adds an event to a user's Google Calendar.</p>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">req</td>
+            <td class="type">request</td>
+            
+            
+            <td class="description last">contains a field 'token' which contains an access token for the calendar,
+as well as a field 'event' which contains data about the event.</td>
+          </tr>
+          </table>
 </div>
 
 
@@ -239,7 +261,537 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="auth.js.html">auth.js</a>, <a href="auth.js.html#line17">line 17</a>
+        <a href="routes_api_calendar.js.html">routes/api/calendar.js</a>, <a href="routes_api_calendar.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="ConfirmationEmail"><span class="type-signature">(route) </span>ConfirmationEmail<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">api/confirmation</td>
+                            </tr>
+                            </table>
+                            <p>Sends the inviter and invitee confirmation email for a newly scheduled event.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_api_confirmation.js.html">routes/api/confirmation.js</a>, <a href="routes_api_confirmation.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CreateInvitation"><span class="type-signature">(route) </span>CreateInvitation<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">api/invitations</td>
+                            </tr>
+                            </table>
+                            <p>Create An Invitation &amp; emails invitation link (appends id to invitation page)</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_api_invitations.js.html">routes/api/invitations.js</a>, <a href="routes_api_invitations.js.html#line64">line 64</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="DeleteInvitation"><span class="type-signature">(route) </span>DeleteInvitation<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">api/invitations</td>
+                            </tr>
+                            </table>
+                            <p>Deletes an invitation once it is used (ie, the invitee schedules a meeting) based on its id.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_api_invitations.js.html">routes/api/invitations.js</a>, <a href="routes_api_invitations.js.html#line41">line 41</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="EditEvent"><span class="type-signature">(route) </span>EditEvent<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">api/calendar/editEvent</td>
+                            </tr>
+                            </table>
+                            <p>Edits an event on a user's Google Calendar.</p>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">req</td>
+            <td class="type">request</td>
+            
+            
+            <td class="description last">contains a field 'token' which contains an access token for the calendar,
+a field 'id' which is the id of the event to edit, and 'event' which contains the new event info.</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_api_calendar.js.html">routes/api/calendar.js</a>, <a href="routes_api_calendar.js.html#line83">line 83</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="GetCalendar"><span class="type-signature">(route) </span>GetCalendar<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">api/calendar/getcalendar</td>
+                            </tr>
+                            </table>
+                            <p>Returns a user's google calendar events.</p>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">req</td>
+            <td class="type">request</td>
+            
+            
+            <td class="description last">contains a field 'token' which contains an access token for the calendar.</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_api_calendar.js.html">routes/api/calendar.js</a>, <a href="routes_api_calendar.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="GetInvitation"><span class="type-signature">(route) </span>GetInvitation<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">api/invitations</td>
+                            </tr>
+                            </table>
+                            <p>Finds all invitations.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_api_invitations.js.html">routes/api/invitations.js</a>, <a href="routes_api_invitations.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="InviterAccessToken"><span class="type-signature">(route) </span>InviterAccessToken<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">api/invitationpage</td>
+                            </tr>
+                            </table>
+                            <p>Get object id of invitation, and use the id to search the inviter's User object in the database.
+Then, use the inviter's refreshToken to receive a new accessToken.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_api_invitationpage.js.html">routes/api/invitationpage.js</a>, <a href="routes_api_invitationpage.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
@@ -268,10 +820,31 @@
                             <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
                             <tr>
                             <td class="type">POST</td>
-                            <td class="name last">api/users</td>
+                            <td class="name last">api/auth</td>
                             </tr>
                             </table>
-                            <p>Registers a user.</p>
+                            <p>Registers a user if they don't exist and returns user info with access token.</p>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">req</td>
+            <td class="type">request</td>
+            
+            
+            <td class="description last">Should contain a single field of code, which is the access code
+   given by the GoogleResponseOffline from the Google Login component. Will be exchanged for
+   an access token, and if it is the user's first time logging in, a refresh token.</td>
+          </tr>
+          </table>
 </div>
 
 
@@ -309,7 +882,97 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="auth.js.html">auth.js</a>, <a href="auth.js.html#line56">line 56</a>
+        <a href="routes_api_auth.js.html">routes/api/auth.js</a>, <a href="routes_api_auth.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="RemoveEvent"><span class="type-signature">(route) </span>RemoveEvent<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">api/calendar/removeEvent</td>
+                            </tr>
+                            </table>
+                            <p>Removes an event from a user's Google Calendar.</p>
+                            <h5>Route Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">req</td>
+            <td class="type">request</td>
+            
+            
+            <td class="description last">contains a field 'token' which contains an access token for the calendar,
+and a field 'id' which is the id of the event to remove.</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_api_calendar.js.html">routes/api/calendar.js</a>, <a href="routes_api_calendar.js.html#line59">line 59</a>
     </li></ul></dd>
     
 
@@ -329,6 +992,442 @@
     
 
     
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createOauthClient"><span class="type-signature"></span>createOauthClient<span class="signature">()</span><span class="type-signature"> &rarr; {OAuth2Client}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>A helper function which builds a Google OAuth2Client.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_utils_routeutils.js.html">routes/utils/routeutils.js</a>, <a href="routes_utils_routeutils.js.html#line13">line 13</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>The new Oauth2Client.</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">OAuth2Client</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getAccessToken"><span class="type-signature"></span>getAccessToken<span class="signature">(refreshToken)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>A helper function which takes a refresh token and uses it to retreive an access token.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>refreshToken</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The refresh token.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_utils_routeutils.js.html">routes/utils/routeutils.js</a>, <a href="routes_utils_routeutils.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>accessToken  - The new access token.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getUserProfile"><span class="type-signature"></span>getUserProfile<span class="signature">(accessToken)</span><span class="type-signature"> &rarr; {UserProfile}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>A helper function which gets a user profile from an OAuth2Client.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>accessToken</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The access token.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_utils_routeutils.js.html">routes/utils/routeutils.js</a>, <a href="routes_utils_routeutils.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>The user object. No type defined.</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">UserProfile</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
 
     
 
@@ -343,13 +1442,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html">GetItems</a></li><li><a href="global.html">Login</a></li><li><a href="global.html">Register</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="InvitationSchema.html">InvitationSchema</a></li><li><a href="UserSchema.html">UserSchema</a></li></ul><h3>Global</h3><ul><li><a href="global.html">accessToken</a></li><li><a href="global.html">AddEvent</a></li><li><a href="global.html">ConfirmationEmail</a></li><li><a href="global.html">CreateInvitation</a></li><li><a href="global.html#createOauthClient">createOauthClient</a></li><li><a href="global.html">DeleteInvitation</a></li><li><a href="global.html">EditEvent</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html">GetCalendar</a></li><li><a href="global.html">GetInvitation</a></li><li><a href="global.html#getUserProfile">getUserProfile</a></li><li><a href="global.html">InviterAccessToken</a></li><li><a href="global.html">Register</a></li><li><a href="global.html">RemoveEvent</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Feb 14 2021 19:04:46 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Mar 05 2021 18:26:30 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

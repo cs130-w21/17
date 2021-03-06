@@ -214,6 +214,11 @@ const reducer = (state: any, action: any) => {
   }
 };
 
+/**
+ * The SyncedCalendar Component serves as the main calendar component. Displays
+ * a calendar UI, which allows users to view and modify their Google Calendar.
+ * @param props - Contains information about the user, such as their profile and accessToken.
+ */
 export default (props: SyncedCalendarProps) => {
   /**
    * dispatch is mapped to the reducer function. all calls to dispatch are a call
