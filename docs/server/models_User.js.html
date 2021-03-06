@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: models/User.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,45 +17,51 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: models/User.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>EasyMeet</h1>
-<h2>Installation and usage</h2>
-<p>The repo requires specific environment variables in order to work. Visit the team google drive and open a file called &quot;logins&quot;. This file contains all the variables needed.</p>
-<h2>Our Website</h2>
-<p>Visit <a href="http://www.easy-meet-w21project.com/">Easy Meet</a>!</p>
-<h2>API Documentation</h2>
-<p>Visit our <a href="https://cs130-w21.github.io/17/index.html">GitHub Pages</a> website to see the API documentation. It is separated between Client and Server documentation.</p>
-<h2>Citations</h2>
-<p>We used <a href="https://www.youtube.com/watch?v=PBTYxXADG_k&amp;list=PLillGF-RfqbbiTGgA77tGO426V3hRF9iE&amp;ab_channel=TraversyMedia">this</a> tutorial to set up skeleton code for our project.
-The repo for it is <a href="https://github.com/bradtraversy/mern_shopping_list">here</a>.</p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Schema, model } from 'mongoose';
+
+/**
+ * @class Schema representing a User
+ *      contains user's name, email, and a refreshToken which allows us
+ *      to call Google API's on their behalf even when they are offline.
+ *
+ *
+ * @type {module:mongoose.Schema&lt;Document, Model&lt;Document>, undefined>}
+ */
+const UserSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  refreshToken: {
+    type: String,
+    required: true
+  }
+});
+
+const User = model('user', UserSchema);
+
+export default User;
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

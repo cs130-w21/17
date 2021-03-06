@@ -23,6 +23,7 @@ const transporter = nodemailer.createTransport({
 /**
  * Sends the inviter and invitee confirmation email for a newly scheduled event.
  *
+ * @name ConfirmationEmail
  * @route   {POST} api/confirmation
  * @access  public
  */
