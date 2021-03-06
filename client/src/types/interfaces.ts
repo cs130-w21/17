@@ -96,10 +96,12 @@ export interface InvitationPageState {
   inviterProfile: IUser | null;
   inviteeProfile: IUser | null;
   inviteeEmail: string | null;
+  inviteeName: string | null;
   success: boolean;
   error:boolean;
   isExpired: boolean;
   isLoading: boolean;
+
 }
 
 export interface InvitationProps {
@@ -112,6 +114,27 @@ export interface InvitationState {
   submitted?: boolean;
   invite_sent?: boolean;
   backend_error?: boolean;
+}
+
+
+//MISCELLANEOUS
+
+export interface ErrorPageState {}
+
+export interface ErrorPageProps {
+  message: string;
+}
+
+export interface ConfirmationPageState {}
+
+export interface ConfirmationPageProps {
+  message?: string;
+}
+
+export interface LoadingPageState {}
+
+export interface LoadingPageProps {
+  message?: string;
 }
 
 
@@ -130,6 +153,7 @@ export interface InviteeCalendarProps {
   inviteeEmail: string | null;
   setSuccess(): void;
   getId(): string;
+  sendConfirmation(start: SchedulerDateTime, end: SchedulerDateTime, location: string): void;
 }
 interface Attendee {
   email: string;
@@ -137,7 +161,10 @@ interface Attendee {
 }
 export interface Event {
   id?: string;
+<<<<<<< HEAD
   isInviteeEvent?: boolean;
+=======
+>>>>>>> c2def46aaa8c394572050cb7732e77e3fe1fef01
   location: string;
   summary: string;
   description: string;
@@ -160,7 +187,10 @@ export interface customAppointment {
   title: string;
   allDay?:boolean
   id?: string;
+<<<<<<< HEAD
   isInviteeEvent?:boolean;
+=======
+>>>>>>> c2def46aaa8c394572050cb7732e77e3fe1fef01
   rRule?:string;
   exDate?: string;
   readOnly?: boolean;
