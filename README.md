@@ -1,7 +1,16 @@
 # EasyMeet
 
 ## Installation and usage
-The repo requires specific environment variables in order to work. Visit the team google drive and open a file called "logins". This file contains all the variables needed.
+The repo requires specific environment variables in order to work. Visit the team google drive and open a file called "logins". This file contains all the variables needed, without them, you would be unable to trigger the build.
+Use the following command in your desired location:
+```
+git clone https://github.com/cs130-w21/17
+```
+Always run:
+```
+git pull
+```
+This command ensures that you have the latest version available, though it is unlikely that there will be newer versions from this point on. 
 
 
 ## Our Website
