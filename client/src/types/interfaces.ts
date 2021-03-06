@@ -148,6 +148,7 @@ export interface SyncedCalendarProps {
 
 export interface InviteeCalendarProps {
   user:IUser | null;
+  inviteeProfile: IUser | null;
   isAuthenticated: boolean;
   inviteeEmail: string | null;
   setSuccess(): void;
@@ -160,6 +161,7 @@ interface Attendee {
 }
 export interface Event {
   id?: string;
+  isInviteeEvent?: boolean;
   location: string;
   summary: string;
   description: string;
@@ -182,6 +184,7 @@ export interface customAppointment {
   title: string;
   allDay?:boolean
   id?: string;
+  isInviteeEvent?:boolean;
   rRule?:string;
   exDate?: string;
   readOnly?: boolean;

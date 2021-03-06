@@ -7,16 +7,16 @@ import {
 import { createUserFromServerResponse } from '../utils/utils';
 import axios from 'axios';
 import InviteeCalender from '../calendar/InviteeCalender';
-import {SchedulerDateTime} from "@devexpress/dx-react-scheduler";
-import {Confirmation} from '../miscellaneous/Confirmation';
-import {Error} from '../miscellaneous/Error';
-import {Loading} from '../miscellaneous/Loading';
+import { SchedulerDateTime } from '@devexpress/dx-react-scheduler';
+import { Confirmation } from '../miscellaneous/Confirmation';
+import { Error } from '../miscellaneous/Error';
+import { Loading } from '../miscellaneous/Loading';
 
 /**
  * This class serves as the invitation page for the application.
  * The invitee will be able to view the inviter's schedule here.
  */
- 
+
 class InvitationPage extends React.Component<
   InvitationPageProps,
   InvitationPageState
@@ -27,36 +27,35 @@ class InvitationPage extends React.Component<
       inviterProfile: null,
       inviteeProfile: this.props.user,
       inviteeEmail: null,
-      inviteeName:null,
+      inviteeName: null,
       success: false,
       error: false,
       isExpired: false,
-      isLoading: true
+      isLoading: true,
     };
- 
+
     this.setSuccess = this.setSuccess.bind(this);
     this.getId = this.getId.bind(this);
     this.sendConfirmation = this.sendConfirmation.bind(this);
   }
- 
+
   componentDidMount(): void {
     this.getData();
   }
   setSuccess(): void {
     this.setState({ success: true });
- 
- 
   }
+
   getId(): string {
     let search = this.getUrlParams();
     return search.get('id') || '';
   }
- 
+
   getUrlParams(): URLSearchParams {
     if (!this.props.location.search) return new URLSearchParams();
     return new URLSearchParams(this.props.location.search);
   }
- 
+
   /**
    * Sends the inviter and invitee's names and emails,
    * as well as the new event info (time and location)
@@ -69,31 +68,35 @@ class InvitationPage extends React.Component<
    * @param end event end time
    * @param location name of location
    */
-  sendConfirmation(start: SchedulerDateTime, end: SchedulerDateTime,
-                   location: string): void{
-    const email_info={
+  sendConfirmation(
+    start: SchedulerDateTime,
+    end: SchedulerDateTime,
+    location: string
+  ): void {
+    const email_info = {
       invitee_name: this.state.inviteeName,
       invitee_email: this.state.inviteeEmail,
       inviter_name: this.state.inviterProfile?.fullName,
       inviter_email: this.state.inviterProfile?.email,
       event_start: start,
       event_end: end,
-      event_location: location
-    }
- 
+      event_location: location,
+    };
+
     // sending email_info to backend
-    axios.post('/api/confirmation/added', email_info)
-        .then((res) => {
-          console.log('Email confirmation sent');
-        })
-        .catch(err => {
-          console.log('Error with confirmation backend', err);
-        });
+    axios
+      .post('/api/confirmation/added', email_info)
+      .then((res) => {
+        console.log('Email confirmation sent');
+      })
+      .catch((err) => {
+        console.log('Error with confirmation backend', err);
+      });
   }
- 
+
   public renderScheduler(): any {
     if (this.state.success) {
-      return <Confirmation/>;
+      return <Confirmation />;
     } else if (
       this.state.inviterProfile != null &&
       this.state.inviteeEmail != null
@@ -101,24 +104,24 @@ class InvitationPage extends React.Component<
       return (
         <InviteeCalender
           user={this.state.inviterProfile}
+          inviteeProfile={this.props.user}
           isAuthenticated={this.props.isAuthenticated}
           inviteeEmail={this.state.inviteeEmail}
           setSuccess={this.setSuccess}
           getId={this.getId}
           sendConfirmation={this.sendConfirmation}
- 
         />
       );
     } else {
-      return <Error message="Internal Server Error"/>
+      return <Error message="Internal Server Error" />;
     }
   }
- 
+
   getData() {
     const i = {
       id: this.getId(),
     };
- 
+
     axios
       .post('/api/invitationpage/accessToken', i)
       .then((res) => {
@@ -132,9 +135,8 @@ class InvitationPage extends React.Component<
               inviterProfile: inviter,
               inviteeEmail: res.data.inviteeEmail,
               inviteeName: res.data.inviteeName,
-              isLoading: false
+              isLoading: false,
             });
- 
           }
         }, 5000);
       })
@@ -143,17 +145,20 @@ class InvitationPage extends React.Component<
         console.log('Error with backend', err);
       });
   }
- 
+
   render(): any {
-    if(this.state.isLoading){
-      return <Loading/>;
-    }
-    else if (this.state.isExpired || this.state.error || this.state.inviterProfile == null) {
-      return <Error message="This invitation is invalid or expired."/>
+    if (this.state.isLoading) {
+      return <Loading />;
+    } else if (
+      this.state.isExpired ||
+      this.state.error ||
+      this.state.inviterProfile == null
+    ) {
+      return <Error message="This invitation is invalid or expired." />;
     } else {
       return <div>{this.renderScheduler()}</div>;
     }
   }
 }
- 
+
 export { InvitationPage };
