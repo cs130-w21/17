@@ -2,7 +2,7 @@
     "source": {
       "include": ["./models/", "./routes/"],
       "includePattern": ".js$",
-      "excludePattern": "(node_modules/|docs)"
+      "excludePattern": ".*test.js$"
     },
   "plugins": [
       "plugins/markdown",

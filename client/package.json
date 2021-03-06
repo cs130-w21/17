@@ -42,7 +42,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "docs": "npx typedoc --excludeExternals --excludeNotDocumented --exclude *.test.tsx",
+    "docs": "npx typedoc",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

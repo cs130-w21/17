@@ -1,5 +1,4 @@
-import React, { ComponentProps } from 'react';
-import {render} from 'react-dom';
+import React  from 'react';
 import { ConfirmationPageProps, ConfirmationPageState } from '../../types/interfaces';
 
 /**
@@ -11,7 +10,10 @@ class Confirmation extends React.Component<ConfirmationPageProps, ConfirmationPa
         super(props);
         this.state = {};
     }
-    
+
+    /**
+     * Displays a success message with a graphic.
+     */
     render(): any {
         return <section>
             <div className="C_Div1">

@@ -65,8 +65,9 @@ router.post('/register', async (req, res) => {
  *
  * @name accessToken
  * @route {POST} api/auth
- * @routeparam {request} req - Should contain a single field of refreshToken.
- *    Should be retreived from the database. Exchanges it for an access token.
+ * @routeparam {request} req - Should contain a single field of refreshToken which is
+ * retrieved from the database. Exchanges it for an access token and puts it in the response
+ * field 'accessToken'.
  */
 router.post('/accessToken', async (req, res) => {
   try {

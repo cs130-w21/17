@@ -15,10 +15,8 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 
-/**
- * Creates transporter that connects to GMAIL services *
- * @type {transporter}
- */
+
+//Get transporter that connects to GMAIL services *
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -28,7 +26,7 @@ const transporter = nodemailer.createTransport({
 });
 
 /**
- * @route   GET api/invitations
+ * @route   {GET} api/invitations
  * @desc    Get All Invitations
  * @access  Public
  */
@@ -40,7 +38,7 @@ router.route('/').get((req, res) => {
 });
 
 /**
- * @route   POST api/invitations
+ * @route   {POST} api/invitations
  * @desc    Delete an invitation given invitation ID
  * @access  Public
  */
@@ -62,7 +60,7 @@ router.post('/delete', async (req, res) => {
   
 
 /**
- * @route   POST api/invitations
+ * @route   {POST} api/invitations
  * @desc    Create An Invitation & emails invitation link (appends id to invitation page)
  * @access  public
  */

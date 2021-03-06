@@ -1,6 +1,10 @@
 {
   "entryPoints": ["src/"],
   "out": "../docs/client/",
-  "exclude": ["src/components/auth/AuthConstants.tsx"],
+  "exclude": ["src/components/auth/AuthConstants.tsx", "**/*+(test).tsx",
+    "src/index.tsx", "src/serviceWorker.ts", "src/react-app-env.d.ts", "src/components/calendar/CalenderUtils.tsx"],
+  "externalPattern": [".*test.tsx$"],
+  "excludeExternals": true,
+  "excludeNotDocumented": true,
   "readme": "README.md"
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import {render} from 'react-dom';
 import { ErrorPageProps, ErrorPageState } from '../../types/interfaces';
 
 /**
@@ -12,7 +11,10 @@ class Error extends React.Component<ErrorPageProps, ErrorPageState> {
         super(props);
         this.state = {};
     }
-    
+
+    /**
+     * Displays an error message with a graphic.
+     */
     render(): any {
         return <section>
             <div className="C_Div1">

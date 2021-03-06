@@ -279,6 +279,12 @@ const reducer = (state: any, action: any) => {
   }
 };
 
+/**
+ * The Invitee Component serves as the secondary calendar component. Displays
+ * a calendar UI, which allows invitees to modify the inviter's calendar, but hides
+ * information about the inviter's other events.
+ * @param props - Contains information about the inviter, such as their profile and accessToken.
+ */
 export default (props: InviteeCalendarProps) => {
   /**
    * dispatch is mapped to the reducer function. all calls to dispatch are a call

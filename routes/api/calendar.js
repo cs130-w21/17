@@ -7,40 +7,38 @@ import * as routeutils from '../utils/routeutils'
 dotenv.config();
 
 const router = Router();
-  /**
-   * This route takes a access token obtained from the google login button
-   * and produces a authentication client that can access google calendar information
-   * on behalf of the user. The function currently contains test code that uploads an
-   * event to the calender. In the future this should be implemented to fit our app usage
-   * 
-   * Below are example usage case of the route in the login.tsx file
-   */
 
   /**
-      const access_token = response.accessToken;
-      console.log(access_token);
-      const config = {
-        headers: { 'Content-Type': 'application/json' },
-      };
-      const body = JSON.stringify({ token: access_token });
-      axios.post('/api/calendar/action', body, config);
+   * Returns a user's google calendar events.
+   *
+   * @route   {POST} api/calendar/getcalendar
+   * @routeparam {request} req - contains a field 'token' which contains an access token for the calendar.
    */
   router.post('/getcalendar', async (req, res) => {
     try {
       const oauth2Client = routeutils.createOauthClient();
           oauth2Client.setCredentials( {
               access_token : req.body["token"]
-            });  
-            
+            });
+
           const calendar = google.calendar({version: 'v3', auth: oauth2Client});
           const events = calendar.events.list({ calendarId: 'primary'})
           events.then((value) => {
             res.status(200).json({googleresponse : value});})
-        
+
     } catch (e) {
       res.status(400).json({ msg: e.message });
     }
   });
+
+
+/**
+ * Adds an event to a user's Google Calendar.
+ *
+ * @route   {POST} api/calendar/addEvent
+ * @routeparam {request} req - contains a field 'token' which contains an access token for the calendar,
+ * as well as a field 'event' which contains data about the event.
+ */
 router.post('/addEvent', async (req, res) => {
     try {
         const oauth2Client = routeutils.createOauthClient();
@@ -56,6 +54,14 @@ router.post('/addEvent', async (req, res) => {
     }
   });
 
+/**
+ * Removes an event from a user's Google Calendar.
+ *
+ * @route   {POST} api/calendar/removeEvent
+ * @routeparam {request} req - contains a field 'token' which contains an access token for the calendar,
+ * and a field 'id' which is the id of the event to remove.
+ */
+
   router.post('/removeEvent', async (req, res) => {
     try {
         const oauth2Client = routeutils.createOauthClient();
@@ -70,6 +76,14 @@ router.post('/addEvent', async (req, res) => {
       res.status(400).json({ msg: e.message });
     }
   });
+
+/**
+ * Edits an event on a user's Google Calendar.
+ *
+ * @route   {POST} api/calendar/editEvent
+ * @routeparam {request} req - contains a field 'token' which contains an access token for the calendar,
+ * a field 'id' which is the id of the event to edit, and 'event' which contains the new event info.
+ */
 
   router.post('/editEvent', async (req, res) => {
     try {

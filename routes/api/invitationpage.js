@@ -5,8 +5,9 @@ import * as routeutils from "../utils/routeutils";
 const router = Router();
 
 /**
- * @route   POST api/invitationpage
- * @desc    Get object id of invitation, and use the id to search the refresh token from the database.
+ * Get object id of invitation, and use the id to search the refresh token from the database.
+ *
+ * @route   {POST} api/invitationpage
  * @access  public
  */
 router.route('/accessToken').post(async (req, res) => {
