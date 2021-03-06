@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/api/confirmation.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/api/confirmation.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Router } from 'express';
+
+require('dotenv').config();
+const router = Router();
+const express = require('express');
+const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const nodemailer = require('nodemailer');
+
+// Body Parser Middleware
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
+
+//Get transporter that connects to GMAIL services *
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EM_EMAIL,
+        pass: process.env.EM_PW
+    }
+});
+
+/**
+ * Sends the inviter and invitee confirmation email for a newly scheduled event.
+ *
+ * @name ConfirmationEmail
+ * @route   {POST} api/confirmation
+ * @access  public
+ */
+router.route('/added').post((req, res) => {
+    // Email info from front end
+    const invitee_name = req.body.invitee_name;
+    const invitee_email = req.body.invitee_email;
+    const inviter_name = req.body.inviter_name;
+    const inviter_email = req.body.inviter_email;
+    let event_start = new Date(req.body.event_start);
+    let event_end = new Date(req.body.event_end);
+    const event_location = req.body.event_location;
+
+    // INVITEE EMAIL html content
+    let invitee_email_html = '&lt;p> Hello &lt;b>' + invitee_name + '&lt;/b>. &lt;br>' +
+        'You have successfully made an appointment with ' + inviter_name + '.&lt;br>' +
+        'Your appointment is from &lt;b>' + event_start + '&lt;/b> to &lt;b>' + event_end + '&lt;/b>';
+    if (event_location != undefined)
+        invitee_email_html += ' at &lt;b>' + event_location + '&lt;/b>';
+    invitee_email_html +='.&lt;/p>';
+
+    // INVITER EMAIL html content
+    let inviter_email_html = '&lt;p> Hello &lt;b>' + inviter_name + '&lt;/b>. &lt;br>' +
+        '&lt;b>' + invitee_name + '&lt;/b>' + ' recently scheduled a new appointment with you.&lt;br>' +
+        'Your appointment is from &lt;b>' + event_start + '&lt;/b> to &lt;b>' + event_end + '&lt;/b>';
+    if (event_location != undefined)
+        inviter_email_html += ' at ' + '&lt;b>' + event_location + '&lt;/b>';
+    inviter_email_html +='&lt;br>View your calendar for more details!' + '&lt;/p>';
+
+    /**
+     * Email Options for the INVITEE
+     * @type {{subject: string, from: string, html: string, to: (*|string|string), text: string}}
+     */
+    const invitee_mailOptions = {
+        from: process.env.EM_EMAIL,
+        to: invitee_email,
+        subject: 'EasyMeet Confirmation!',
+        text: ''
+        , html: invitee_email_html
+    };
+
+    /**
+     * Email Options for the INVITER
+     * @type {{subject: string, from: string, html: string, to: (*|string|string), text: string}}
+     */
+    const inviter_mailOptions = {
+        from: process.env.EM_EMAIL,
+        to: inviter_email,
+        subject: 'EasyMeet: You have a new meeting!',
+        text: ''
+        , html: inviter_email_html
+    };
+
+    // Sends confirmation to invitee
+    transporter.sendMail(invitee_mailOptions, function (err, data) {
+        if (err) {
+            console.log('Error sending confirmation email to invitee');
+        }
+        else {
+            console.log('Email confirmation sent to invitee');
+        }
+    });
+
+    // Sends confirmation to inviter
+    transporter.sendMail(inviter_mailOptions, function (err, data) {
+        if (err) {
+            console.log('Error sending confirmation email to inviter');
+        }
+        else {
+            console.log('Email confirmation sent to inviter');
+        }
+    });
+});
+
+export default router;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="InvitationSchema.html">InvitationSchema</a></li><li><a href="UserSchema.html">UserSchema</a></li></ul><h3>Global</h3><ul><li><a href="global.html">accessToken</a></li><li><a href="global.html">AddEvent</a></li><li><a href="global.html">ConfirmationEmail</a></li><li><a href="global.html">CreateInvitation</a></li><li><a href="global.html#createOauthClient">createOauthClient</a></li><li><a href="global.html">DeleteInvitation</a></li><li><a href="global.html">EditEvent</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html">GetCalendar</a></li><li><a href="global.html">GetInvitation</a></li><li><a href="global.html#getUserProfile">getUserProfile</a></li><li><a href="global.html">InviterAccessToken</a></li><li><a href="global.html">Register</a></li><li><a href="global.html">RemoveEvent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Mar 05 2021 18:26:30 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

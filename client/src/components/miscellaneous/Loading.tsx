@@ -1,7 +1,10 @@
-import React, { ComponentProps } from 'react';
-import {render} from 'react-dom';
+import React from 'react';
 import { LoadingPageProps, LoadingPageState } from '../../types/interfaces';
 
+/**
+ * A component which displays while the calendar is loading. Simply displays a message
+ * with a graphic to the user.
+ */
 class Loading extends React.Component<LoadingPageProps, LoadingPageState> {
     constructor(props : LoadingPageProps){
         super(props);
@@ -9,6 +12,9 @@ class Loading extends React.Component<LoadingPageProps, LoadingPageState> {
     }
 
 
+    /**
+     * Display an image to the user with a loading graphic.
+     */
     render(): any {
         return <section>
             <div className="C_Div1">

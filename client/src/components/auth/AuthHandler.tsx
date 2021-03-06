@@ -10,10 +10,15 @@ import {Logout} from "./Logout";
  * the correct props to them.
  */
 class AuthHandler extends React.Component<IAuthHandlerProps, IAuthHandlerState> {
+    /**
+     * Call super constructor and initialize empty state.
+     * @param props - Contains information about the user, as
+     * well as callback functions for setting the App state.
+     */
     constructor(props : IAuthHandlerProps) {
         super(props);
 
-        this.state = {}
+        this.state = {};
     }
 
     /**

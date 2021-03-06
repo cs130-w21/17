@@ -1,6 +1,13 @@
 import { Schema, model } from 'mongoose';
 
-// Create Schema
+/**
+ * @class Schema representing a User
+ *      contains user's name, email, and a refreshToken which allows us
+ *      to call Google API's on their behalf even when they are offline.
+ *
+ *
+ * @type {module:mongoose.Schema<Document, Model<Document>, undefined>}
+ */
 const UserSchema = new Schema({
   firstName: {
     type: String,

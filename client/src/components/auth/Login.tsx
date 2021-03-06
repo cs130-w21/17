@@ -31,10 +31,14 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   }
 
   /**
-   * Handles a successful Google Login. Creates the user,
-   * and uses the login callback from props to update application state.
+   * Handles a successful Google Login. Creates the user through a backend call if
+   * it is the first time they've logged in, otherwise it just gets an access token.
+   * Uses the login callback from props to update application state.
    * @param response {GoogleLoginResponseOffline} - Contains an authorization code
-   *    which can be used to get an access token and refresh token.
+   *    which can be used to get an access token and refresh token. The parameter
+   *    will never be of type GoogleLoginResponse because we are only requesting
+   *    Offline access, but it is required to define it like
+   *    this because the API from the GoogleLogin button specifies it this way.
    */
   successfulGoogleLogin(response: GoogleLoginResponse | GoogleLoginResponseOffline): void {
     this.setState({
@@ -70,7 +74,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
    */
   render(): any {
     return (
-      <>
         <GoogleLogin
           clientId={OAUTH_CLIENT_ID}
           buttonText="Login"
@@ -81,8 +84,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
           responseType='code'
           accessType='offline'
         />
-        {this.state.failedLogin ? (<p className="loginfail">Login failed...</p>) : ('')}
-      </>
     );
   }
 }

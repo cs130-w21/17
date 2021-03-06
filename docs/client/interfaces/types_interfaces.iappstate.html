@@ -39,8 +39,6 @@
 							</div>
 							<input type="checkbox" id="tsd-filter-inherited" checked />
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -68,50 +66,25 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>App Component state. Only extends the IUserState interface for now.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IAppState</span>
+						<span class="tsd-signature-type">IUserState</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">IAppState</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
-			</section>
-			<section class="tsd-panel-group tsd-index-group">
-				<h2>Index</h2>
-				<section class="tsd-panel tsd-index-panel">
-					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="types_interfaces.iappstate.html#isauthenticated" class="tsd-kind-icon">is<wbr>Authenticated</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="types_interfaces.iappstate.html#user" class="tsd-kind-icon">user</a></li>
-							</ul>
-						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="isauthenticated" class="tsd-anchor"></a>
-					<h3>is<wbr>Authenticated</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Authenticated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cs130-w21/17/blob/9b9a24f/client/src/types/interfaces.ts#L50">src/types/interfaces.ts:50</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="user" class="tsd-anchor"></a>
-					<h3>user</h3>
-					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="types_interfaces.iuser.html" class="tsd-signature-type" data-tsd-kind="Interface">IUser</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/cs130-w21/17/blob/9b9a24f/client/src/types/interfaces.ts#L51">src/types/interfaces.ts:51</a></li>
-						</ul>
-					</aside>
-				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -124,10 +97,10 @@
 						<a href="../modules/app.html">App</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/app_test.html">App.test</a>
+						<a href="../modules/components_appnavbar.html">components/<wbr>App<wbr>Navbar</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/components_appnavbar.html">components/<wbr>App<wbr>Navbar</a>
+						<a href="../modules/components_linkformmodal.html">components/<wbr>Link<wbr>Form<wbr>Modal</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/components_auth_authhandler.html">components/auth/<wbr>Auth<wbr>Handler</a>
@@ -139,6 +112,24 @@
 						<a href="../modules/components_auth_logout.html">components/auth/<wbr>Logout</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/components_calendar_inviteecalender.html">components/calendar/<wbr>Invitee<wbr>Calender</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/components_calendar_syncedcalender.html">components/calendar/<wbr>Synced<wbr>Calender</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/components_miscellaneous_confirmation.html">components/miscellaneous/<wbr>Confirmation</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/components_miscellaneous_error.html">components/miscellaneous/<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/components_miscellaneous_loading.html">components/miscellaneous/<wbr>Loading</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/components_pages_calendarpage.html">components/pages/<wbr>Calendar<wbr>Page</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/components_pages_homepage.html">components/pages/<wbr>Home<wbr>Page</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -148,16 +139,7 @@
 						<a href="../modules/components_pages_pageconstants.html">components/pages/<wbr>Page<wbr>Constants</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/flux_actions_itemactions.html">flux/actions/item<wbr>Actions</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/react_app_env.html">react-<wbr>app-<wbr>env</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/serviceworker.html">service<wbr>Worker</a>
+						<a href="../modules/components_utils_utils.html">components/utils/utils</a>
 					</li>
 					<li class="current tsd-kind-module">
 						<a href="../modules/types_interfaces.html">types/interfaces</a>
@@ -166,6 +148,12 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="types_interfaces.calendarpageprops.html" class="tsd-kind-icon">Calendar<wbr>Page<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="types_interfaces.calendarpagestate.html" class="tsd-kind-icon">Calendar<wbr>Page<wbr>State</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="types_interfaces.homepageprops.html" class="tsd-kind-icon">Home<wbr>Page<wbr>Props</a>
 					</li>
@@ -179,14 +167,6 @@
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
 						<a href="types_interfaces.iappstate.html" class="tsd-kind-icon">IApp<wbr>State</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="types_interfaces.iappstate.html#isauthenticated" class="tsd-kind-icon">is<wbr>Authenticated</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="types_interfaces.iappstate.html#user" class="tsd-kind-icon">user</a>
-							</li>
-						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
@@ -209,25 +189,19 @@
 						<a href="types_interfaces.ilogoutstate.html" class="tsd-kind-icon">ILogout<wbr>State</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="types_interfaces.imsg.html" class="tsd-kind-icon">IMsg</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="types_interfaces.inavbarprops.html" class="tsd-kind-icon">INavbar<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="types_interfaces.inavbarstate.html" class="tsd-kind-icon">INavbar<wbr>State</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="types_interfaces.itarget.html" class="tsd-kind-icon">ITarget</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="types_interfaces.iuser.html" class="tsd-kind-icon">IUser</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="types_interfaces.invitationprops.html" class="tsd-kind-icon">Invitation<wbr>Props</a>
+						<a href="types_interfaces.invitationpageprops.html" class="tsd-kind-icon">Invitation<wbr>Page<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="types_interfaces.invitationstate.html" class="tsd-kind-icon">Invitation<wbr>State</a>
+						<a href="types_interfaces.invitationpagestate.html" class="tsd-kind-icon">Invitation<wbr>Page<wbr>State</a>
 					</li>
 				</ul>
 			</nav>
@@ -239,14 +213,13 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>

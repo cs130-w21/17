@@ -15,10 +15,8 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 
-/**
- * Creates transporter that connects to GMAIL services *
- * @type {transporter}
- */
+
+//Get transporter that connects to GMAIL services *
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -28,8 +26,9 @@ const transporter = nodemailer.createTransport({
 });
 
 /**
- * @route   GET api/invitations
- * @desc    Get All Invitations
+ * Finds all invitations.
+ * @name GetInvitation
+ * @route   {GET} api/invitations
  * @access  Public
  */
 
@@ -39,10 +38,16 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+/**
+ * Deletes an invitation once it is used (ie, the invitee schedules a meeting) based on its id.
+ * @name DeleteInvitation
+ * @route   {POST} api/invitations
+ * @access  Public
+ */
 router.post('/delete', async (req, res) => {
     try {
       const invite = await Invitation.findById(req.body['id']);
-      console.log(req.body['id']);
+
       if (!invite) throw Error('No item found');
   
       const removed = await invite.remove();
@@ -57,8 +62,9 @@ router.post('/delete', async (req, res) => {
   
 
 /**
- * @route   POST api/invitations
- * @desc    Create An Invitation & emails invitation link (appends id to invitation page)
+ * Create An Invitation & emails invitation link (appends id to invitation page)
+ * @name CreateInvitation
+ * @route   {POST} api/invitations
  * @access  public
  */
 router.route('/add').post((req, res) => {

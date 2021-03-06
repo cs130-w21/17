@@ -11,10 +11,7 @@ const nodemailer = require('nodemailer');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-/**
- * Creates transporter that connects to GMAIL services *
- * @type {transporter}
- */
+//Get transporter that connects to GMAIL services *
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -24,8 +21,10 @@ const transporter = nodemailer.createTransport({
 });
 
 /**
- * @route   POST api/confirmation
- * @desc    Sends the inviter and invitee confirmation email for a newly scheduled event.
+ * Sends the inviter and invitee confirmation email for a newly scheduled event.
+ *
+ * @name ConfirmationEmail
+ * @route   {POST} api/confirmation
  * @access  public
  */
 router.route('/added').post((req, res) => {

@@ -18,9 +18,9 @@ import { Loading } from '../miscellaneous/Loading';
  */
 
 class InvitationPage extends React.Component<
-  InvitationPageProps,
-  InvitationPageState
-> {
+    InvitationPageProps,
+    InvitationPageState
+    > {
   constructor(props: InvitationPageProps) {
     super(props);
     this.state = {
@@ -39,18 +39,34 @@ class InvitationPage extends React.Component<
     this.sendConfirmation = this.sendConfirmation.bind(this);
   }
 
+
+  /**
+   * This function is called automatically when constructing.
+   */
+
   componentDidMount(): void {
     this.getData();
   }
+
+  /**
+   * set the success state to true.
+   */
   setSuccess(): void {
     this.setState({ success: true });
   }
 
+  /**
+   * get the id string from url.
+   */
   getId(): string {
     let search = this.getUrlParams();
     return search.get('id') || '';
   }
 
+
+  /**
+   * get the url string from the website.
+   */
   getUrlParams(): URLSearchParams {
     if (!this.props.location.search) return new URLSearchParams();
     return new URLSearchParams(this.props.location.search);
@@ -94,12 +110,18 @@ class InvitationPage extends React.Component<
       });
   }
 
+
+  /**
+   * create the calendar if the invitation id is valid
+   * show the error if the invitation is invalid
+   * show the success page after the appointment is added.
+   */
   public renderScheduler(): any {
     if (this.state.success) {
       return <Confirmation />;
     } else if (
-      this.state.inviterProfile != null &&
-      this.state.inviteeEmail != null
+        this.state.inviterProfile != null &&
+        this.state.inviteeEmail != null
     ) {
       return (
         <InviteeCalender
@@ -117,11 +139,16 @@ class InvitationPage extends React.Component<
     }
   }
 
+
+  /**
+   * assign the object id to the private variable id.
+   */
   getData() {
     const i = {
       id: this.getId(),
     };
 
+    //return info/error to the frontend
     axios
       .post('/api/invitationpage/accessToken', i)
       .then((res) => {
@@ -146,6 +173,13 @@ class InvitationPage extends React.Component<
       });
   }
 
+
+  /**
+   * show the loading page while loading
+   * show the error page if errors occured
+   * sho the expiration page if the id is expired
+   * otherwise display the calendar
+   */
   render(): any {
     if (this.state.isLoading) {
       return <Loading />;
