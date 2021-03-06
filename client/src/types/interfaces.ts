@@ -175,7 +175,8 @@ export interface Event {
     dateTime: any,
     timeZone?: string
   }
-  attendees:Attendee[]
+  recurrence?:string[];
+  attendees:Attendee[];
 }
 
 export interface customAppointment {

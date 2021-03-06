@@ -15,6 +15,7 @@ export const mapEventToAppointment = (
   attendees: googleEvent.attendees,
   readOnly: true,
   isInviteeEvent: googleEvent.isInviteeEvent,
+  rRule: googleEvent.recurrence ? googleEvent.recurrence[0] : undefined,
 });
 
 export const mapAppointmentToEvent = (
@@ -25,9 +26,12 @@ export const mapAppointmentToEvent = (
   description: appointment.description,
   start: {
     dateTime: new Date(appointment.startDate),
+    timeZone: 'America/Los_Angeles',
   },
   end: {
     dateTime: new Date(appointment.endDate),
+    timeZone: 'America/Los_Angeles',
   },
   attendees: appointment.attendees,
+  recurrence: appointment.rRule ? [appointment.rRule] : undefined,
 });
