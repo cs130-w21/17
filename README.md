@@ -1,14 +1,10 @@
 # EasyMeet
 
 ## Installation and usage locally
-The repo requires specific environment variables in order to work. Visit the team google drive and open a file called "logins". This file contains all the variables needed, without them, you would be unable to trigger the build.\n
+**Disclaimer: Building and testing our app requires specific environment variables to work. Only the developers have access to these variables. Unfortunately we cannot publish this information as it contains the team's sensitive information. You can however, visit our website linked below to see what we have launched**  
 To start hosting our app locally, use the following command in your desired location:
 ```
 git clone https://github.com/cs130-w21/17
-```
-Always run:
-```
-git pull
 ```
 This command ensures that you have the latest version available, though it is unlikely that there will be newer versions from this point on. Open terminal and change your directory into the top level folder of our application. Run these commands to install the required libraries and dependencies:
 ```
@@ -22,6 +18,7 @@ npm run dev
 This opens the EasyMeet homepage in your browser on port 3000. Since our app is not yet verified by Google, the common man would not be able to login and view their Google calendar through our website. However, if you are either Keerti or Doruk, then we have whitelisted your emails to allow registration and continue navigating our app. To see more information on how to navigate our website, turn to our GitHub Wiki's page labelled 'User Manual'.
 
 ## Testing
+**Disclaimer: Again, if you do not have our environment variables, most of these tests will be unlikely to succeed.**  
 If you would like to run the test cases we have built for our app, then the directory you are currently on determines which test cases you run. To test the backend, simply remain in the top level folder and run:
 ```
 npm run test
