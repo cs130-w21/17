@@ -22,6 +22,7 @@ import {
   AppointmentTooltip,
   TodayButton,
   ConfirmationDialog,
+  AllDayPanel,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { InviteeCalendarProps, IUser } from '../../types/interfaces';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -416,12 +417,14 @@ export default (props: InviteeCalendarProps) => {
 
         <ConfirmationDialog />
         <Appointments appointmentComponent={customAppointmentComp} />
+
         <AppointmentTooltip showCloseButton showOpenButton />
         <AppointmentForm
           basicLayoutComponent={BasicLayout}
           textEditorComponent={TextEditor}
           messages={messages}
         />
+
         <Toolbar />
         <DateNavigator />
         <TodayButton />

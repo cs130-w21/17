@@ -38,6 +38,7 @@ const getDate = (date: Date): string => {
     date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
   );
 };
+
 export const mapAppointmentToEvent = (
   appointment: customAppointment
 ): Event => {
