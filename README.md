@@ -1,7 +1,7 @@
 # EasyMeet
 
 ## Installation and usage locally
-**Disclaimer: Building and testing our app requires specific environment variables to work. Only the developers have access to these variables. Unfortunately we cannot publish this information as it contains the team's sensitive information. You can however, visit our website linked below to see what we have launched. In addition, we have two databases: one for testing and one for the production version. If you decide to register on localhost, then you will NOT be able to run the production version, our website, and vice versa.**    
+**Disclaimer: Building and testing our app requires specific environment variables to work. Only the developers have access to these variables. Unfortunately we cannot publish this information as it contains the team's sensitive information. You can however, visit our website linked below to see what we have launched. In addition, we have two databases: one for testing and one for the production version. If you decide to register on localhost, then you will NOT be able to register on the production version, our website, and vice versa.**    
 To start hosting our app locally, use the following command in your desired location:
 ```
 git clone https://github.com/cs130-w21/17
