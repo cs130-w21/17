@@ -12,6 +12,17 @@ const allDayTime = (date: any) => {
 
   return usaTime(temp);
 };
+export const checkStatus = (googleEvent: Event): boolean => {
+  if (googleEvent.status) {
+    if (googleEvent.status === 'cancelled') {
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return false;
+  }
+};
 
 export const mapEventToAppointment = (
   googleEvent: Event
@@ -31,6 +42,8 @@ export const mapEventToAppointment = (
   readOnly: true,
   isInviteeEvent: googleEvent.isInviteeEvent,
   rRule: googleEvent.recurrence ? googleEvent.recurrence[0] : undefined,
+  exDate: googleEvent.recurrence ? googleEvent.recurrence[3] : undefined,
+  status: googleEvent.status ? googleEvent.status : undefined,
 });
 
 const getDate = (date: Date): string => {
@@ -63,6 +76,10 @@ export const mapAppointmentToEvent = (
       timeZone: 'America/Los_Angeles',
     },
     attendees: appointment.attendees,
-    recurrence: appointment.rRule ? [appointment.rRule] : undefined,
+    recurrence: appointment.rRule
+      ? appointment.exDate
+        ? [appointment.rRule, appointment.exDate]
+        : [appointment.rRule]
+      : undefined,
   };
 };
