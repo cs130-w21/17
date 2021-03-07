@@ -4,6 +4,9 @@ EasyMeet is a web application that allows a user to view and change their calend
 ## Why EasyMeet
 EasyMeet is effortless and instant. And while other scheduling apps may offer the same ease of access, EasyMeet allows invitees to make their own events without exposing the inviter's private calendar. Furthermore, invitees do not need an account to select an available time to meet and inviters can rest easy knowing their generated invitations are one time use only.
 
+## Our Website
+If you would just like to skip hosting locally and see the website we have launched, then visit [Easy Meet](http://www.easy-meet-w21project.com/)!
+
 ## Installation and usage locally
 **Disclaimer: Building and testing our app requires specific environment variables to work. Only the developers have access to these variables. Unfortunately we cannot publish this information as it contains the team's sensitive information. You can however, visit our website linked below to see what we have launched. In addition, we have two databases: one for testing and one for the production version. If you decide to register on localhost, then you will NOT be able to register on the production version, our website, and vice versa.**    
 To start hosting our app locally, use the following command in your desired location:
@@ -28,9 +31,6 @@ If you would like to run the test cases we have built for our app, then the dire
 npm run test
 ```
 This runs the Jest framework that tests our backend test suites. For the front end, simply change directory into /client and then run the same command.
-
-## Our Website
-If you would just like to skip hosting locally and see the website we have launched, then visit [Easy Meet](http://www.easy-meet-w21project.com/)!
 
 ## API Documentation
 Visit our [GitHub Pages](https://cs130-w21.github.io/17/index.html) website to see the API documentation. It is separated between Client and Server documentation.
