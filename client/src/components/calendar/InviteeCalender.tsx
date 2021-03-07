@@ -214,12 +214,15 @@ const getData = (
     });
 };
 
-const addEvent = (appointment: customAppointment, accessToken?: string) => {
+const addEvent = (appointment: customAppointment,
+                  accessToken?: string,
+                  sendConfirmation?: any) => {
   const body = JSON.stringify({
     token: accessToken,
     event: mapAppointmentToEvent(appointment),
   });
   axios.post('/api/calendar/addEvent', body, config).then((response) => {
+    sendConfirmation(appointment.startDate, appointment.endDate, appointment.location);
     setTimeout(() => {}, timeout);
   });
 };
@@ -336,7 +339,7 @@ export default (props: InviteeCalendarProps) => {
         },
       ];
       dispatch({ type: 'addData', payload: temp });
-      addEvent(temp[temp.length - 1], props.user?.accessToken);
+      addEvent(temp[temp.length - 1], props.user?.accessToken, props.sendConfirmation);
 
       const invitation = props.getId();
       const body = JSON.stringify({ id: invitation });
