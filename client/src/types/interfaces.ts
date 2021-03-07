@@ -228,6 +228,7 @@ export interface Event {
   }
   recurrence?:string[];
   attendees:Attendee[];
+  status?: string;
 }
 
 export interface customAppointment {
@@ -243,6 +244,7 @@ export interface customAppointment {
   location: string;
   description: string;
   attendees: Attendee[];
+  status?: string;
 }
 
 export interface FormProps

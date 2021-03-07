@@ -8,7 +8,6 @@ import {
   ViewState,
   EditingState,
   IntegratedEditing,
-  Appointment,
 } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
@@ -27,8 +26,12 @@ import {
 import { SyncedCalendarProps } from '../../types/interfaces';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
-import { customAppointment } from '../../types/interfaces';
-import { mapEventToAppointment, mapAppointmentToEvent } from './CalenderUtils';
+import { customAppointment, Event } from '../../types/interfaces';
+import {
+  mapEventToAppointment,
+  mapAppointmentToEvent,
+  checkStatus,
+} from './CalenderUtils';
 
 const messages = {
   moreInformationLabel: '',
@@ -204,7 +207,10 @@ const reducer = (state: any, action: any) => {
     case 'addData':
       return { ...state, data: action.payload };
     case 'setData':
-      return { ...state, data: action.payload.map(mapEventToAppointment) };
+      return {
+        ...state,
+        data: action.payload.filter(checkStatus).map(mapEventToAppointment),
+      };
     case 'setCurrentViewName':
       return { ...state, currentViewName: action.payload };
     case 'setCurrentDate':
