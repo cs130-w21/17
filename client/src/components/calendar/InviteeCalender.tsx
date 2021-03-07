@@ -86,7 +86,6 @@ const TextEditor = (props: any) => {
 const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }: any) => {
   const [guest, setGuest] = useState('');
   appointmentData = { ...newAppointment, ...appointmentData };
-  console.log(appointmentData);
   const handleClick = () => {
     if (!appointmentData.readOnly) {
       onAddAttendee({ email: guest });
