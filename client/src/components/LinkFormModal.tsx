@@ -80,8 +80,10 @@ class LinkFormModal extends React.Component<InvitationProps, InvitationState, IA
         this.setState({ [event.target.name]: event.target.value}
         );
         this.setState({
-            invite_sent: false
+            invite_sent: false,
+            submitted: false
         });
+
 
     };
 
