@@ -13,7 +13,7 @@ To start hosting our app locally, use the following command in your desired loca
 ```
 git clone https://github.com/cs130-w21/17
 ```
-Open terminal and change your directory into the top level folder of our application. If you don't have Node.js or npm, download it from [here] (https://nodejs.org/en/). Then, run these commands to install the required libraries and dependencies:
+Open terminal and change your directory into the top level folder of our application. If you don't have Node.js or npm, download it from [here](https://nodejs.org/en/). Then, run these commands to install the required libraries and dependencies:
 ```
 npm install npm@6.14.11
 npm install
